@@ -10,5 +10,19 @@
   <%= @league.user %>
 </p>
 
+<p><strong>Pick your teams:</strong></p>
+
+<select multiple="multiple" id="team-select">
+  <% @teams.each do |team| %>
+      <option><%= team.name %></option>
+  <% end %>
+</select>
+
+<script type="text/javascript">
+    $('#team-select').multiSelect({ cssClass: 'team-select' });
+</script>
+
+<br clear="both"/>
+
 <%= link_to 'Edit', edit_league_path(@league) %> |
 <%= link_to 'Back', leagues_path %>

@@ -17,7 +17,9 @@
         <td><%= league.name %></td>
         <td><%= league.user %></td>
         <td>
-          <% unless league.users.include?(current_user) %>
+          <% if league.users.include?(current_user) %>
+              <b>You're a member</b>
+          <% else %>
               <%= link_to 'Join', join_league_path(league), method: :post %>
           <% end %>
         </td>
