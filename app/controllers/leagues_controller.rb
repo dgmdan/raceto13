@@ -1,6 +1,6 @@
 class LeaguesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_league, only: [:show, :edit, :update, :destroy, :join]
+  before_action :set_league, only: [:show, :edit, :update, :destroy, :join, :update_teams]
 
   # GET /leagues
   # GET /leagues.json
@@ -67,6 +67,12 @@ class LeaguesController < ApplicationController
   def join
     @league.users << current_user
     redirect_to @league
+  end
+
+  def update_teams
+    respond_to do |format|
+      format.js
+    end
   end
 
   private
