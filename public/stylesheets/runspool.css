@@ -1,5 +1,0 @@
-/* Team list height adjustment */
-.ms-list, .ms-container, .ms-selectable, select.ms-list
-{
-    min-height:350px;
-}

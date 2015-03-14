@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  started_on: 2015-03-06
+  home_team_id: 1
+  away_team_id: 1
+  home_score: 1
+  away_score: 1
+
+two:
+  started_on: 2015-03-06
+  home_team_id: 1
+  away_team_id: 1
+  home_score: 1
+  away_score: 1

@@ -12,6 +12,7 @@ class LeaguesController < ApplicationController
   # GET /leagues/1.json
   def show
     @teams = Team.order('name')
+    @my_teams = current_user.team_users.where(league: @league, team_id: params[:team_id])
   end
 
   # GET /leagues/new
@@ -67,12 +68,6 @@ class LeaguesController < ApplicationController
   def join
     @league.users << current_user
     redirect_to @league
-  end
-
-  def update_teams
-    respond_to do |format|
-      format.js
-    end
   end
 
   private

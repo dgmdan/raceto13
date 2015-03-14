@@ -6,31 +6,8 @@
 </p>
 
 <p>
-  <strong>User:</strong>
+  <strong>Creator:</strong>
   <%= @league.user %>
 </p>
 
-<p><strong>Pick your teams:</strong></p>
-
-<select multiple="multiple" id="team-select">
-  <% @teams.each do |team| %>
-      <option value="<%= team.id %>"><%= team.name %></option>
-  <% end %>
-</select>
-
-<script type="text/javascript">
-    $('#team-select').multiSelect({
-        afterSelect: function(value){
-            updateTeamUser(<%= params[:id] %>, value, true);
-        },
-        afterDeselect: function(value){
-            updateTeamUser(<%= params[:id] %>, value, false);
-        },
-        cssClass: 'team-select'
-    });
-</script>
-
-<br clear="both"/>
-
-<%= link_to 'Edit', edit_league_path(@league) %> |
 <%= link_to 'Back', leagues_path %>
