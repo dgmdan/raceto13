@@ -1,36 +1,46 @@
-<p id="notice"><%= notice %></p>
+<div class="container">
 
-<h1>Listing Leagues</h1>
+  <div class="page-header">
+    <h1>Leagues</h1>
+  </div>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>User</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+  <div class="row">
+    <div class="col-md-12">
 
-  <tbody>
-    <% @leagues.each do |league| %>
-      <tr>
-        <td><%= league.name %></td>
-        <td><%= league.user %></td>
-        <td>
-          <% if league.users.include?(current_user) %>
-              <b>You're a member</b>
-          <% else %>
-              <%= link_to 'Join', join_league_path(league), method: :post %>
-          <% end %>
-        </td>
-        <td><%= link_to 'Show', league %></td>
-        <td><%= link_to 'Edit', edit_league_path(league) %></td>
-        <td><%= link_to 'Destroy', league, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+      <p id="notice"><%= notice %></p>
 
-<br>
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>User</th>
+          <th colspan="4"></th>
+        </tr>
+        </thead>
 
-<%= link_to 'New League', new_league_path %>
+        <tbody>
+        <% @leagues.each do |league| %>
+            <tr>
+              <td><%= league.name %></td>
+              <td><%= league.user %></td>
+              <td>
+                <% if league.users.include?(current_user) %>
+                    <b>You're a member</b>
+                <% else %>
+                    <%= link_to 'Join', join_league_path(league), method: :post %>
+                <% end %>
+              </td>
+              <td><%= link_to 'Show', league %></td>
+              <td><%= link_to 'Edit', edit_league_path(league) %></td>
+              <td><%= link_to 'Destroy', league, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+
+      <p><%= link_to 'New League', new_league_path %></p>
+
+    </div>
+  </div>
+
+</div>

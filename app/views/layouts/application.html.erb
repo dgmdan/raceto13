@@ -1,28 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Dan's MLB Runs Pool</title>
+  <title>2015 MLB Runs Pool</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
   <%= javascript_include_tag 'rails' %>
   <%= javascript_include_tag 'jquery.multi-select' %>
+  <%= javascript_include_tag 'bootstrap/bootstrap.min' %>
   <%= javascript_include_tag 'runspool' %>
+
+  <%= stylesheet_link_tag 'bootstrap/bootstrap.min' %>
   <%= stylesheet_link_tag 'multi-select', media: 'screen' %>
   <%= stylesheet_link_tag 'runspool', media: 'screen' %>
-  <%= stylesheet_link_tag 'team-logos', media: 'screen' %>
+
   <%= csrf_meta_tags %>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body>
+<body role="document">
 
-<%= link_to 'Home', '/' %> |<br/>
-
-<% if user_signed_in? %>
-    Signed in as <%= current_user.email %> |
-    <%= link_to 'Sign out', destroy_user_session_path, method: :delete %>
-<% else %>
-    <%= link_to 'Sign in', new_user_session_path %> |
-    <%= link_to 'Sign up', new_user_registration_path %>
-<% end %>
-<hr/>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">2015 MLB Runs Pool</a>
+    </div>
+    <div id="navbar" class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <% if user_signed_in? %>
+            <li><%= link_to 'Log out', destroy_user_session_path, method: :delete %></li>
+        <% else %>
+            <li><%= link_to 'Sign up', new_user_registration_path %></li>
+            <li><%= link_to 'Log in', new_user_session_path %></li>
+        <% end %>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</nav>
 
 <%= yield %>
 
