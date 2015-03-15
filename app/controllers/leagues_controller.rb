@@ -12,7 +12,7 @@ class LeaguesController < ApplicationController
   # GET /leagues/1.json
   def show
     @teams = Team.order('name')
-    @my_teams = current_user.team_users.where(league: @league, team_id: params[:team_id])
+    # @my_teams = current_user.team_users.where(league: @league, team_id: params[:team_id])
   end
 
   # GET /leagues/new

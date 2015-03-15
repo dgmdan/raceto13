@@ -1,5 +1,4 @@
 class Team < ActiveRecord::Base
-  has_many :team_users
 
   validates :name, :data_name, presence: true
   validates :data_name, uniqueness: true
