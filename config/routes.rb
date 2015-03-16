@@ -7,14 +7,20 @@ Rails.application.routes.draw do
     end
   end
 
-  resource :leagues
-
   resources :entries do
     collection do
       get 'index'
       post 'buy'
     end
   end
+
+  resources :standings do
+    collection do
+      get 'index'
+    end
+  end
+
+  resource :leagues
 
   devise_for :users
 end

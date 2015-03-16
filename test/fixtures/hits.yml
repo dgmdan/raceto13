@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  entry_id: 
+  runs: 1
+  hit_on: 2015-03-15
+
+two:
+  entry_id: 
+  runs: 1
+  hit_on: 2015-03-15

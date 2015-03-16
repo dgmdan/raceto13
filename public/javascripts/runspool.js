@@ -9,7 +9,7 @@ $(document).ready(function(){
     });
 
     $('form#buy_entries').submit(function() {
-        var c = confirm("I agree to pay the " + $('#cost').text() + " entry fee before April 3.");
+        var c = confirm("I've read the rules and will pay the " + $('#cost').text() + " entry fee.");
         return c;
     });
 });
