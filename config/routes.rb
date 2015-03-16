@@ -4,10 +4,17 @@ Rails.application.routes.draw do
   resources :leagues do
     member do
       post 'join'
-      post 'update_teams'
     end
   end
+
   resource :leagues
+
+  resources :entries do
+    collection do
+      get 'index'
+      post 'buy'
+    end
+  end
 
   devise_for :users
 end
