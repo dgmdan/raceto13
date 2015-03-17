@@ -46,6 +46,7 @@ namespace :import_data do
         end
       end
     end
+    puts "Loaded #{espn_scores.count} games"
 
     # With the new hits, see if any entries have won
     winners = Hit.select('entry_id').group('entry_id').having('COUNT(id) = 14')
@@ -55,11 +56,11 @@ namespace :import_data do
       other_winners = winners.where("league_id = ? AND user_id <> ?", winning_entry.league_id, winning_entry.user_id)
       if other_winners.any?
         # Multiple winners
-        logger.debug "Multiple winners for league #{winner.league_id}"
+        puts "Multiple winners for league #{winner.league_id}"
         # TODO: send an email to admin for special handling
       else
         # Single winner
-        logger.debug "Winner for league #{winner.league_id} is entry #{winning_entry.id}"
+        puts "Winner for league #{winner.league_id} is entry #{winning_entry.id}"
         winning_entry.won_at = Time.now
         winning_entry.save
         # TODO: send an email to user telling them that they won
@@ -67,6 +68,8 @@ namespace :import_data do
       end
 
     end
+
+    puts "No winners for #{args.query_date}" unless winners.any?
 
     # TODO: if it's the last day of the season, look for leagues with no winners, award win to whoever is closest
   end
