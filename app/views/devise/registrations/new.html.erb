@@ -1,9 +1,8 @@
-<div class="clearfix"></div>
-
 <div class="container">
   <div class="row">
     <div class="col-md-12">
       <h2>Sign up</h2>
+      <hr/>
 
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
           <%= devise_error_messages! %>
@@ -19,7 +18,7 @@
             <%= f.label :password_confirmation %>
             <%= f.password_field :password_confirmation, autocomplete: "off", placeholder: 'Confirm password', class: 'form-control' %>
           </div>
-          <%= f.submit "Sign up", class: 'btn btn-default' %>
+          <%= f.submit "Sign up", class: 'btn btn-default btn-primary' %>
       <% end %>
     </div>
   </div>

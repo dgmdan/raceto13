@@ -1,8 +1,22 @@
+<% if flash[:notice] %>
+    <div class="container">
+      <div class="col-md-12">
+        <div class="alert alert-info" role="alert">
+          <%= flash[:notice] %>
+        </div>
+      </div>
+    </div>
+<% end %>
+
 <div class="jumbotron">
   <div class="container">
     <h1>Play ball!</h1>
     <p>Here's how our MLB runs pool works: You buy entries for $10 each. Each entry is randomly assigned an MLB team. After each game, the amount of runs each team scores is recorded. The first team to record runs 0 through 13 wins!</p>
-    <p><%= link_to raw("Register now &raquo;"), new_user_registration_path, class: 'btn btn-primary btn-lg' %></p>
+    <% if user_signed_in? %>
+        <p><%= link_to raw("View standings &raquo;"), standings_path, class: 'btn btn-primary btn-lg' %></p>
+    <% else %>
+        <p><%= link_to raw("Register now &raquo;"), new_user_registration_path, class: 'btn btn-primary btn-lg' %></p>
+    <% end %>
   </div>
 </div>
 
