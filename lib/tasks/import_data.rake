@@ -1,3 +1,5 @@
+require 'byebug'
+
 namespace :import_data do
 
   desc 'Import all MLB teams from ESPN'
@@ -22,25 +24,25 @@ namespace :import_data do
     espn_scores = ESPN.get_mlb_scores(args.query_date)
     espn_scores.each do |score|
       # HERE: these are not getting set correctly
-      home_team = Team.where(data_name: score['home_team']).first
-      away_team = Team.where(data_name: score['away_team']).first
+      home_team = Team.where(data_name: score[:home_team]).first
+      away_team = Team.where(data_name: score[:away_team]).first
 
       # Keep log of games + scores even though we don't really need it
       Game.create(
           started_on: args.query_date,
           home_team: home_team,
           away_team: away_team,
-          home_score: score['home_score'],
-          away_score: score['away_score']
+          home_score: score[:home_score],
+          away_score: score[:away_score]
       )
 
       # Create hits for those who earned one
-      entries = Entry.where('team_id IN (?,?)', home_team.id, away_team.id)
+      entries = Entry.where('team_id = ? OR team_id = ?', home_team, away_team)
       entries.each do |entry|
         if entry.team == home_team
-          check_for_hit(entry.team, args.query_date, score['home_score'])
+          check_for_hit(entry.team, args.query_date, score[:home_score])
         else
-          check_for_hit(entry.team, args.query_date, score['away_score'])
+          check_for_hit(entry.team, args.query_date, score[:away_score])
         end
       end
     end
