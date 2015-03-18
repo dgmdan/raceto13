@@ -20,7 +20,9 @@ class Entry < ActiveRecord::Base
   belongs_to :team
 
   include ActiveModel::Validations
-  validates_with LeagueSizeValidator, MaxEntriesValidator
+  validates_with LeagueSizeValidator, MaxEntriesValidator, on: :create
 
   scope :active, -> { where(cancelled_at: nil) }
+  scope :unassigned, -> { where(team_id: nil) }
+  scope :assigned, -> { where.not(team_id: nil) }
 end
