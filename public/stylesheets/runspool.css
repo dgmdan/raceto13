@@ -13,3 +13,38 @@ input#quantity {
     width:30px;
     text-align:center;
 }
+
+/* Standings page */
+td {
+    vertical-align: middle !important;
+}
+
+th.runs-header {
+    text-align:center;
+}
+
+td.runs-cell {
+    font-size:1.4em;
+    font-weight:bold;
+    text-align:center;
+}
+
+tr.winner {
+    background-color:gold;
+    font-weight:bold;
+}
+
+span.winner-text {
+    font-size:0.8em;
+    color:darkred;
+}
+
+span.winner-icon {
+    margin-top:-3px;
+    vertical-align: middle;
+    color:darkred;
+}
+
+.right {
+    text-align:right;
+}

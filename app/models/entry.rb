@@ -18,6 +18,7 @@ class Entry < ActiveRecord::Base
   belongs_to :user
   belongs_to :league
   belongs_to :team
+  has_many :hits
 
   include ActiveModel::Validations
   validates_with LeagueSizeValidator, MaxEntriesValidator, on: :create

@@ -3,6 +3,55 @@
     <div class="col-md-12">
       <h2>Current standings</h2>
       <hr/>
+      <table class="table table-striped">
+        <tr>
+            <th>Rank</th>
+            <th>Player</th>
+            <th>Team</th>
+            <th class="runs-header">0</th>
+            <th class="runs-header">1</th>
+            <th class="runs-header">2</th>
+            <th class="runs-header">3</th>
+            <th class="runs-header">4</th>
+            <th class="runs-header">5</th>
+            <th class="runs-header">6</th>
+            <th class="runs-header">7</th>
+            <th class="runs-header">8</th>
+            <th class="runs-header">9</th>
+            <th class="runs-header">10</th>
+            <th class="runs-header">11</th>
+            <th class="runs-header">12</th>
+            <th class="runs-header">13</th>
+            <th class="right">Score</th>
+        </tr>
+        <% @entries.each do |entry| %>
+            <tr class="<% if entry[:won_at] %>winner<% end %>">
+              <td><%= @run_counts.index(entry[:run_count]) + 1 %></td>
+              <td>
+                <%= entry[:name] %>
+                <% if entry[:won_at] %>
+                    <span class="winner-icon glyphicon glyphicon-ok-sign"></span> <span class="winner-text">Winner</span>
+                <% end %>
+              </td>
+              <td><%= entry[:team_name] %></td>
+              <td class="runs-cell"><% if entry[:runs].include?(0) %>X<% end %></td>
+              <td class="runs-cell"><% if entry[:runs].include?(1) %>X<% end %></td>
+              <td class="runs-cell"><% if entry[:runs].include?(2) %>X<% end %></td>
+              <td class="runs-cell"><% if entry[:runs].include?(3) %>X<% end %></td>
+              <td class="runs-cell"><% if entry[:runs].include?(4) %>X<% end %></td>
+              <td class="runs-cell"><% if entry[:runs].include?(5) %>X<% end %></td>
+              <td class="runs-cell"><% if entry[:runs].include?(6) %>X<% end %></td>
+              <td class="runs-cell"><% if entry[:runs].include?(7) %>X<% end %></td>
+              <td class="runs-cell"><% if entry[:runs].include?(8) %>X<% end %></td>
+              <td class="runs-cell"><% if entry[:runs].include?(9) %>X<% end %></td>
+              <td class="runs-cell"><% if entry[:runs].include?(10) %>X<% end %></td>
+              <td class="runs-cell"><% if entry[:runs].include?(11) %>X<% end %></td>
+              <td class="runs-cell"><% if entry[:runs].include?(12) %>X<% end %></td>
+              <td class="runs-cell"><% if entry[:runs].include?(13) %>X<% end %></td>
+              <td class="right"><%= entry[:run_count] %></td>
+            </tr>
+        <% end %>
+      </table>
     </div>
   </div>
 </div>
