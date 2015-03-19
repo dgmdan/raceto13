@@ -3,6 +3,7 @@ class EntriesController < ApplicationController
 
   def index
     @entries = current_user.entries
+    @registerable = League.first.registerable?
   end
 
   def buy

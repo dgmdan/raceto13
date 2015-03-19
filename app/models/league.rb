@@ -13,7 +13,11 @@ class League < ActiveRecord::Base
                       WHERE E.id IS NULL")
   end
 
-  def is_complete
+  def registerable?
+    entries.where('team_id IS NOT NULL').empty?
+  end
+
+  def complete?
     entries.where('won_at IS NOT NULL').any?
   end
 

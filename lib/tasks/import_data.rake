@@ -19,7 +19,7 @@ namespace :import_data do
     # There are days with no MLB games, so we need to keep advancing the date and trying again until we reach the current date
     loop do
       last_game_date += 1
-      break if last_game_date == Date.today || League.first.is_complete
+      break if last_game_date == Date.today || League.first.complete?
       GameState.get_espn_games(last_game_date)
     end
   end
