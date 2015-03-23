@@ -8,7 +8,9 @@ set :user, "root"
 set :port, 22
 set :deploy_to, "/home/rails/"
 set :deploy_via, :remote_cache
-set :use_sudo, false
+set :use_sudo, true
+set :sudo, "sudo -u rails -i"
+set :rvm_ruby_string, 'ruby-2.1.3'
 set :rvm_type, :system
 
 set :scm, "git"

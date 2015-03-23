@@ -1,4 +1,4 @@
-require 'byebug'
+# require 'byebug'
 require 'game_state'
 
 namespace :import_data do
