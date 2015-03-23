@@ -10,6 +10,8 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'espn_scraper', git: 'git@github.com:aj0strow/espn-scraper.git'
 gem 'devise'
+gem 'capistrano'
+gem 'rvm-capistrano'
 
 group :development, :test do
   gem 'byebug'
