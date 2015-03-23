@@ -8,6 +8,7 @@ class StandingsController < ApplicationController
       entry_minimal = {
           name: entry.user.name,
           team_name: entry.team.name,
+          team_data_name: entry.team.data_name,
           runs: entry.hits.collect{ |h| h.runs },
           run_count: entry.hits.count,
           won_at: entry.won_at

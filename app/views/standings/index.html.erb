@@ -33,7 +33,10 @@
                     <span class="winner-icon glyphicon glyphicon-ok-sign"></span> <span class="winner-text">Winner</span>
                 <% end %>
               </td>
-              <td><%= entry[:team_name] %></td>
+              <td>
+                <%= image_tag "teams/#{entry[:team_data_name]}.png" %>&nbsp;
+                <%= entry[:team_name] %>
+              </td>
               <td class="runs-cell"><% if entry[:runs].include?(0) %>X<% end %></td>
               <td class="runs-cell"><% if entry[:runs].include?(1) %>X<% end %></td>
               <td class="runs-cell"><% if entry[:runs].include?(2) %>X<% end %></td>

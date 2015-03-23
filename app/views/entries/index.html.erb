@@ -20,7 +20,14 @@
         <% @entries.each do |entry| %>
             <tr>
               <td><%= entry.created_at.strftime('%D %r') %></td>
-              <td><%= entry.team ? entry.team.name : 'Pending' %></td>
+              <td>
+                <% if entry.team %>
+                    <%= image_tag "teams/#{entry.team.data_name}.png" %>&nbsp;
+                    <%= entry.team.name %>
+                <% else %>
+                    Pending
+                <% end %>
+              </td>
               <td><%= entry.paid_at ? 'Paid' : 'Not Paid' %></td>
             </tr>
         <% end %>
