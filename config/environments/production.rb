@@ -64,4 +64,13 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # Mail sending
+  config.action_mailer.smtp_settings = {
+      address: "smtp.webfaction.com",
+      port: 465,
+      user_name: 'runspool',
+      password: '39eBT1gKzJGX',
+      authentication: :cram_md5
+  }
 end
