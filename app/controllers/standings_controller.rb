@@ -7,8 +7,8 @@ class StandingsController < ApplicationController
     entries.each do |entry|
       entry_minimal = {
           name: entry.user.name,
-          team_name: entry.team.name,
-          team_data_name: entry.team.data_name,
+          team_name: entry.team ? entry.team.name : 'Pending',
+          team_data_name: entry.team ? entry.team.data_name : '',
           runs: entry.hits.collect{ |h| h.runs },
           run_count: entry.hits.count,
           won_at: entry.won_at

@@ -26,7 +26,11 @@
         </tr>
         <% @entries.each do |entry| %>
             <tr class="<% if entry[:won_at] %>winner<% end %>">
-              <td><%= @run_counts.index(entry[:run_count]) + 1 %></td>
+              <td>
+                <% unless entry[:team_data_name].blank? %>
+                    <%= @run_counts.index(entry[:run_count]) + 1 %>
+                <% end %>
+              </td>
               <td>
                 <%= entry[:name] %>
                 <% if entry[:won_at] %>
@@ -34,7 +38,9 @@
                 <% end %>
               </td>
               <td>
-                <%= image_tag "teams/#{entry[:team_data_name]}.png" %>&nbsp;
+                <% unless entry[:team_data_name].blank? %>
+                    <%= image_tag "teams/#{entry[:team_data_name]}.png" %>&nbsp;
+                <% end %>
                 <%= entry[:team_name] %>
               </td>
               <td class="runs-cell"><% if entry[:runs].include?(0) %>X<% end %></td>

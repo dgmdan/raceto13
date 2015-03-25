@@ -33,5 +33,17 @@ module Runspool
 
     # Need this for logs on heroku
     config.logger = Logger.new(STDOUT)
+
+    # Mail sending
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+        address:              'smtp.webfaction.com',
+        port:                 465,
+        user_name:            'runspool',
+        password:             '39eBT1gKzJGX',
+        authentication:       :plain,
+        enable_starttls_auto: false,
+        ssl:                  true
+    }
   end
 end
