@@ -12,6 +12,11 @@ gem 'devise'
 gem 'capistrano', require: false
 gem 'rvm-capistrano', require: false
 gem 'pg'
+gem 'rails_12factor',
+
+group: :production do
+  gem 'rails_12factor'
+end
 
 group :development, :test do
   gem 'sqlite3'
