@@ -3,7 +3,7 @@ class EntriesController < ApplicationController
 
   def index
     @entries = current_user.entries
-    @registerable = League.first.registerable?
+    @registerable = League.first.registerable? && !League.first.full?
   end
 
   def buy

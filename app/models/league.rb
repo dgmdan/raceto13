@@ -21,4 +21,8 @@ class League < ActiveRecord::Base
     entries.where('won_at IS NOT NULL').any?
   end
 
+  def full?
+    entries.active.count == 30
+  end
+
 end
