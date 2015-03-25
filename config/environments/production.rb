@@ -66,6 +66,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # Mail sending
+  config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
       address: "smtp.webfaction.com",
       port: 465,
@@ -73,4 +74,5 @@ Rails.application.configure do
       password: '39eBT1gKzJGX',
       authentication: :cram_md5
   }
+  config.action_mailer.default_url_options = { host: 'marathonrunspool.com' }
 end
