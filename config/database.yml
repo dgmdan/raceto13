@@ -24,4 +24,5 @@ production:
   adapter: postgresql
   host: localhost
   username: krhelpouiyfswq
+  password: mKpI0JzezosqXYaXLA2lR5ViE5
   database: dd2918bbm9rscq
