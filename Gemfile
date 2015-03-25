@@ -10,11 +10,12 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'espn_scraper', git: 'git@github.com:aj0strow/espn-scraper.git'
 gem 'devise'
-gem 'capistrano'
-gem 'rvm-capistrano'
+gem 'capistrano', require: false
+gem 'rvm-capistrano', require: false
 
 group :production do
   gem 'unicorn'
+  gem 'mysql2'
 end
 
 group :development, :test do
