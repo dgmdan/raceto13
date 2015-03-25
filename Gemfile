@@ -11,11 +11,7 @@ gem 'espn_scraper', git: 'git://github.com/aj0strow/espn-scraper.git'
 gem 'devise'
 gem 'capistrano', require: false
 gem 'rvm-capistrano', require: false
-
-group :production do
-  gem 'unicorn'
-  gem 'pg'
-end
+gem 'pg'
 
 group :development, :test do
   gem 'sqlite3'
