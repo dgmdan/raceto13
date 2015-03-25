@@ -1,5 +1,5 @@
 GIT
-  remote: git@github.com:aj0strow/espn-scraper.git
+  remote: git://github.com/aj0strow/espn-scraper.git
   revision: 123b43b5ab797cb691b6748cca8d48a4cb641778
   specs:
     espn_scraper (1.0.4)
