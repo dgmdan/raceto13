@@ -14,7 +14,7 @@ gem 'rvm-capistrano', require: false
 
 group :production do
   gem 'unicorn'
-  gem 'mysql2'
+  gem 'pg'
 end
 
 group :development, :test do

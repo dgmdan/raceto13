@@ -21,9 +21,7 @@ test:
   database: db/test.sqlite3
 
 production:
-  adapter: mysql2
-  encoding: utf8
-  database: rails
-  pool: 5
-  username: rails
-  password: X3vIflO2xA
+  adapter: postgresql
+  host: localhost
+  username: krhelpouiyfswq
+  database: dd2918bbm9rscq
