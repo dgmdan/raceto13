@@ -13,6 +13,10 @@ gem 'devise'
 gem 'capistrano'
 gem 'rvm-capistrano'
 
+group :production do
+  gem 'unicorn'
+end
+
 group :development, :test do
   gem 'byebug'
   gem 'web-console', '~> 2.0'
