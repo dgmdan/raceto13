@@ -72,7 +72,7 @@ Rails.application.configure do
       port: 465,
       user_name: 'runspool',
       password: '39eBT1gKzJGX',
-      authentication: :cram_md5
+      authentication: :login
   }
   config.action_mailer.default_url_options = { host: 'marathonrunspool.com' }
 end
