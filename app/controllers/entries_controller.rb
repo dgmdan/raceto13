@@ -1,5 +1,6 @@
 class EntriesController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :authenticate_admin!, only: [:buy]
 
   def index
     @entries = current_user.entries
@@ -35,4 +36,14 @@ class EntriesController < ApplicationController
 
     redirect_to entries_path, notice: message
   end
+
+  def pay
+    entry = Entry.find(params[:id])
+    if entry.paid_at.nil?
+      entry.paid_at = Time.now
+      entry.save
+    end
+    redirect_to standings_path, notice: 'Entry is now marked paid.'
+  end
+
 end

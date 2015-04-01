@@ -12,6 +12,10 @@ Rails.application.routes.draw do
       get 'index'
       post 'buy'
     end
+
+    member do
+      post 'pay'
+    end
   end
 
   resources :standings do

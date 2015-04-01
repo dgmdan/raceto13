@@ -1,4 +1,6 @@
 class StandingsController < ApplicationController
+  before_filter :authenticate_user!
+
   def index
     @entries = []
 
@@ -6,12 +8,14 @@ class StandingsController < ApplicationController
     entries = Entry.all
     entries.each do |entry|
       entry_minimal = {
+          id: entry.id,
           name: entry.user.name,
           team_name: entry.team ? entry.team.name : 'Pending',
           team_data_name: entry.team ? entry.team.data_name : '',
           runs: entry.hits.collect{ |h| h.runs },
           run_count: entry.hits.count,
-          won_at: entry.won_at
+          won_at: entry.won_at,
+          paid_at: entry.paid_at
       }
       @entries << entry_minimal
     end
@@ -22,4 +26,5 @@ class StandingsController < ApplicationController
 
     @run_counts = @entries.map{ |e| e[:run_count] }.uniq.sort.reverse
   end
+
 end

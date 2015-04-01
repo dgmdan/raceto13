@@ -13,4 +13,9 @@ class User < ActiveRecord::Base
   def to_s
     self.email
   end
+
+  def admin?
+    self.admin == true
+  end
+
 end

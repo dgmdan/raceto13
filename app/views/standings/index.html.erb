@@ -23,6 +23,9 @@
             <th class="runs-header">12</th>
             <th class="runs-header">13</th>
             <th class="right">Score</th>
+            <% if current_user.admin %>
+                <th>Admin</th>
+            <% end %>
         </tr>
         <% @entries.each do |entry| %>
             <tr class="<% if entry[:won_at] %>winner<% end %>">
@@ -58,6 +61,13 @@
               <td class="runs-cell"><% if entry[:runs].include?(12) %>X<% end %></td>
               <td class="runs-cell"><% if entry[:runs].include?(13) %>X<% end %></td>
               <td class="right"><%= entry[:run_count] %></td>
+              <% if current_user.admin %>
+                  <td>
+                    <% if entry[:paid_at].nil? %>
+                        <%= button_to 'Pay', pay_entry_path(entry[:id]), { method: :post, data: {confirm: 'Mark as paid?'} } %>
+                    <% end %>
+                  </td>
+              <% end %>
             </tr>
         <% end %>
       </table>
