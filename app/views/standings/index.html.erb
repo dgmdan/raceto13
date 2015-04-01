@@ -3,6 +3,13 @@
     <div class="col-md-12">
       <h2>Current standings</h2>
       <hr/>
+      
+      <% if flash[:notice] %>
+          <div class="alert alert-info" role="alert">
+            <%= flash[:notice] %>
+          </div>
+      <% end %>
+
       <table class="table table-striped">
         <tr>
             <th>Rank</th>
