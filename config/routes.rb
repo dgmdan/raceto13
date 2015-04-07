@@ -26,5 +26,13 @@ Rails.application.routes.draw do
 
   resource :leagues
 
+  resources :games do
+    collection do
+      get 'index'
+      get 'mass_entry'
+      post 'mass_entry'
+    end
+  end
+
   devise_for :users
 end

@@ -1,0 +1,29 @@
+<div class="container">
+  <h2>Enter games</h2>
+  <hr/>
+  <%= flash[:notice] %>
+
+  <%= form_tag(method: :post) do |f| %>
+
+  Game date: <%= date_field 'game', 'date' %>
+
+      <table class="table">
+        <tr>
+          <th>Away team</th>
+          <th>Away score</th>
+          <th>Home team</th>
+          <th>Home score</th>
+        </tr>
+        <% 15.times do |count| %>
+            <tr>
+              <td><%= text_field count, 'away_team' %></td>
+              <td><%= text_field count, 'away_score' %></td>
+              <td><%= text_field count, 'home_team' %></td>
+              <td><%= text_field count, 'home_score' %></td>
+            </tr>
+        <% end %>
+      </table>
+      <%= submit_tag %>
+<% end %>
+
+</div>

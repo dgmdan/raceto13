@@ -57,6 +57,22 @@ class GameState
     espn_scores.any?
   end
 
+  def self.create_hits(query_date)
+    entries = Entry.active
+    entries.each do |entry|
+      home_match = Game.where(started_on: query_date, home_team_id: entry.team_id)
+      away_match = Game.where(started_on: query_date, away_team_id: entry.team_id)
+
+      home_match.each do |match|
+        check_for_hit(entry, query_date, match.home_score)
+      end
+
+      away_match.each do |match|
+        check_for_hit(entry, query_date, match.away_score)
+      end
+    end
+  end
+
   def self.check_for_hit(entry, date, runs)
     return if runs > 13
     if Hit.where(entry: entry, runs: runs).empty?

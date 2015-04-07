@@ -1,0 +1,27 @@
+<div class="container">
+  <h2>Listing games</h2>
+  <hr/>
+
+  <P><%= link_to 'Enter Games', mass_entry_games_path %></P>
+
+  <table class="table table-striped">
+    <tr>
+      <th>Game ID</th>
+      <th>Date</th>
+      <th>Away Team Name</th>
+      <th>Away Team Runs</th>
+      <th>Home Team Name</th>
+      <th>Home Team Runs</th>
+    </tr>
+    <% @games.each do |game| %>
+        <tr>
+          <td><%= game.id.to_s %></td>
+          <td><%= game.started_on %></td>
+          <td><%= game.away_team.name %></td>
+          <td><%= game.away_score %></td>
+          <td><%= game.home_team.name %></td>
+          <td><%= game.home_score %></td>
+        </tr>
+    <% end %>
+  </table>
+</div>

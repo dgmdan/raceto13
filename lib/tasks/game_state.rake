@@ -1,3 +1,5 @@
+require 'game_state'
+
 namespace :game_state do
 
   desc "Assign a team to each unassigned entry"
@@ -7,6 +9,11 @@ namespace :game_state do
       entry.team = entry.league.available_teams.sample
       entry.save
     end
+  end
+
+  desc "Create hits based on existing games for one date"
+  task :create_hits, [:query_date] => [:environment] do |t, args|
+    GameState.create_hits(args.query_date)
   end
 
   desc "Reset the games, hits and won_at column on entries"
