@@ -87,8 +87,8 @@ class GameState
     return if runs > 13
     if Hit.where(entry: entry, runs: runs).empty?
       Rails.logger.debug "Creating hit for entry #{entry.id}, date #{date}, runs #{runs}"
-      Hit.create(entry: entry, hit_on: date, runs: runs)
-      # TODO: send user an email telling them they got a hit
+      hit = Hit.create(entry: entry, hit_on: date, runs: runs)
+      UserMailer.hit_email(hit).deliver_now
     end
   end
 
