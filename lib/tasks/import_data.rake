@@ -15,7 +15,7 @@ namespace :import_data do
 
   desc 'Import MLB games for the next day based on current data'
   task :advance => [:environment] do |t|
-    last_game_date = Game.maximum('started_on')
+    last_game_date = Game.any? ? Game.maximum('started_on') : Date.parse('2015-04-04')
     # There are days with no MLB games, so we need to keep advancing the date and trying again until we reach the current date
     loop do
       last_game_date += 1
