@@ -10,6 +10,12 @@
           </div>
       <% end %>
 
+      <p>
+        <span class="label label-success">new feature</span>
+        Hover over an X to see the date a score was recorded.
+      </p>
+      <br/>
+
       <table class="table table-striped">
         <tr>
             <th>Rank</th>
@@ -53,20 +59,20 @@
                 <% end %>
                 <%= entry[:team_name] %>
               </td>
-              <td class="runs-cell"><% if entry[:runs].include?(0) %>X<% end %></td>
-              <td class="runs-cell"><% if entry[:runs].include?(1) %>X<% end %></td>
-              <td class="runs-cell"><% if entry[:runs].include?(2) %>X<% end %></td>
-              <td class="runs-cell"><% if entry[:runs].include?(3) %>X<% end %></td>
-              <td class="runs-cell"><% if entry[:runs].include?(4) %>X<% end %></td>
-              <td class="runs-cell"><% if entry[:runs].include?(5) %>X<% end %></td>
-              <td class="runs-cell"><% if entry[:runs].include?(6) %>X<% end %></td>
-              <td class="runs-cell"><% if entry[:runs].include?(7) %>X<% end %></td>
-              <td class="runs-cell"><% if entry[:runs].include?(8) %>X<% end %></td>
-              <td class="runs-cell"><% if entry[:runs].include?(9) %>X<% end %></td>
-              <td class="runs-cell"><% if entry[:runs].include?(10) %>X<% end %></td>
-              <td class="runs-cell"><% if entry[:runs].include?(11) %>X<% end %></td>
-              <td class="runs-cell"><% if entry[:runs].include?(12) %>X<% end %></td>
-              <td class="runs-cell"><% if entry[:runs].include?(13) %>X<% end %></td>
+              <td class="runs-cell"><% if entry[:runs].include?(0) %><span class="runs-marker" data-toggle="tooltip" title="<%= entry[:runs][0] %>">X</span><% end %></td>
+              <td class="runs-cell"><% if entry[:runs].include?(1) %><span class="runs-marker" data-toggle="tooltip" title="<%= entry[:runs][1] %>">X</span><% end %></td>
+              <td class="runs-cell"><% if entry[:runs].include?(2) %><span class="runs-marker" data-toggle="tooltip" title="<%= entry[:runs][2] %>">X</span><% end %></td>
+              <td class="runs-cell"><% if entry[:runs].include?(3) %><span class="runs-marker" data-toggle="tooltip" title="<%= entry[:runs][3] %>">X</span><% end %></td>
+              <td class="runs-cell"><% if entry[:runs].include?(4) %><span class="runs-marker" data-toggle="tooltip" title="<%= entry[:runs][4] %>">X</span><% end %></td>
+              <td class="runs-cell"><% if entry[:runs].include?(5) %><span class="runs-marker" data-toggle="tooltip" title="<%= entry[:runs][5] %>">X</span><% end %></td>
+              <td class="runs-cell"><% if entry[:runs].include?(6) %><span class="runs-marker" data-toggle="tooltip" title="<%= entry[:runs][6] %>">X</span><% end %></td>
+              <td class="runs-cell"><% if entry[:runs].include?(7) %><span class="runs-marker" data-toggle="tooltip" title="<%= entry[:runs][7] %>">X</span><% end %></td>
+              <td class="runs-cell"><% if entry[:runs].include?(8) %><span class="runs-marker" data-toggle="tooltip" title="<%= entry[:runs][8] %>">X</span><% end %></td>
+              <td class="runs-cell"><% if entry[:runs].include?(9) %><span class="runs-marker" data-toggle="tooltip" title="<%= entry[:runs][9] %>">X</span><% end %></td>
+              <td class="runs-cell"><% if entry[:runs].include?(10) %><span class="runs-marker" data-toggle="tooltip" title="<%= entry[:runs][10] %>">X</span><% end %></td>
+              <td class="runs-cell"><% if entry[:runs].include?(11) %><span class="runs-marker" data-toggle="tooltip" title="<%= entry[:runs][11] %>">X</span><% end %></td>
+              <td class="runs-cell"><% if entry[:runs].include?(12) %><span class="runs-marker" data-toggle="tooltip" title="<%= entry[:runs][12] %>">X</span><% end %></td>
+              <td class="runs-cell"><% if entry[:runs].include?(13) %><span class="runs-marker" data-toggle="tooltip" title="<%= entry[:runs][13] %>">X</span><% end %></td>
               <td class="right"><%= entry[:run_count] %></td>
               <% if current_user.admin %>
                   <td>

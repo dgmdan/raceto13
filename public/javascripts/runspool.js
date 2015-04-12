@@ -12,4 +12,6 @@ $(document).ready(function(){
         var c = confirm("I've read the rules and will pay the " + $('#cost').text() + " entry fee.");
         return c;
     });
+
+    $('span.runs-marker').tooltip({'placement': 'top'});
 });
