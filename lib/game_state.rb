@@ -36,17 +36,27 @@ class GameState
     # With the new hits, see if any entries have won
     winner_sql = "SELECT entry_id FROM hits WHERE entry_id <> 0 GROUP BY entry_id HAVING COUNT(id) >= 14"
     winner_entry_ids = ActiveRecord::Base.connection.execute(winner_sql).collect{|x| x['entry_id']}
-    if winner_entry_ids.size > 1
-      # Multiple winners
-      puts "Multiple winners! entry ids #{winner_entry_ids.join(',')}"
-      # TODO: send an email to admin for special handling
-    elsif winner_entry_ids.size == 1
-      # Single winner
-      winning_entry = Entry.find(winner_entry_ids.first)
-      puts "Winner is entry #{winning_entry.id}"
-      winning_entry.won_at = Time.now
-      winning_entry.save
-      # TODO: send an email to user telling them that they won
+    if winner_entry_ids.size >= 1
+      # We have a winner (or more than one)
+      puts "Winner alert! Entry ids #{winner_entry_ids.join(',')}"
+      winner_entry_ids.each do |entry_id|
+        entry = Entry.find(entry_id)
+        entry.won_at = Time.now
+        entry.won_place = 1
+        entry.save
+      end
+
+      # Determine second place prize
+      second_place_sql = "SELECT entry_id FROM hits WHERE entry_id <> 0 GROUP BY entry_id HAVING COUNT(id) = 13"
+      second_place_entry_ids = ActiveRecord::Base.connection.execute(second_place_sql).collect{|x| x['entry_id']}
+      second_place_entry_ids.each do |entry_id|
+        entry = Entry.find(entry_id)
+        entry.won_at = Time.now
+        entry.won_place = 2
+        entry.save
+      end
+
+      # TODO: send an email to winners telling them that they won
       # TODO: send an email to everyone in the league telling them it's over
     else
       puts "No winners for #{query_date}"

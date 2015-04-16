@@ -15,6 +15,7 @@ class StandingsController < ApplicationController
           runs: entry.hits.to_a.each_with_object({}){ |c,h| h[c.runs] = c.hit_on },
           run_count: entry.hits.count,
           won_at: entry.won_at,
+          won_place: entry.won_place,
           paid_at: entry.paid_at
       }
       @entries << entry_minimal

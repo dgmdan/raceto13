@@ -29,8 +29,13 @@ td.runs-cell {
     text-align:center;
 }
 
-tr.winner {
-    background-color:gold;
+tr.winner-1 {
+    background-color:gold !important;
+    font-weight:bold;
+}
+
+tr.winner-2 {
+    background-color:gray !important;
     font-weight:bold;
 }
 

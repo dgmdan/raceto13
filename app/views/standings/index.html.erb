@@ -41,7 +41,7 @@
             <% end %>
         </tr>
         <% @entries.each do |entry| %>
-            <tr class="<% if entry[:won_at] %>winner<% end %>">
+            <tr class="<% if entry[:won_at] %>winner-<%= entry[:won_place] %><% end %>">
               <td>
                 <% unless entry[:team_data_name].blank? %>
                     <%= @run_counts.index(entry[:run_count]) + 1 %>
@@ -50,7 +50,7 @@
               <td>
                 <%= entry[:name] %>
                 <% if entry[:won_at] %>
-                    <span class="winner-icon glyphicon glyphicon-ok-sign"></span> <span class="winner-text">Winner</span>
+                    <span class="winner-icon glyphicon glyphicon-ok-sign"></span> <span class="winner-text">Won <%= entry[:won_place].ordinalize  %></span>
                 <% end %>
               </td>
               <td>
