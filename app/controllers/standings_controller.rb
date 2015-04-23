@@ -16,7 +16,8 @@ class StandingsController < ApplicationController
           run_count: entry.hits.count,
           won_at: entry.won_at,
           won_place: entry.won_place,
-          paid_at: entry.paid_at
+          paid_at: entry.paid_at,
+          games_played: entry.team.games.count
       }
       @entries << entry_minimal
     end

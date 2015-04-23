@@ -35,7 +35,8 @@
             <th class="runs-header">11</th>
             <th class="runs-header">12</th>
             <th class="runs-header">13</th>
-            <th class="right">Score</th>
+            <th class="text-center">Games Played</th>
+            <th class="text-center">Score</th>
             <% if current_user.admin %>
                 <th>Admin</th>
             <% end %>
@@ -73,7 +74,8 @@
               <td class="runs-cell"><% if entry[:runs].include?(11) %><span class="runs-marker" data-toggle="tooltip" title="<%= entry[:runs][11] %>">X</span><% end %></td>
               <td class="runs-cell"><% if entry[:runs].include?(12) %><span class="runs-marker" data-toggle="tooltip" title="<%= entry[:runs][12] %>">X</span><% end %></td>
               <td class="runs-cell"><% if entry[:runs].include?(13) %><span class="runs-marker" data-toggle="tooltip" title="<%= entry[:runs][13] %>">X</span><% end %></td>
-              <td class="right"><%= entry[:run_count] %></td>
+              <td class="text-center"><%= entry[:games_played] %></td>
+              <td class="text-center"><%= entry[:run_count] %></td>
               <% if current_user.admin %>
                   <td>
                     <% if entry[:paid_at].nil? %>
