@@ -4,13 +4,13 @@
   <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
 </head>
 <body>
-<h1>You scored</h1>
-<p>
-  Congrats! Your team, <%= @entry.team.name %>, scored <%= @hit.runs %> runs for the first time. This brings you one step closer to winning the pool!
+<h1 style="text-align:center">You scored!</h1>
+<p style="text-align:center">
+  Congrats! Your team <%= image_tag "/teams/#{@hit.entry.team.data_name}.png", alt: '[Logo]' %>&nbsp;<%= @hit.entry.team.name %> scored <%= @hit.runs %> runs for the first time. This brings you one step closer to winning the pool!
 </p>
-<p>
+<p style="text-align:center">
   To see current standings, just follow this link: <%= @url %>
 </p>
-<p>Thanks for playing!</p>
+<p style="text-align:center">Thanks for playing!</p>
 </body>
 </html>

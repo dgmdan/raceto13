@@ -67,4 +67,5 @@ Rails.application.configure do
 
   # Mail sending
   config.action_mailer.default_url_options = { host: 'marathonrunspool.com' }
+  config.action_mailer.asset_host = 'http://marathonrunspool.com/images'
 end
