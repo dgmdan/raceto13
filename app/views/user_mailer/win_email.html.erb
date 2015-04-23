@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+</head>
+<body>
+<h1 style="text-align:center">You're a winner!</h1>
+<p style="text-align:center">
+  Your team <%= image_tag "/teams/#{@entry.team.data_name}.png", alt: '[Logo]' %>&nbsp;<%= @entry.team.name %> finished <%= @entry.won_place.ordinalize %> place in the MLB runs pool. There are <%= @winner_count-1 %> other <%= @entry.won_place.ordinalize %> place winners to split the prize with.
+</p>
+<p style="text-align:center">
+  Your prize will be delivered shortly. Thanks for playing!
+</p>
+<p style="text-align:center">
+  Final standings: <%= @url %>
+</p>
+</body>
+</html>

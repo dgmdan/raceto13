@@ -44,6 +44,7 @@ class GameState
         entry.won_at = Time.now
         entry.won_place = 1
         entry.save
+        UserMailer.win_email(entry,winner_entry_ids.count).deliver_now
       end
 
       # Determine second place prize
@@ -54,10 +55,10 @@ class GameState
         entry.won_at = Time.now
         entry.won_place = 2
         entry.save
+        UserMailer.win_email(entry,second_place_entry_ids.count).deliver_now
       end
 
-      # TODO: send an email to winners telling them that they won
-      # TODO: send an email to everyone in the league telling them it's over
+      # TODO: send an email to non-winners in the league telling them it's over
     else
       puts "No winners for #{query_date}"
       # TODO: if it's the last day of the season, look for leagues with no winners, award win to whoever is closest
