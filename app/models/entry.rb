@@ -34,4 +34,6 @@ class Entry < ActiveRecord::Base
   scope :active, -> { where(cancelled_at: nil) }
   scope :unassigned, -> { where(team_id: nil) }
   scope :assigned, -> { where.not(team_id: nil) }
+  scope :winners, -> { where.not(won_at: nil) }
+  scope :losers, -> { where(won_at:nil) }
 end

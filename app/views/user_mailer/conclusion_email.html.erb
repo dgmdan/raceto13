@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+</head>
+<body>
+<h1 style="text-align:center">The runs pool has ended</h1>
+<p style="text-align:center">
+  It looks like your team <%= image_tag "/teams/#{@entry.team.data_name}.png", alt: '[Logo]' %>&nbsp;<%= @entry.team.name %> didn't win this time -- but thanks for playing.<br/><br/>
+  The winners are:<br/>
+  <% @winners.each do |winner| %>
+    <%= winner.won_place.ordinalize %>: <%= image_tag "/teams/#{winner.team.data_name}.png", alt: '[Logo]' %>&nbsp;<%= winner.team.name %><br/>
+  <% end %>
+  <br/>
+  Full standings at <%= standings_url %>
+</p>
+</body>
+</html>

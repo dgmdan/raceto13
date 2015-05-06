@@ -1,8 +1,8 @@
 == You're a winner! ==
 
-Your team <%= @entry.team.name %> finished <%= @entry.won_place.ordinalize %> place in the MLB runs pool. There are <%= @winner_count-1 %> other <%= @entry.won_place.ordinalize %> place winners to split the prize with.
+Your team <%= @entry.team.name %> finished <%= @entry.won_place.ordinalize %> place in the MLB runs pool. There are <%= @winner_count-1 %> other <%= @entry.won_place.ordinalize %> place winners to divide the prize with.
 
 Your prize will be delivered shortly. Thanks for playing!
 
 Final standings:
-<%= @url %>
+<%= standings_url %>

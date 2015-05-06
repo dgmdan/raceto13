@@ -1,0 +1,10 @@
+== The runs pool has ended ==
+
+It looks like your team, <%= @entry.team.name %>, didn't win this time -- but thanks for playing.
+
+The winners are:
+<% @winners.each do |winner| %>
+  <%= winner.won_place.ordinalize %>: <%= image_tag "/teams/#{winner.team.data_name}.png", alt: '[Logo]' %> <%= winner.team.name %>
+<% end %>
+
+Full standings at <%= standings_url %>

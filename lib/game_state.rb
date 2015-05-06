@@ -34,6 +34,7 @@ class GameState
     puts "Loaded #{espn_scores.count} games"
 
     # With the new hits, see if any entries have won
+    winners = []
     winner_sql = "SELECT entry_id FROM hits WHERE entry_id <> 0 GROUP BY entry_id HAVING COUNT(id) >= 14"
     winner_entry_ids = ActiveRecord::Base.connection.execute(winner_sql).collect{|x| x['entry_id']}
     if winner_entry_ids.size >= 1
@@ -44,6 +45,7 @@ class GameState
         entry.won_at = Time.now
         entry.won_place = 1
         entry.save
+        winners << entry
         UserMailer.win_email(entry,winner_entry_ids.count).deliver_now
       end
 
@@ -55,10 +57,15 @@ class GameState
         entry.won_at = Time.now
         entry.won_place = 2
         entry.save
+        winners << entry
         UserMailer.win_email(entry,second_place_entry_ids.count).deliver_now
       end
 
-      # TODO: send an email to non-winners in the league telling them it's over
+      # Send an email to losers in the league telling them it's over
+      Entry.losers.each do |entry|
+        UserMailer.conclusion_email(entry, winners).deliver_now
+      end
+
     else
       puts "No winners for #{query_date}"
       # TODO: if it's the last day of the season, look for leagues with no winners, award win to whoever is closest
@@ -89,7 +96,7 @@ class GameState
     if Hit.where(entry: entry, runs: runs).empty?
       Rails.logger.debug "Creating hit for entry #{entry.id}, date #{date}, runs #{runs}"
       hit = Hit.create(entry: entry, hit_on: date, runs: runs)
-      UserMailer.hit_email(hit).deliver_now
+      UserMailer.hit_email(hit).deliver_now unless Rails.env.development?
     end
   end
 
