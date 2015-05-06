@@ -62,7 +62,7 @@ class GameState
       end
 
       # Send an email to losers in the league telling them it's over
-      Entry.losers.each do |entry|
+      Entry.active.losers.each do |entry|
         UserMailer.conclusion_email(entry, winners).deliver_now
       end
 
@@ -96,7 +96,7 @@ class GameState
     if Hit.where(entry: entry, runs: runs).empty?
       Rails.logger.debug "Creating hit for entry #{entry.id}, date #{date}, runs #{runs}"
       hit = Hit.create(entry: entry, hit_on: date, runs: runs)
-      UserMailer.hit_email(hit).deliver_now unless Rails.env.development?
+      UserMailer.hit_email(hit).deliver_now
     end
   end
 
