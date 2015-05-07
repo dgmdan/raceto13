@@ -46,7 +46,7 @@ class GameState
         entry.won_place = 1
         entry.save
         winners << entry
-        UserMailer.win_email(entry,winner_entry_ids.count).deliver_now
+        UserMailer.win_email(entry,winner_entry_ids.count).deliver_now if entry.user.notification_types.where(name: 'conclude').any?
       end
 
       # Determine second place prize
@@ -58,12 +58,12 @@ class GameState
         entry.won_place = 2
         entry.save
         winners << entry
-        UserMailer.win_email(entry,second_place_entry_ids.count).deliver_now
+        UserMailer.win_email(entry,second_place_entry_ids.count).deliver_now if entry.user.notification_types.where(name: 'conclude').any?
       end
 
       # Send an email to losers in the league telling them it's over
       Entry.active.losers.each do |entry|
-        UserMailer.conclusion_email(entry, winners).deliver_now
+        UserMailer.conclusion_email(entry, winners).deliver_now if entry.user.notification_types.where(name: 'conclude').any?
       end
 
     else
@@ -96,7 +96,7 @@ class GameState
     if Hit.where(entry: entry, runs: runs).empty?
       Rails.logger.debug "Creating hit for entry #{entry.id}, date #{date}, runs #{runs}"
       hit = Hit.create(entry: entry, hit_on: date, runs: runs)
-      UserMailer.hit_email(hit).deliver_now
+      UserMailer.hit_email(hit).deliver_now if entry.user.notification_types.where(name: 'hit').any?
     end
   end
 
