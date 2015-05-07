@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  notification_type: 
+  user: 
+
+two:
+  notification_type: 
+  user: 

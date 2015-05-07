@@ -6,3 +6,5 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+NotificationType.find_or_create_by(name: 'hit', description: 'When my score increases')
+NotificationType.find_or_create_by(name: 'conclude', description: 'When the pool ends')

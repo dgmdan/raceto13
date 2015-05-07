@@ -25,4 +25,13 @@ namespace :game_state do
       entry.save
     end
   end
+
+  desc "Give everyone the default notification types"
+  task assign_notifications: :environment do
+    NotificationType.all.each do |notification_type|
+      User.all.each do |user|
+        NotificationTypeUser.find_or_create_by(user: user, notification_type: notification_type)
+      end
+    end
+  end
 end
