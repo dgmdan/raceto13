@@ -6,22 +6,7 @@
 
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
           <%= devise_error_messages! %>
-          <div class="form-group">
-            <%= f.label :name %>
-            <%= f.text_field :name, autofocus: true, placeholder: 'Enter name', class: 'form-control' %>
-          </div>
-          <div class="form-group">
-            <%= f.label :email %>
-            <%= f.email_field :email, placeholder: 'Enter e-mail', class: 'form-control' %>
-          </div>
-          <div class="form-group">
-            <%= f.label :password %>
-            <%= f.password_field :password, autocomplete: "off", placeholder: 'Enter password', class: 'form-control' %>
-          </div>
-          <div class="form-group">
-            <%= f.label :password_confirmation %>
-            <%= f.password_field :password_confirmation, autocomplete: "off", placeholder: 'Confirm password', class: 'form-control' %>
-          </div>
+          <%= render partial: 'form', locals: {f:f} %>
           <%= f.submit "Sign up", class: 'btn btn-default btn-primary' %>
       <% end %>
     </div>

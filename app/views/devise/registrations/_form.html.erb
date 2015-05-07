@@ -1,0 +1,28 @@
+<div class="form-group">
+  <%= f.label :email %><br />
+  <%= f.email_field :email, autofocus: true, class: 'form-control' %>
+</div>
+
+<div class="form-group">
+  <%= f.label :name %><br />
+  <%= f.text_field :name, class: 'form-control' %>
+</div>
+
+<div class="form-group">
+  <b>E-mail notifications:</b><br/>
+  <%= hidden_field_tag 'user[notification_type_ids][]', '' %>
+  <% NotificationType.all.each do |notification_type| %>
+      <%= check_box_tag "notification#{notification_type.id}", notification_type.id, user_signed_in? ? current_user.notification_types.include?(notification_type) : true, :name => 'user[notification_type_ids][]' -%>
+      <%= label_tag "notification#{notification_type.id}", notification_type.description -%><br/>
+  <% end %>
+</div>
+
+<div class="form-group">
+  <%= f.label :password, 'New password' %> <i>(leave blank if you don't want to change it)</i><br />
+  <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
+</div>
+
+<div class="form-group">
+  <%= f.label :password_confirmation, 'New password confirmation' %><br />
+  <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control' %>
+</div>
