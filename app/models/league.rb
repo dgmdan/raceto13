@@ -7,10 +7,15 @@ class League < ActiveRecord::Base
   validates :name, presence: true
 
   def available_teams
-    Team.find_by_sql("SELECT T.id \
+    if self.new_record?
+      Team.all
+    else
+      Team.find_by_sql("SELECT T.id \
                       FROM teams T \
                       LEFT JOIN entries E ON E.team_id = T.id \
                       WHERE E.id IS NULL")
+    end
+
   end
 
   def registerable?
