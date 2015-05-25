@@ -3,6 +3,7 @@ class League < ActiveRecord::Base
   has_many :league_users
   has_many :users, through: :league_users
   has_many :entries
+  has_many :hits, through: :entries
 
   validates :name, presence: true
 
