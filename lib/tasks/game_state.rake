@@ -26,6 +26,11 @@ namespace :game_state do
     end
   end
 
+  desc "Reset the games and hits for 2015 season"
+  task reset_all_scores: :environment do
+    GameState.reset_all_scores
+  end
+
   desc "Give everyone the default notification types"
   task assign_notifications: :environment do
     NotificationType.all.each do |notification_type|
