@@ -29,6 +29,6 @@ Rails.application.configure do
   config.action_mailer.asset_host = 'http://marathonrunspool.com/images'
   config.action_mailer.perform_deliveries = false
 
-  config.log_level = :debug
+  config.log_level = :warn
 
 end
