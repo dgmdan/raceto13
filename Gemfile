@@ -24,4 +24,6 @@ group :development, :test do
   gem 'web-console', '~> 2.0'
   gem 'spring'
   gem 'rspec-rails', '~> 3.1'
+  gem 'minitest-rails-capybara'
+  gem 'mocha'
 end

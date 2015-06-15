@@ -1,8 +1,9 @@
 require 'test_helper'
 
 class EntriesControllerTest < ActionController::TestCase
+  include Devise::TestHelpers
 
-  test "should get index" do
+  test "should list my entries" do
     sign_in users(:user)
     get :index
     assert_response :success
@@ -11,7 +12,8 @@ class EntriesControllerTest < ActionController::TestCase
   end
 
   test "should allow buying an entry" do
-
+    sign_in users(:user)
+    # post :
   end
 
   test "should prevent buying an entry when league is full" do
