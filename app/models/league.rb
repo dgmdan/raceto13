@@ -20,6 +20,7 @@ class League < ActiveRecord::Base
   end
 
   def registerable?
+    # If all of this league's entries have no team_id, teams are not assigned yet so we can say entries are still open.
     entries.where('team_id IS NOT NULL').empty?
   end
 
@@ -28,7 +29,7 @@ class League < ActiveRecord::Base
   end
 
   def full?
-    entries.active.count == 30
+    entries.active.count == Team.count
   end
 
 end
