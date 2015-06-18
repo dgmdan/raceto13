@@ -1,5 +1,6 @@
 class LeaguesController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_admin!, except: [:join]
+  before_action :authenticate_user!, only: [:join]
   before_action :set_league, only: [:show, :edit, :update, :destroy, :join, :update_teams]
 
   # GET /leagues
@@ -63,11 +64,6 @@ class LeaguesController < ApplicationController
       format.html { redirect_to leagues_url, notice: 'League was successfully destroyed.' }
       format.json { head :no_content }
     end
-  end
-
-  def join
-    @league.users << current_user
-    redirect_to @league
   end
 
   private
