@@ -9,7 +9,7 @@ class StandingsControllerTest < ActionController::TestCase
   end
 
   test "gets index" do
-    sign_in users(:user)
+    sign_in users(:user0)
     get :index
     assert_response :success
     assert_not_nil assigns(:entries)

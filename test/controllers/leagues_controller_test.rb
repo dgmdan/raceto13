@@ -9,7 +9,7 @@ class LeaguesControllerTest < ActionController::TestCase
   end
 
   test "should not allow non-admin users" do
-    sign_in users(:user)
+    sign_in users(:user0)
     get :index
     assert_redirected_to new_user_session_path
   end
