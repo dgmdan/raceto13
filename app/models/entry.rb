@@ -1,11 +1,3 @@
-class LeagueSizeValidator < ActiveModel::Validator
-  def validate(record)
-    if record.league.entries.active.count == 30
-      record.errors[:base] << 'Entries are sold out.'
-    end
-  end
-end
-
 class MaxUserEntriesValidator < ActiveModel::Validator
   def validate(record)
     if Entry.where(user: record.user).active.count == 5
@@ -29,7 +21,7 @@ class Entry < ActiveRecord::Base
   has_many :hits
 
   include ActiveModel::Validations
-  validates_with LeagueSizeValidator, MaxUserEntriesValidator, MaxLeagueEntriesValidator, on: :create
+  validates_with MaxUserEntriesValidator, MaxLeagueEntriesValidator, on: :create
 
   scope :active, -> { where(cancelled_at: nil) }
   scope :unassigned, -> { where(team_id: nil) }
