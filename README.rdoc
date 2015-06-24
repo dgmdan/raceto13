@@ -1,28 +1,16 @@
-== README
+== MLB Runs Pool Game
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a simple office pool game based on MLB scores. The basic rules are:
 
-Things you may want to cover:
+* Players sign up and buy one or more entries
+* At the beginning of the MLB season, each entry is randomly assigned a team
+* The first team with final run scores matching every number from 0 to 13 wins
 
-* Ruby version
+The more complete set of rules are in entries/index.html.erb .
 
-* System dependencies
+=== Roadmap:
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+* Take games played into account when determining winners
+* Give admins ability to mass email players
+* Browsable game history
+* Live scores of in progress games on the scoreboard
