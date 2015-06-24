@@ -37,10 +37,10 @@ module Runspool
     # Mail sending
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
-        address:              'smtp.webfaction.com',
-        port:                 465,
-        user_name:            'runspool',
-        password:             '39eBT1gKzJGX',
+        address:              ENV['SMTP_HOST'],
+        port:                 ENV['SMTP_PORT'],
+        user_name:            ENV['SMTP_USER'],
+        password:             ENV['SMTP_PASSWORD'],
         authentication:       :plain,
         enable_starttls_auto: false,
         ssl:                  true
