@@ -1,9 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
-</head>
-<body>
 <h1 style="text-align:center">You scored!</h1>
 <p style="text-align:center">
   Nice! Your team <%= image_tag "/teams/#{@hit.entry.team.data_name}.png", alt: '[Logo]' %>&nbsp;<%= @hit.entry.team.name %> scored <%= @hit.runs %> runs for the first time. This brings you one step closer to winning the pool!
@@ -12,5 +6,3 @@
   To see current standings, just follow this link: <%= standings_url %>
 </p>
 <p style="text-align:center">Thanks for playing!</p>
-</body>
-</html>
