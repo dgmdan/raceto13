@@ -9,8 +9,6 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'espn_scraper', git: 'git://github.com/dgmdan/espn-scraper.git'
 gem 'devise'
-gem 'capistrano', require: false
-gem 'rvm-capistrano', require: false
 gem 'pg'
 gem 'rails_12factor',
 
