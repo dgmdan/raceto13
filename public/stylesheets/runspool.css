@@ -53,3 +53,7 @@ span.winner-icon {
 .right {
     text-align:right;
 }
+
+img.gravatar {
+    height:30px;
+}

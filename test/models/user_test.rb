@@ -29,4 +29,9 @@ class UserTest < ActiveSupport::TestCase
     assert_equal users(:admin).admin?, true
     assert_equal users(:user0).admin?, false
   end
+
+  test "should have a gravatar url" do
+    user = users(:user0)
+    assert_match /^http:\/\/www\.gravatar\.com\/avatar\/\w+$/, user.gravatar_url
+  end
 end

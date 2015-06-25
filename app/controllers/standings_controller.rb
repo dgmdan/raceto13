@@ -17,7 +17,8 @@ class StandingsController < ApplicationController
           won_at: entry.won_at,
           won_place: entry.won_place,
           paid_at: entry.paid_at,
-          games_played: entry.team.games.count
+          games_played: entry.team.games.count,
+          gravatar_url: entry.user.gravatar_url
       }
       @entries << entry_minimal
     end

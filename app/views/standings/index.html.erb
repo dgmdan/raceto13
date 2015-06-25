@@ -49,6 +49,7 @@
                 <% end %>
               </td>
               <td>
+                <%= image_tag entry[:gravatar_url], class: 'gravatar' %>&nbsp;
                 <%= entry[:name] %>
                 <% if entry[:won_at] %>
                     <span class="winner-icon glyphicon glyphicon-ok-sign"></span> <span class="winner-text">Won <%= entry[:won_place].ordinalize  %></span>
