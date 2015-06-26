@@ -1,5 +1,3 @@
-# require 'byebug'
-
 class GameState
 
   def self.get_espn_games(query_date)
@@ -22,53 +20,35 @@ class GameState
       )
 
       # Create hits for those who earned one
-      entries = Entry.where('team_id = ? OR team_id = ?', home_team, away_team)
-      entries.each do |entry|
-        if entry.team == home_team
-          check_for_hit(entry, query_date, score[:home_score], true)
-        else
-          check_for_hit(entry, query_date, score[:away_score], true)
+      League.all.each do |league|
+        entries = league.entries.where('team_id = ? OR team_id = ?', home_team, away_team)
+        entries.each do |entry|
+          if entry.team == home_team
+            check_for_hit(entry, query_date, score[:home_score], true)
+          else
+            check_for_hit(entry, query_date, score[:away_score], true)
+          end
         end
       end
     end
     puts "Loaded #{espn_scores.count} games"
 
     # With the new hits, see if any entries have won
-    winners = []
-    winner_sql = "SELECT entry_id FROM hits WHERE entry_id <> 0 GROUP BY entry_id HAVING COUNT(id) >= 14"
-    winner_entry_ids = ActiveRecord::Base.connection.execute(winner_sql).collect{|x| x['entry_id']}
-    if winner_entry_ids.size >= 1
-      # We have a winner (or more than one)
-      puts "Winner alert! Entry ids #{winner_entry_ids.join(',')}"
-      winner_entry_ids.each do |entry_id|
-        entry = Entry.find(entry_id)
-        entry.won_at = Time.now
-        entry.won_place = 1
-        entry.save
-        winners << entry
-        UserMailer.win_email(entry,winner_entry_ids.count).deliver_now if entry.user.notification_types.where(name: 'conclude').any?
-      end
+    League.all.each do |league|
+      winners = league.get_and_record_winners!
+      if winners.size > 0
+        puts 'Winner found!'
 
-      # Determine second place prize
-      second_place_sql = "SELECT entry_id FROM hits WHERE entry_id <> 0 GROUP BY entry_id HAVING COUNT(id) = 13"
-      second_place_entry_ids = ActiveRecord::Base.connection.execute(second_place_sql).collect{|x| x['entry_id']}
-      second_place_entry_ids.each do |entry_id|
-        entry = Entry.find(entry_id)
-        entry.won_at = Time.now
-        entry.won_place = 2
-        entry.save
-        winners << entry
-        UserMailer.win_email(entry,second_place_entry_ids.count).deliver_now if entry.user.notification_types.where(name: 'conclude').any?
-      end
+        # Send an email to winners
+        winners.each do |entry|
+          UserMailer.win_email(entry, winners.count).deliver_now if entry.user.notification_types.where(name: 'conclude').any?
+        end
 
-      # Send an email to losers in the league telling them it's over
-      Entry.active.losers.each do |entry|
-        UserMailer.conclusion_email(entry, winners).deliver_now if entry.user.notification_types.where(name: 'conclude').any?
+        # Send an email to losers
+        league.losers.each do |entry|
+          UserMailer.conclusion_email(entry, winners).deliver_now if entry.user.notification_types.where(name: 'conclude').any?
+        end
       end
-
-    else
-      puts "No winners for #{query_date}"
-      # TODO: if it's the last day of the season, look for leagues with no winners, award win to whoever is closest
     end
 
     # Returns true if we found games
