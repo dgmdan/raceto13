@@ -11,22 +11,22 @@ class LeagueTest < ActiveSupport::TestCase
     assert_equal Team.count, available_teams.count
   end
 
-  test "detect when league is registerable" do
-    assert @league.registerable?
+  test "detect when league is started" do
+    assert_includes League.started, @league
   end
 
-  test "detect when league isn't registerable" do
-    Entry.create(user:users(:user0), league:leagues(:one), team:teams(:one))
-    refute @league.registerable?
+  test "detect when league isn't started" do
+    Entry.create(user:users(:user0), league:leagues(:future), team:teams(:one))
+    refute_includes League.started, leagues(:future)
   end
 
   test "detect when league isn't complete" do
-    refute @league.complete?
+    refute_includes League.complete, @league
   end
 
   test "detect when league is complete" do
     Entry.create(user:users(:user0), league:leagues(:one), team:teams(:one), won_at: Time.now)
-    assert @league.complete?
+    assert_includes League.complete, @league
   end
 
   test "detect when league is full" do
@@ -35,11 +35,11 @@ class LeagueTest < ActiveSupport::TestCase
         Entry.create(user: users(:"user#{user_num}") , league: leagues(:one))
       end
     end
-    assert @league.full?
+    assert_includes League.full, @league
   end
 
   test "detect when league isn't full" do
-    refute @league.full?
+    refute_includes League.full, @league
   end
 
 

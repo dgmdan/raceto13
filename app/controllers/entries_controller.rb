@@ -4,11 +4,11 @@ class EntriesController < ApplicationController
 
   def index
     @entries = current_user.entries
-    @registerable = League.first.registerable? && !League.first.full?
+    @leagues = current_user.leagues
   end
 
   def buy
-    @league = League.first
+    @league = current_user.leagues.where(id: params[:league_id]).first
 
     # Create the entries
     success = 0

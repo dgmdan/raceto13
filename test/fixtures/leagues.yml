@@ -1,3 +1,14 @@
 one:
-  name: Bob's League
+  name: Beginning of Season League
   user: user
+  starts_at: 2015-04-04
+
+two:
+  name: Mid-season League
+  user: user
+  starts_at: 2015-07-06
+
+future:
+  name: Future-starting League
+  user: user
+  starts_at: 2020-01-01

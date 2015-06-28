@@ -1,9 +1,7 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
-  league_id: 
-  user_id: 
+  league: leagues(:one)
+  user: users(:user0)
 
 two:
-  league_id: 
-  user_id: 
+  league: leagues(:one)
+  user: users(:admin)

@@ -85,7 +85,7 @@ class GameState
 
       # Create hits for those who earned one
       League.all.each do |league|
-        next if league.complete?
+        next if League.complete.include?(league)
 
         # Create hits
         entries = league.entries.where('team_id = ? OR team_id = ?', home_team, away_team)

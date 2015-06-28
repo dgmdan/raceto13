@@ -8,7 +8,7 @@ end
 
 class MaxLeagueEntriesValidator < ActiveModel::Validator
   def validate(record)
-    if record.league.full?
+    if League.full.include?(record.league)
       record.errors[:base] << 'Entries are sold out.'
     end
   end

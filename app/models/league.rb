@@ -7,38 +7,18 @@ class League < ActiveRecord::Base
 
   validates :name, presence: true
 
+  scope :started, -> { where('starts_at <= ?', Time.now)  }
+  scope :full, -> { joins(:entries).where('entries.cancelled_at IS NULL').group('leagues.id').having('COUNT(entries.id) = ?', Team.count) }
+  scope :complete, -> { joins(:entries).where('entries.won_at IS NOT NULL').group('leagues.id') }
+
   def available_teams
-    if self.new_record?
-      Team.all
-    else
-      Team.find_by_sql("SELECT T.id \
-                      FROM teams T \
-                      LEFT JOIN entries E ON E.team_id = T.id \
-                      WHERE E.id IS NULL")
-    end
-
-  end
-
-  def registerable?
-    # If all of this league's entries have no team_id, teams are not assigned yet so we can say entries are still open.
-    entries.where('team_id IS NOT NULL').empty?
-  end
-
-  def complete?
-    entries.where('won_at IS NOT NULL').any?
-  end
-
-  def full?
-    entries.active.count == Team.count
+    Team.all - entries.active.map(&:team)
   end
 
   def get_and_record_winners!
-    if entries.winners.any?
-      # If we already have entries with a won_at date, the winner has already been marked, no need to do it again
-      nil
-    else
+    winners = []
+    unless entries.winners.any?
       # Check for potential winners
-      winners = []
       winner_sql = "SELECT entry_id FROM hits JOIN entries ON entries.id = hits.entry_id WHERE entries.league_id = #{id} GROUP BY hits.entry_id HAVING COUNT(hits.id) >= 14"
       winner_entry_ids = ActiveRecord::Base.connection.execute(winner_sql).collect{|x| x['entry_id']}
       if winner_entry_ids.size >= 1
@@ -62,8 +42,8 @@ class League < ActiveRecord::Base
           winners << entry
         end
       end
-      winners
     end
+    winners
   end
 
   def losers
