@@ -1,6 +1,14 @@
-<h1>Editing League</h1>
+<div class="container">
 
-<%= render 'form' %>
+  <h2>Edit league</h2>
+  <hr/>
 
-<%= link_to 'Show', @league %> |
-<%= link_to 'Back', leagues_path %>
+  <% if flash[:notice] %>
+      <div class="alert alert-info" role="alert">
+        <%= flash[:notice] %>
+      </div>
+  <% end %>
+
+  <%= render 'form' %>
+
+</div>

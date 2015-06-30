@@ -33,11 +33,9 @@ class LeaguesController < ApplicationController
 
     respond_to do |format|
       if @league.save
-        format.html { redirect_to @league, notice: 'League was successfully created.' }
-        format.json { render :show, status: :created, location: @league }
+        format.html { redirect_to leagues_path, notice: 'League was successfully created.' }
       else
         format.html { render :new }
-        format.json { render json: @league.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -47,11 +45,9 @@ class LeaguesController < ApplicationController
   def update
     respond_to do |format|
       if @league.update(league_params)
-        format.html { redirect_to @league, notice: 'League was successfully updated.' }
-        format.json { render :show, status: :ok, location: @league }
+        format.html { redirect_to leagues_path, notice: 'League was successfully updated.' }
       else
         format.html { render :edit }
-        format.json { render json: @league.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -62,7 +58,6 @@ class LeaguesController < ApplicationController
     @league.destroy
     respond_to do |format|
       format.html { redirect_to leagues_url, notice: 'League was successfully destroyed.' }
-      format.json { head :no_content }
     end
   end
 
@@ -74,6 +69,6 @@ class LeaguesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def league_params
-      params.require(:league).permit(:name)
+      params.require(:league).permit(:name, :starts_at)
     end
 end

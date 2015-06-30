@@ -20,7 +20,8 @@ class GameState
       )
 
       # Create hits for those who earned one
-      League.all.each do |league|
+      League.started.each do |league|
+        next if League.complete.include?(league)
         entries = league.entries.where('team_id = ? OR team_id = ?', home_team, away_team)
         entries.each do |entry|
           if entry.team == home_team
@@ -34,7 +35,8 @@ class GameState
     puts "Loaded #{espn_scores.count} games"
 
     # With the new hits, see if any entries have won
-    League.all.each do |league|
+    League.started.each do |league|
+      next if League.complete.include?(league)
       winners = league.get_and_record_winners!
       if winners.size > 0
         puts 'Winner found!'
@@ -110,6 +112,7 @@ class GameState
   def self.create_hits(query_date)
     entries = Entry.active
     entries.each do |entry|
+      next if League.complete.include?(entry.league)
       home_match = Game.where(started_on: query_date, home_team_id: entry.team_id)
       away_match = Game.where(started_on: query_date, away_team_id: entry.team_id)
 

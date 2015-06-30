@@ -5,6 +5,21 @@ class LeagueTest < ActiveSupport::TestCase
     @league = leagues(:one)
   end
 
+  test "requires a name" do
+    assert_no_difference 'League.count' do
+      league = League.new
+      league.starts_at = Date.today
+      league.save
+    end
+  end
+
+  test "requires a starts at" do
+    assert_no_difference 'League.count' do
+      league = League.new
+      league.name = 'A League of My Own'
+      league.save
+    end
+  end
   test "gets available teams" do
     available_teams = @league.available_teams
     assert_instance_of Array, available_teams

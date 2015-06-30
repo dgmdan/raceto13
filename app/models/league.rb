@@ -5,7 +5,7 @@ class League < ActiveRecord::Base
   has_many :entries
   has_many :hits, through: :entries
 
-  validates :name, presence: true
+  validates :name, :starts_at, presence: true
 
   scope :started, -> { where('starts_at <= ?', Time.now)  }
   scope :full, -> { joins(:entries).where('entries.cancelled_at IS NULL').group('leagues.id').having('COUNT(entries.id) = ?', Team.count) }

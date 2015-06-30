@@ -4,7 +4,6 @@ class LeaguesControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
   setup do
-    # TODO: The concept of leagues hasn't been fully implemented yet. Need to refactor code that assumes only one league.
     @league = leagues(:one)
   end
 
@@ -30,10 +29,10 @@ class LeaguesControllerTest < ActionController::TestCase
   test "should create league" do
     sign_in users(:admin)
     assert_difference('League.count') do
-      post :create, league: { name: @league.name, user_id: @league.user_id }
+      post :create, league: { name: @league.name, starts_at: Date.today, user_id: @league.user_id }
     end
 
-    assert_redirected_to league_path(assigns(:league))
+    assert_redirected_to leagues_path
   end
 
   test "should show league" do
@@ -51,7 +50,7 @@ class LeaguesControllerTest < ActionController::TestCase
   test "should update league" do
     sign_in users(:admin)
     patch :update, id: @league, league: { name: @league.name, user_id: @league.user_id }
-    assert_redirected_to league_path(assigns(:league))
+    assert_redirected_to leagues_path
   end
 
   test "should destroy league" do
