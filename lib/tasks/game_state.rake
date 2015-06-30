@@ -20,8 +20,9 @@ namespace :game_state do
   task reset: :environment do
     Game.destroy_all
     Hit.destroy_all
-    Entry.where.not(won_at: nil).each do |entry|
+    Entry.all.each do |entry|
       entry.won_at = nil
+      entry.won_place = nil
       entry.save
     end
   end
