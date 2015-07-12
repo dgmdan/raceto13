@@ -1,7 +1,7 @@
 class LeaguesController < ApplicationController
   before_action :authenticate_admin!, except: [:join]
   before_action :authenticate_user!, only: [:join]
-  before_action :set_league, only: [:show, :edit, :update, :destroy, :join, :update_teams]
+  before_action :set_league, only: [:show, :edit, :update, :destroy, :join, :update_teams, :mass_email]
 
   # GET /leagues
   # GET /leagues.json
@@ -60,6 +60,18 @@ class LeaguesController < ApplicationController
       format.html { redirect_to leagues_url, notice: 'League was successfully destroyed.' }
     end
   end
+
+	def mass_email
+    if request.post?
+			@Users = User.joins(:league_users).where(league_users: { league_id: 1 })
+			subject = params[:post][:subject]
+			body = params[:post][:body]
+			@Users.each do |u|
+				ActionMailer::Base.mail(from: 'MLB Runs Pool <runspool@danmadere.com>', to: u.email, subject: subject , body: body).deliver_now
+			end
+			redirect_to leagues_path, notice: "Your email '#{subject}' has been sent!"
+		end
+	end
 
   private
     # Use callbacks to share common setup or constraints between actions.
