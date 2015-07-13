@@ -1,25 +1,25 @@
 <p id="notice"><%= notice %></p>
 
 <%= form_for @league, :method => :POST, :url => {:action => "mass_email"} do |f| %>
-	<p>
-		<strong>Name:</strong>
-		<%= @league.name %>
-	</p>
+  <p>
+    <strong>Name:</strong>
+    <%= @league.name %>
+  </p>
 
-	<p>
-		<strong>Subject:</strong>
-	</p>
-	<p>
-		<%= text_field(:post, :subject) %>
-	</p>
-	<p>
-		<strong>Body:</strong>
-	</p>
-	<p>
-		<%= text_area(:post, :body, cols: 40, rows: 10) %>
-	</p>
+  <p>
+    <strong>Subject:</strong>
+  </p>
+  <p>
+    <%= text_field(:post, :subject) %>
+  </p>
+  <p>
+    <strong>Body:</strong>
+  </p>
+  <p>
+    <%= text_area(:post, :body, cols: 40, rows: 10) %>
+  </p>
 
-	<%= f.submit 'Email League' %>
+  <%= f.submit 'Email League' %>
 <% end %>
 
 <%= link_to 'Back', leagues_path %>

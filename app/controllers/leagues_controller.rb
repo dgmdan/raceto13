@@ -61,17 +61,17 @@ class LeaguesController < ApplicationController
     end
   end
 
-	def mass_email
+  def mass_email
     if request.post?
-			@Users = User.joins(:league_users).where(league_users: { league_id: 1 })
-			subject = params[:post][:subject]
-			body = params[:post][:body]
-			@Users.each do |u|
-				ActionMailer::Base.mail(from: 'MLB Runs Pool <runspool@danmadere.com>', to: u.email, subject: subject , body: body).deliver_now
-			end
-			redirect_to leagues_path, notice: "Your email '#{subject}' has been sent!"
-		end
-	end
+      users = @league.users
+      subject = params[:post][:subject]
+      body = params[:post][:body]
+      users.each do |u|
+        ActionMailer::Base.mail(from: 'MLB Runs Pool <runspool@danmadere.com>', to: u.email, subject: subject , body: body).deliver_now
+      end
+      redirect_to leagues_path, notice: "Your email '#{subject}' has been sent!"
+    end
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
