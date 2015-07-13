@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   resources :leagues do
     member do
       post 'join'
+      get 'mass_email'
+      post 'mass_email'
     end
   end
 

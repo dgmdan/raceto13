@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+  <%= form_tag(mass_email_league_path, method: :post) do |f| %>
+  <p>
+    <strong>Name:</strong>
+    <%= @league.name %>
+  </p>
+
+  <p>
+    <strong>Subject:</strong>
+  </p>
+  <p>
+    <%= text_field(:post, :subject) %>
+  </p>
+  <p>
+    <strong>Body:</strong>
+  </p>
+  <p>
+    <%= text_area(:post, :body, cols: 40, rows: 10) %>
+  </p>
+
+  <%= submit_tag 'Email League' %>
+<% end %>
+
+<%= link_to 'Back', leagues_path %>

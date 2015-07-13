@@ -24,6 +24,7 @@
               <td><%= league.starts_at ? league.starts_at.strftime('%m/%d/%Y') : 'None' %></td>
               <td><%= league.name %></td>
               <td>
+                  <%= link_to 'Email', mass_email_league_path(league) %> |
                   <%= link_to 'Edit', edit_league_path(league) %> |
                   <%= link_to 'Destroy', league, method: :delete, data: { confirm: 'Are you sure?' } %>
               </td>
