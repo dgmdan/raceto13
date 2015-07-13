@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<%= form_for @league, :method => :POST, :url => {:action => "mass_email"} do |f| %>
+  <%= form_tag(mass_email_league_path, method: :post) do |f| %>
   <p>
     <strong>Name:</strong>
     <%= @league.name %>
@@ -19,7 +19,7 @@
     <%= text_area(:post, :body, cols: 40, rows: 10) %>
   </p>
 
-  <%= f.submit 'Email League' %>
+  <%= submit_tag 'Email League' %>
 <% end %>
 
 <%= link_to 'Back', leagues_path %>
