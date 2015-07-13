@@ -36,12 +36,13 @@ class LeagueTest < ActiveSupport::TestCase
   end
 
   test "detect when league isn't complete" do
-    refute_includes League.complete, @league
+    refute @league.complete?
   end
 
   test "detect when league is complete" do
-    Entry.create(user:users(:user0), league:leagues(:one), team:teams(:one), won_at: Time.now)
-    assert_includes League.complete, @league
+    Entry.create(user:users(:user0), league:leagues(:one), team:teams(:one), won_at: Time.now, won_place: 1)
+    Entry.create(user:users(:user0), league:leagues(:one), team:teams(:two), won_at: Time.now, won_place: 2)
+    assert @league.complete?
   end
 
   test "detect when league is full" do
@@ -56,6 +57,5 @@ class LeagueTest < ActiveSupport::TestCase
   test "detect when league isn't full" do
     refute_includes League.full, @league
   end
-
 
 end

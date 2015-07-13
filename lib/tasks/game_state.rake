@@ -23,6 +23,7 @@ namespace :game_state do
     Entry.all.each do |entry|
       entry.won_at = nil
       entry.won_place = nil
+      entry.possible_winner_game_count = nil
       entry.save
     end
   end
