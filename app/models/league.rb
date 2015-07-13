@@ -1,5 +1,3 @@
-require 'byebug'
-
 class League < ActiveRecord::Base
   belongs_to :user
   has_many :league_users
@@ -38,21 +36,30 @@ class League < ActiveRecord::Base
         return []
       end
 
-      # Find possible winners, those little s['hits']...
-      # TODO: Handle if 2nd place has < 13 runs
-      possible_winners = standings.select { |s| s['hits'] == (14 - place) }
+      # Find possible winners
+      possible_winners = standings.select { |entry| entry['hits'] == (14 - place) }
+
+      # Handle if 2nd place has < 13 runs
+      if possible_winners.empty? && place == 1
+        place_buffer = 0
+        loop do
+          place_buffer += 1
+          possible_winners = standings.select { |entry| entry['hits'] == (14 - place - place_buffer) }
+          break if possible_winners.any?
+        end
+      end
 
       # See if anyone else could catch up to win/tie
       if possible_winners.any?
-        game_counts = possible_winners.collect { |pw| pw['games'] }
-        entry_ids = possible_winners.collect{ |pw| pw['entry_id'] }
-        contenders = standings.select { |s| s['hits'] + game_counts.min - s['games'] >= (14 - place) }
-        contenders.reject! { |c| entry_ids.include?(c['entry_id']) }
+        game_counts = possible_winners.collect { |possible_winner| possible_winner['games'] }
+        entry_ids = possible_winners.collect{ |possible_winner| possible_winner['entry_id'] }
+        contenders = standings.select { |entry| entry['hits'] + game_counts.min - entry['games'] >= possible_winners[0]['hits'] }
+        contenders.reject! { |contender| entry_ids.include?(contender['entry_id']) }
 
         # If one can possibly catch up then let's declare winners
         if contenders.empty?
-          possible_winners.each do |pw|
-            entry = Entry.find(pw['entry_id'])
+          possible_winners.each do |possible_winner|
+            entry = Entry.find(possible_winner['entry_id'])
             entry.won_at = Time.now
             entry.won_place = place + 1
             entry.save
