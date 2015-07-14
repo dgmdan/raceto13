@@ -1,4 +1,3 @@
-# require 'byebug'
 require 'game_state'
 
 namespace :import_data do
@@ -20,13 +19,13 @@ namespace :import_data do
     loop do
       last_game_date += 1
       break if last_game_date == Date.today
-      GameState.get_espn_games(last_game_date)
+      GameState.scrape_games!(last_game_date)
     end
   end
 
   desc 'Import MLB scores for a given date'
   task :get_games, [:query_date] => [:environment] do |t, args|
-    GameState.get_espn_games(args.query_date)
+    GameState.scrape_games!(args.query_date)
   end
 
 end

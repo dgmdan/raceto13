@@ -24,7 +24,7 @@ class League < ActiveRecord::Base
     # Find each entry's number of hits and games
     standings_sql = """
           SELECT entries.id entry_id,
-            entries.possible_winner_game_count possible_winner_game_count,
+            entries.game_count game_count,
             COUNT(DISTINCT hits.id) hits,
             COUNT(DISTINCT games.id) games
           FROM entries
@@ -45,41 +45,48 @@ class League < ActiveRecord::Base
       end
 
       # Find possible winners
-      possible_winners = standings.select { |entry| entry['hits'] == (14 - place) }
+      possible_winners = standings.select { |entry| entry['hits'] == 14 - place }
 
       # Handle if 2nd place has < 13 runs
       if possible_winners.empty? && place == 1
         place_buffer = 0
         loop do
           place_buffer += 1
-          possible_winners = standings.select { |entry| entry['hits'] == (14 - place - place_buffer) }
+          possible_winners = standings.select { |entry| entry['hits'] == 14 - place - place_buffer }
           break if possible_winners.any?
         end
       end
 
       # See if anyone else could catch up to win/tie
       if possible_winners.any?
-        game_counts = possible_winners.collect { |possible_winner| possible_winner['possible_winner_game_count'] ? possible_winner['possible_winner_game_count'] : possible_winner['games'] }
-        entry_ids = possible_winners.collect{ |possible_winner| possible_winner['entry_id'] }
+        game_counts = possible_winners.collect { |possible_winner| possible_winner['game_count'] ? possible_winner['game_count'] : possible_winner['games'] }
+        entry_ids = possible_winners.collect { |possible_winner| possible_winner['entry_id'] }
         contenders = standings.select { |entry| entry['hits'] + game_counts.min - entry['games'] >= possible_winners[0]['hits'] }
         contenders.reject! { |contender| entry_ids.include?(contender['entry_id']) }
 
         if contenders.empty?
           # If no one can possibly catch up then let's declare winners
-          possible_winners.select! { |possible_winner| possible_winner['games'] == game_counts.min || possible_winner['possible_winner_game_count'] == game_counts.min }
-          possible_winners.each do |possible_winner|
-            entry = Entry.find(possible_winner['entry_id'])
+          selected_winners = possible_winners.select { |possible_winner| possible_winner['games'] == game_counts.min || possible_winner['game_count'] == game_counts.min }
+          selected_winners.each do |winner|
+            entry = Entry.find(winner['entry_id'])
             entry.won_at = Time.now
             entry.won_place = place + 1
             entry.save
             winners << entry
           end
+
+          # Save the game count for all entries for the final standings
+          non_winners = entries.reject { |entry| winners.collect{ |winner| winner['entry_id'] }.include?(entry.id) }
+          non_winners.each do |entry|
+            entry.game_count = entry.team.games.count
+            entry.save
+          end
         else
           # If someone can catch up, don't declare winners but save the game count on the entry
           possible_winners.each do |possible_winner|
             entry = Entry.find(possible_winner['entry_id'])
-            if entry.possible_winner_game_count.nil?
-              entry.possible_winner_game_count = possible_winner['games']
+            if entry.game_count.nil?
+              entry.game_count = possible_winner['games']
               entry.save
             end
           end

@@ -1,5 +1,4 @@
 require 'test_helper'
-require 'byebug'
 
 class EntriesControllerTest < ActionController::TestCase
   include Devise::TestHelpers
@@ -22,7 +21,6 @@ class EntriesControllerTest < ActionController::TestCase
 
   test "should prevent buying an entry on errors" do
     sign_in users(:user0)
-    # byebug
     post :buy, quantity: 5, league_id: leagues(:one).id
     assert_no_difference('Entry.count') do
       post :buy, quantity: 1, league_id: leagues(:one).id

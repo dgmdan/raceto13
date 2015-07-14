@@ -1,6 +1,6 @@
 class GameState
 
-  def self.get_espn_games(query_date)
+  def self.scrape_games!(query_date)
     # Clear existing game data for this date
     Game.where(started_on: query_date).destroy_all
 
@@ -25,9 +25,9 @@ class GameState
         entries = league.entries.where('team_id = ? OR team_id = ?', home_team, away_team)
         entries.each do |entry|
           if entry.team == home_team
-            check_for_hit(entry, query_date, score[:home_score], true)
+            check_for_hit!(entry, query_date, score[:home_score], true)
           else
-            check_for_hit(entry, query_date, score[:away_score], true)
+            check_for_hit!(entry, query_date, score[:away_score], true)
           end
         end
       end
@@ -57,16 +57,27 @@ class GameState
     espn_scores.any?
   end
 
-  def self.reset_all_scores
+  def self.reset_all_scores!
     # TODO: futureproof this for more seasons
     start_date = Date.parse('2015-04-04')
     end_date = Date.yesterday
     (start_date..end_date).each do |current_date|
-      self.reset_scores(current_date)
+      self.reset_scores!(current_date)
     end
   end
 
-  def self.reset_scores(query_date)
+  def self.reset!
+    Game.destroy_all
+    Hit.destroy_all
+    Entry.all.each do |entry|
+      entry.won_at = nil
+      entry.won_place = nil
+      entry.game_count = nil
+      entry.save
+    end
+  end
+
+  def self.rebuild_hits!(query_date)
     # Clear existing game data for this date
     Game.where(started_on: query_date).destroy_all
 
@@ -93,9 +104,9 @@ class GameState
         entries = league.entries.where('team_id = ? OR team_id = ?', home_team, away_team)
         entries.each do |entry|
           if entry.team == home_team
-            check_for_hit(entry, query_date, score[:home_score], false)
+            check_for_hit!(entry, query_date, score[:home_score], false)
           else
-            check_for_hit(entry, query_date, score[:away_score], false)
+            check_for_hit!(entry, query_date, score[:away_score], false)
           end
         end
 
@@ -109,7 +120,7 @@ class GameState
     espn_scores.any?
   end
 
-  def self.create_hits(query_date)
+  def self.create_hits!(query_date)
     entries = Entry.active
     entries.each do |entry|
       next if entry.league.complete?
@@ -117,16 +128,16 @@ class GameState
       away_match = Game.where(started_on: query_date, away_team_id: entry.team_id)
 
       home_match.each do |match|
-        check_for_hit(entry, query_date, match.home_score, false)
+        check_for_hit!(entry, query_date, match.home_score, false)
       end
 
       away_match.each do |match|
-        check_for_hit(entry, query_date, match.away_score, false)
+        check_for_hit!(entry, query_date, match.away_score, false)
       end
     end
   end
 
-  def self.check_for_hit(entry, query_date, runs, enable_emails)
+  def self.check_for_hit!(entry, query_date, runs, enable_emails)
     return if runs > 13
     if Hit.where(entry: entry, runs: runs).empty?
       Rails.logger.debug "Creating hit for entry #{entry.id}, date #{query_date}, runs #{runs}"

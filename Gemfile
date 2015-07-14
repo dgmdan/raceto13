@@ -10,11 +10,10 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'espn_scraper', git: 'git://github.com/dgmdan/espn-scraper.git'
 gem 'devise'
 gem 'pg'
-gem 'rails_12factor',
+gem 'vcr'
+gem 'webmock'
 
-group: :production do
-  gem 'rails_12factor'
-end
+gem 'rails_12factor', group: :production
 
 group :development, :test do
   gem 'sqlite3'
