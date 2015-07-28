@@ -23,11 +23,19 @@ class StandingsController < ApplicationController
       @entries << entry_minimal
     end
 
-    # Sort by highest run count
-    @entries.sort_by! { |e| e[:run_count] }
-    @entries.reverse!
+    # Sort by winners, then run count (descending), then games played (ascending)
+    @entries.sort_by! { |e| [e[:won_place] || 99, -e[:run_count], e[:games_played]] }
 
-    @run_counts = @entries.map{ |e| e[:run_count] }.uniq.sort.reverse
+    # Figure out rankings
+    current_rank, current_runs, current_games_played = nil, nil, nil
+    @entries.each do |entry|
+      if current_rank.nil? || current_runs != entry[:run_count] || current_games_played != entry[:games_played]
+        current_rank = current_rank.nil? ? 1 : (current_rank + 1)
+        current_runs = entry[:run_count]
+        current_games_played = entry[:games_played]
+      end
+      entry[:rank] = current_rank
+    end
   end
 
 end

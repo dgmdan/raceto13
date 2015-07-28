@@ -30,7 +30,7 @@
             <th class="runs-header">12</th>
             <th class="runs-header">13</th>
             <th class="text-center">Games Played</th>
-            <th class="text-center">Score</th>
+            <th class="text-center">Runs</th>
             <% if current_user.admin %>
                 <th>Admin</th>
             <% end %>
@@ -39,7 +39,7 @@
             <tr class="<% if entry[:won_at] %>winner-<%= entry[:won_place] %><% end %>">
               <td>
                 <% unless entry[:team_data_name].blank? %>
-                    <%= @run_counts.index(entry[:run_count]) + 1 %>
+                    <%= entry[:rank] %>
                 <% end %>
               </td>
               <td>
