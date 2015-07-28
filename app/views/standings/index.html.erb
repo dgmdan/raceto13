@@ -3,7 +3,7 @@
     <div class="col-md-12">
       <h2>Current standings</h2>
       <hr/>
-      
+
       <% if flash[:notice] %>
           <div class="alert alert-info" role="alert">
             <%= flash[:notice] %>
@@ -12,28 +12,17 @@
 
       <table class="table table-striped">
         <tr>
-            <th>Rank</th>
-            <th>Player</th>
-            <th>Team</th>
-            <th class="runs-header">0</th>
-            <th class="runs-header">1</th>
-            <th class="runs-header">2</th>
-            <th class="runs-header">3</th>
-            <th class="runs-header">4</th>
-            <th class="runs-header">5</th>
-            <th class="runs-header">6</th>
-            <th class="runs-header">7</th>
-            <th class="runs-header">8</th>
-            <th class="runs-header">9</th>
-            <th class="runs-header">10</th>
-            <th class="runs-header">11</th>
-            <th class="runs-header">12</th>
-            <th class="runs-header">13</th>
-            <th class="text-center">Games Played</th>
-            <th class="text-center">Runs</th>
-            <% if current_user.admin %>
-                <th>Admin</th>
-            <% end %>
+          <th>Rank</th>
+          <th>Player</th>
+          <th>Team</th>
+          <% 14.times do |i| %>
+              <th class="runs-header"><%= i %></th>
+          <% end %>
+          <th class="text-center">Games Played</th>
+          <th class="text-center">Runs</th>
+          <% if current_user.admin %>
+              <th>Admin</th>
+          <% end %>
         </tr>
         <% @entries.each do |entry| %>
             <tr class="<% if entry[:won_at] %>winner-<%= entry[:won_place] %><% end %>">
@@ -55,20 +44,9 @@
                 <% end %>
                 <%= entry[:team_name] %>
               </td>
-              <td class="runs-cell"><% if entry[:runs].include?(0) %><span class="runs-marker" data-toggle="tooltip" title="<%= entry[:runs][0] %>">X</span><% end %></td>
-              <td class="runs-cell"><% if entry[:runs].include?(1) %><span class="runs-marker" data-toggle="tooltip" title="<%= entry[:runs][1] %>">X</span><% end %></td>
-              <td class="runs-cell"><% if entry[:runs].include?(2) %><span class="runs-marker" data-toggle="tooltip" title="<%= entry[:runs][2] %>">X</span><% end %></td>
-              <td class="runs-cell"><% if entry[:runs].include?(3) %><span class="runs-marker" data-toggle="tooltip" title="<%= entry[:runs][3] %>">X</span><% end %></td>
-              <td class="runs-cell"><% if entry[:runs].include?(4) %><span class="runs-marker" data-toggle="tooltip" title="<%= entry[:runs][4] %>">X</span><% end %></td>
-              <td class="runs-cell"><% if entry[:runs].include?(5) %><span class="runs-marker" data-toggle="tooltip" title="<%= entry[:runs][5] %>">X</span><% end %></td>
-              <td class="runs-cell"><% if entry[:runs].include?(6) %><span class="runs-marker" data-toggle="tooltip" title="<%= entry[:runs][6] %>">X</span><% end %></td>
-              <td class="runs-cell"><% if entry[:runs].include?(7) %><span class="runs-marker" data-toggle="tooltip" title="<%= entry[:runs][7] %>">X</span><% end %></td>
-              <td class="runs-cell"><% if entry[:runs].include?(8) %><span class="runs-marker" data-toggle="tooltip" title="<%= entry[:runs][8] %>">X</span><% end %></td>
-              <td class="runs-cell"><% if entry[:runs].include?(9) %><span class="runs-marker" data-toggle="tooltip" title="<%= entry[:runs][9] %>">X</span><% end %></td>
-              <td class="runs-cell"><% if entry[:runs].include?(10) %><span class="runs-marker" data-toggle="tooltip" title="<%= entry[:runs][10] %>">X</span><% end %></td>
-              <td class="runs-cell"><% if entry[:runs].include?(11) %><span class="runs-marker" data-toggle="tooltip" title="<%= entry[:runs][11] %>">X</span><% end %></td>
-              <td class="runs-cell"><% if entry[:runs].include?(12) %><span class="runs-marker" data-toggle="tooltip" title="<%= entry[:runs][12] %>">X</span><% end %></td>
-              <td class="runs-cell"><% if entry[:runs].include?(13) %><span class="runs-marker" data-toggle="tooltip" title="<%= entry[:runs][13] %>">X</span><% end %></td>
+              <% 14.times do |i| %>
+                  <td class="runs-cell"><% if entry[:runs].include?(i) %><span class="runs-marker" data-toggle="tooltip" title="<%= entry[:runs][i] %>">X</span><% end %></td>
+            <% end %>
               <td class="text-center"><%= entry[:games_played] %></td>
               <td class="text-center"><%= entry[:run_count] %></td>
               <% if current_user.admin %>
