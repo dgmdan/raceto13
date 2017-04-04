@@ -32,7 +32,7 @@ module Runspool
     config.active_record.raise_in_transactional_callbacks = true
 
     # Need this for logs on heroku
-    config.logger = Logger.new(STDOUT)
+    config.logger = ActiveSupport::Logger.new(STDOUT)
 
     # Mail sending
     config.action_mailer.delivery_method = :smtp
