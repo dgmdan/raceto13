@@ -28,4 +28,15 @@ namespace :import_data do
     GameState.scrape_games!(args.query_date)
   end
 
+  desc 'Import MLB scores for a past league (for running simulation)'
+  task :get_league_games, [:league_id] => [:environment] do |t, args|
+    league = League.find_by(id: args.league_id)
+    current_date = league.starts_at.to_date
+    loop do
+      current_date += 1
+      break if league.ends_at.to_date == current_date
+      GameState.scrape_games!(current_date)
+    end
+  end
+
 end
