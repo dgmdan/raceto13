@@ -45,7 +45,7 @@
                 <%= entry[:team_name] %>
               </td>
               <% 14.times do |i| %>
-                  <td class="runs-cell"><% if entry[:runs].include?(i) %><span class="runs-marker" data-toggle="tooltip" title="<%= entry[:runs][i] %>">X</span><% end %></td>
+                  <td class="runs-cell"><% if hit = entry[:runs].where(runs: i).first %><a href="<%= game_path(hit.game.id) %>"><span class="runs-marker" data-toggle="tooltip" title="<%= hit.game.started_on %>">X</span></a><% end %></td>
             <% end %>
               <td class="text-center"><%= entry[:games_played] %></td>
               <td class="text-center"><%= entry[:run_count] %></td>
