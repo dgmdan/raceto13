@@ -10,6 +10,8 @@ class GameState
       home_team = Team.where(data_name: score[:home_team]).first
       away_team = Team.where(data_name: score[:away_team]).first
 
+      next unless home_team and away_team
+
       # Keep log of games + scores even though we don't really need it
       Game.create(
           started_on: query_date,
