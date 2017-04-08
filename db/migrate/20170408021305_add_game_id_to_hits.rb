@@ -1,5 +1,5 @@
 class AddGameIdToHits < ActiveRecord::Migration
   def change
-    add_column :hits, :game_id, :integer
+    add_reference :hits, :game
   end
 end

@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20170408021305) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "entries", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "league_id"
@@ -26,9 +29,9 @@ ActiveRecord::Schema.define(version: 20170408021305) do
     t.integer  "game_count"
   end
 
-  add_index "entries", ["league_id"], name: "index_entries_on_league_id"
-  add_index "entries", ["team_id"], name: "index_entries_on_team_id"
-  add_index "entries", ["user_id"], name: "index_entries_on_user_id"
+  add_index "entries", ["league_id"], name: "index_entries_on_league_id", using: :btree
+  add_index "entries", ["team_id"], name: "index_entries_on_team_id", using: :btree
+  add_index "entries", ["user_id"], name: "index_entries_on_user_id", using: :btree
 
   create_table "games", force: :cascade do |t|
     t.date     "started_on"
@@ -40,8 +43,16 @@ ActiveRecord::Schema.define(version: 20170408021305) do
     t.datetime "updated_at",   null: false
   end
 
-# Could not dump table "hits" because of following NoMethodError
-#   undefined method `[]' for nil:NilClass
+  create_table "hits", force: :cascade do |t|
+    t.integer  "entry_id"
+    t.integer  "runs"
+    t.date     "hit_on"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "game_id"
+  end
+
+  add_index "hits", ["entry_id"], name: "index_hits_on_entry_id", using: :btree
 
   create_table "league_users", force: :cascade do |t|
     t.integer  "league_id"
@@ -50,8 +61,8 @@ ActiveRecord::Schema.define(version: 20170408021305) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "league_users", ["league_id"], name: "index_league_users_on_league_id"
-  add_index "league_users", ["user_id"], name: "index_league_users_on_user_id"
+  add_index "league_users", ["league_id"], name: "index_league_users_on_league_id", using: :btree
+  add_index "league_users", ["user_id"], name: "index_league_users_on_user_id", using: :btree
 
   create_table "leagues", force: :cascade do |t|
     t.string   "name"
@@ -62,7 +73,7 @@ ActiveRecord::Schema.define(version: 20170408021305) do
     t.datetime "ends_at"
   end
 
-  add_index "leagues", ["user_id"], name: "index_leagues_on_user_id"
+  add_index "leagues", ["user_id"], name: "index_leagues_on_user_id", using: :btree
 
   create_table "notification_type_users", force: :cascade do |t|
     t.integer  "notification_type_id"
@@ -85,7 +96,7 @@ ActiveRecord::Schema.define(version: 20170408021305) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "teams", ["data_name"], name: "index_teams_on_data_name", unique: true
+  add_index "teams", ["data_name"], name: "index_teams_on_data_name", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",    null: false
@@ -104,7 +115,14 @@ ActiveRecord::Schema.define(version: 20170408021305) do
     t.string   "name"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "entries", "leagues"
+  add_foreign_key "entries", "teams"
+  add_foreign_key "entries", "users"
+  add_foreign_key "hits", "entries"
+  add_foreign_key "league_users", "leagues"
+  add_foreign_key "league_users", "users"
+  add_foreign_key "leagues", "users"
 end
