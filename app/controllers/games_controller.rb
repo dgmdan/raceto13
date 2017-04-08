@@ -1,5 +1,6 @@
 class GamesController < ApplicationController
-  before_action :authenticate_admin!
+  before_action :authenticate_admin!, only: [:edit, :update, :destroy, :mass_entry]
+  before_action :authenticate_user!, only: [:index, :show]
   # before_action :set_game, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -9,6 +10,10 @@ class GamesController < ApplicationController
       @games = Game.order(:started_on)
     end
     @games = @games.paginate(page: params[:page])
+  end
+
+  def show
+    @game = Game.find_by(id: params[:id])
   end
 
   def mass_entry
