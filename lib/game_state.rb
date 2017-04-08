@@ -13,7 +13,7 @@ class GameState
       next unless home_team and away_team
 
       # Keep log of games + scores even though we don't really need it
-      Game.create(
+      game = Game.create(
           started_on: query_date,
           home_team: home_team,
           away_team: away_team,
@@ -27,9 +27,9 @@ class GameState
         entries = league.entries.where('team_id = ? OR team_id = ?', home_team, away_team)
         entries.each do |entry|
           if entry.team == home_team
-            check_for_hit!(entry, query_date, score[:home_score], true)
+            check_for_hit!(entry, game.id, query_date, score[:home_score], true)
           else
-            check_for_hit!(entry, query_date, score[:away_score], true)
+            check_for_hit!(entry, game.id, query_date, score[:away_score], true)
           end
         end
       end
@@ -90,7 +90,7 @@ class GameState
       away_team = Team.where(data_name: score[:away_team]).first
 
       # Keep log of games + scores
-      Game.create(
+      game = Game.create(
           started_on: query_date,
           home_team: home_team,
           away_team: away_team,
@@ -106,9 +106,9 @@ class GameState
         entries = league.entries.where('team_id = ? OR team_id = ?', home_team, away_team)
         entries.each do |entry|
           if entry.team == home_team
-            check_for_hit!(entry, query_date, score[:home_score], false)
+            check_for_hit!(entry, game.id, query_date, score[:home_score], false)
           else
-            check_for_hit!(entry, query_date, score[:away_score], false)
+            check_for_hit!(entry, game.id, query_date, score[:away_score], false)
           end
         end
 
@@ -130,20 +130,20 @@ class GameState
       away_match = Game.where(started_on: query_date, away_team_id: entry.team_id)
 
       home_match.each do |match|
-        check_for_hit!(entry, query_date, match.home_score, false)
+        check_for_hit!(entry, match.id, query_date, match.home_score, false)
       end
 
       away_match.each do |match|
-        check_for_hit!(entry, query_date, match.away_score, false)
+        check_for_hit!(entry, match.id, query_date, match.away_score, false)
       end
     end
   end
 
-  def self.check_for_hit!(entry, query_date, runs, enable_emails)
+  def self.check_for_hit!(entry, game_id, query_date, runs, enable_emails)
     return if runs > 13
     if Hit.where(entry: entry, runs: runs).empty?
       Rails.logger.debug "Creating hit for entry #{entry.id}, date #{query_date}, runs #{runs}"
-      hit = Hit.create(entry: entry, hit_on: query_date, runs: runs)
+      hit = Hit.create(entry: entry, hit_on: query_date, runs: runs, game_id: game_id)
       UserMailer.hit_email(hit).deliver_now if entry.user.notification_types.where(name: 'hit').any? && enable_emails
     end
   end
