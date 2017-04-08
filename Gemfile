@@ -14,6 +14,7 @@ gem 'pg'
 gem 'uglifier', '>= 2.7.2'
 gem 'vcr'
 gem 'webmock'
+gem 'will_paginate', '~> 3.1.0'
 
 gem 'rails_12factor', group: :production
 
