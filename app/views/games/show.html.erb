@@ -3,5 +3,6 @@
 
   <p>Game date: <%= @game.started_on %></p>
   <p>Score: <%= @game.away_team.name %> <%= @game.away_score %> - <%= @game.home_team.name %> <%= @game.home_score %></p>
+  <p><a href="http://espn.com/mlb/scoreboard/_/date/<%= @game.started_on.strftime('%Y%m%d') %>" target="_blank">See this game on ESPN</a></p>
 
 </div>
