@@ -12,7 +12,7 @@ class StandingsController < ApplicationController
           name: entry.user.name,
           team_name: entry.team ? entry.team.name : 'Pending',
           team_data_name: entry.team ? entry.team.data_name : '',
-          runs: entry.hits.to_a.each_with_object({}){ |c,h| h[c.runs] = c.hit_on },
+          runs: entry.hits.select('runs, hit_on, game_id'),
           run_count: entry.hits.count,
           won_at: entry.won_at,
           won_place: entry.won_place,
