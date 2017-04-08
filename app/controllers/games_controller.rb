@@ -3,7 +3,12 @@ class GamesController < ApplicationController
   # before_action :set_game, only: [:show, :edit, :update, :destroy]
 
   def index
-    @games = Game.all.order(:started_on)
+    if params[:date]
+      @games = Game.where(started_on: params[:date])
+    else
+      @games = Game.order(:started_on)
+    end
+    @games = @games.paginate(page: params[:page])
   end
 
   def mass_entry
