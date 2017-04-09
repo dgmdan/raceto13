@@ -21,7 +21,14 @@ class League < ActiveRecord::Base
   def get_and_record_winners!(query_date)
     winners = []
 
-    # Look for 14-run win condition
+    # Only require 14-runs if it's before the end of season
+    if self.ends_at.to_date <= query_date
+      having_condition = ""
+    else
+      having_condition = "HAVING COUNT(DISTINCT hits.id) = 14"
+    end
+
+    # Look for win condition
     first_counts_sql = """
           SELECT COUNT(DISTINCT hits.id) hits,
             COUNT(DISTINCT games.id) game_count
@@ -33,7 +40,7 @@ class League < ActiveRecord::Base
           AND entries.cancelled_at IS NULL
           AND entries.won_at IS NULL
           GROUP BY entries.id
-          HAVING COUNT(DISTINCT hits.id) = 14
+          #{having_condition}
           ORDER BY hits DESC, game_count ASC
           LIMIT 1;
           """
@@ -103,36 +110,6 @@ class League < ActiveRecord::Base
         entry = Entry.find(result['entry_id'])
         entry.won_at = Time.now
         entry.won_place = 2
-        entry.save
-        winners << entry
-      }
-      byebug
-      return winners
-    end
-
-    # Check for end of season condition
-    if ends_at <= query_date
-      puts "End of season detected"
-      end_season_sql = """
-      SELECT entries.id entry_id,
-          COUNT(DISTINCT games.id) game_count,
-          COUNT(DISTINCT hits.id) hits
-        FROM entries
-        JOIN hits ON hits.entry_id = entries.id
-        JOIN teams ON teams.id = entries.team_id
-        JOIN games ON (games.home_team_id = teams.id OR games.away_team_id = teams.id)
-        WHERE entries.league_id = #{id}
-        AND entries.cancelled_at IS NULL
-        AND entries.won_at IS NULL
-        GROUP BY entries.id
-        ORDER BY hits DESC, game_count ASC
-        LIMIT 2;
-      """
-      end_season_results = ActiveRecord::Base.connection.execute(end_season_sql)
-      end_season_results.each_with_index { |result, index|
-        entry = Entry.find(result['entry_id'])
-        entry.won_at = Time.now
-        entry.won_place = index + 1
         entry.save
         winners << entry
       }

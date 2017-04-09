@@ -34,8 +34,8 @@ namespace :import_data do
     current_date = league.starts_at.to_date
     loop do
       current_date += 1
-      break if league.ends_at.to_date == current_date
       GameState.scrape_games!(current_date)
+      break if league.ends_at.to_date == current_date
     end
   end
 

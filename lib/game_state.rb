@@ -1,10 +1,12 @@
 class GameState
 
   def self.scrape_games!(query_date)
+    puts query_date
+
     # Re-use existing game data for this date
     games = Game.where(started_on: query_date)
 
-    if !games
+    if games.count == 0
       # No game data, need to scrape it
       games = []
       espn_scores = ESPN.get_mlb_scores(query_date)
@@ -24,7 +26,7 @@ class GameState
         )
         games << game
       end
-      puts "Loaded #{espn_scores.count} games on #{query_date}"
+      puts "Loaded #{espn_scores.count} games"
     end
 
     games.each do |game|
