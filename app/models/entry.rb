@@ -1,6 +1,6 @@
 class MaxUserEntriesValidator < ActiveModel::Validator
   def validate(record)
-    if Entry.where(user: record.user).active.count == 5
+    if Entry.where(user: record.user).active.count == 5 and !record.user.admin
       record.errors[:base] << 'You have the maximum of 5 entries.'
     end
   end
