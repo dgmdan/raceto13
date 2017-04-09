@@ -15,86 +15,100 @@ class League < ActiveRecord::Base
   end
 
   def complete?
-    entries.winners_in_place(1).any? && entries.winners_in_place(2).any?
+    entries.winners.any?
   end
 
-  def get_and_record_winners!
+  def get_and_record_winners!(query_date)
     winners = []
 
     # Find each entry's number of hits and games
-    standings_sql = """
+    winner_sql = """
           SELECT entries.id entry_id,
-            entries.game_count game_count,
             COUNT(DISTINCT hits.id) hits,
-            COUNT(DISTINCT games.id) games
+            COUNT(DISTINCT games.id) game_count
           FROM entries
-          LEFT JOIN hits ON hits.entry_id = entries.id
-          LEFT JOIN games ON games.home_team_id = entries.team_id OR games.away_team_id = entries.team_id
+          JOIN hits ON hits.entry_id = entries.id
+          JOIN teams ON teams.id = entries.team_id
+          JOIN games ON (games.home_team_id = teams.id OR games.away_team_id = teams.id)
           WHERE entries.league_id = #{id}
           AND entries.cancelled_at IS NULL
           AND entries.won_at IS NULL
-          GROUP BY entries.id"""
-    standings = ActiveRecord::Base.connection.execute(standings_sql)
+          GROUP BY entries.id
+          HAVING COUNT(DISTINCT hits.id) = 14
+          ORDER BY hits DESC, game_count ASC
+          LIMIT 2;
+          """
+    winner_results = ActiveRecord::Base.connection.execute(winner_sql)
 
-    # Check for 1st and 2nd place winners
-    2.times do |place|
-      if place == 0 && entries.winners_in_place(1).any? # We already have a 1st place winner
-        next
-      elsif place == 1 && entries.winners_in_place(1).empty? # Don't pick 2nd place winner if we can't decide on 1st
-        return []
-      end
-
-      # Find possible winners
-      possible_winners = standings.select { |entry| entry['hits'] == 14 - place }
-
-      # Handle if 2nd place has < 13 runs
-      if possible_winners.empty? && place == 1
-        place_buffer = 0
-        loop do
-          place_buffer += 1
-          possible_winners = standings.select { |entry| entry['hits'] == 14 - place - place_buffer }
-          break if possible_winners.any?
-        end
-      end
-
-      # See if anyone else could catch up to win/tie
-      if possible_winners.any?
-        game_counts = possible_winners.collect { |possible_winner| possible_winner['game_count'] ? possible_winner['game_count'] : possible_winner['games'] }
-        entry_ids = possible_winners.collect { |possible_winner| possible_winner['entry_id'] }
-        contenders = standings.select { |entry| entry['hits'] + game_counts.min - entry['games'] >= possible_winners[0]['hits'] }
-        contenders.reject! { |contender| entry_ids.include?(contender['entry_id']) }
-
-        if contenders.empty?
-          # If no one can possibly catch up then let's declare winners
-          selected_winners = possible_winners.select { |possible_winner| possible_winner['games'] == game_counts.min || possible_winner['game_count'] == game_counts.min }
-          selected_winners.each do |winner|
-            entry = Entry.find(winner['entry_id'])
-            entry.won_at = Time.now
-            entry.won_place = place + 1
-            entry.save
-            winners << entry
-          end
-
-          # Save the game count for all entries for the final standings
-          non_winners = entries.reject { |entry| winners.collect{ |winner| winner['entry_id'] }.include?(entry.id) }
-          non_winners.each do |entry|
-            entry.game_count = entry.team.games.count
-            entry.save
-          end
-        else
-          # If someone can catch up, don't declare winners but save the game count on the entry
-          possible_winners.each do |possible_winner|
-            entry = Entry.find(possible_winner['entry_id'])
-            if entry.game_count.nil?
-              entry.game_count = possible_winner['games']
-              entry.save
-            end
-          end
-        end
-      end
+    if winner_results.count == 1
+      # Find a second place winner if necessary
+      second_sql = """
+      SELECT entries.id entry_id,
+            COUNT(DISTINCT hits.id) hits,
+            COUNT(DISTINCT games.id) game_count
+          FROM entries
+          JOIN hits ON hits.entry_id = entries.id
+          JOIN teams ON teams.id = entries.team_id
+          JOIN games ON (games.home_team_id = teams.id OR games.away_team_id = teams.id)
+          WHERE entries.league_id = #{id}
+          AND entries.cancelled_at IS NULL
+          AND entries.won_at IS NULL
+          AND entries.id <> #{winner_results.first['entry_id']}
+          GROUP BY entries.id
+          ORDER BY hits DESC, game_count ASC
+          LIMIT 1;
+      """
+      second_winner_results = ActiveRecord::Base.connection.execute(second_sql)
     end
 
-    winners
+    # If we have winners, mark them and return
+    if winner_results.count > 0
+      winner_results.each_with_index { |result, index|
+        entry = Entry.find(result['entry_id'])
+        entry.won_at = Time.now
+        entry.won_place = index + 1
+        entry.save
+        winners << entry
+      }
+      if second_winner_results
+        entry = Entry.find(second_winner_results.first['entry_id'])
+        entry.won_at = Time.now
+        entry.won_place = 2
+        entry.save
+        winners << entry
+      end
+      byebug
+      return winners
+    end
+
+    # Check for end of season condition
+    if ends_at <= query_date
+      puts "End of season detected"
+      end_season_sql = """
+      SELECT entries.id entry_id,
+          COUNT(DISTINCT games.id) game_count,
+          COUNT(DISTINCT hits.id) hits
+        FROM entries
+        JOIN hits ON hits.entry_id = entries.id
+        JOIN teams ON teams.id = entries.team_id
+        JOIN games ON (games.home_team_id = teams.id OR games.away_team_id = teams.id)
+        WHERE entries.league_id = #{id}
+        AND entries.cancelled_at IS NULL
+        AND entries.won_at IS NULL
+        GROUP BY entries.id
+        ORDER BY hits DESC, game_count ASC
+        LIMIT 2;
+      """
+      end_season_results = ActiveRecord::Base.connection.execute(end_season_sql)
+      end_season_results.each_with_index { |result, index|
+        entry = Entry.find(result['entry_id'])
+        entry.won_at = Time.now
+        entry.won_place = index + 1
+        entry.save
+        winners << entry
+      }
+    end
+    return winners
   end
 
   def losers

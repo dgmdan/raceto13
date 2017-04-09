@@ -1,45 +1,51 @@
 class GameState
 
   def self.scrape_games!(query_date)
-    # Clear existing game data for this date
-    Game.where(started_on: query_date).destroy_all
+    # Re-use existing game data for this date
+    games = Game.where(started_on: query_date)
 
-    # Loop through each MLB game on this date
-    espn_scores = ESPN.get_mlb_scores(query_date)
-    espn_scores.each do |score|
-      home_team = Team.where(data_name: score[:home_team]).first
-      away_team = Team.where(data_name: score[:away_team]).first
+    if !games
+      # No game data, need to scrape it
+      games = []
+      espn_scores = ESPN.get_mlb_scores(query_date)
+      espn_scores.each do |score|
+        home_team = Team.where(data_name: score[:home_team]).first
+        away_team = Team.where(data_name: score[:away_team]).first
 
-      next unless home_team and away_team
+        next unless home_team and away_team
 
-      # Keep log of games + scores even though we don't really need it
-      game = Game.create(
-          started_on: query_date,
-          home_team: home_team,
-          away_team: away_team,
-          home_score: score[:home_score],
-          away_score: score[:away_score]
-      )
+        # Keep log of games + scores
+        game = Game.create(
+            started_on: query_date,
+            home_team: home_team,
+            away_team: away_team,
+            home_score: score[:home_score],
+            away_score: score[:away_score]
+        )
+        games << game
+      end
+      puts "Loaded #{espn_scores.count} games on #{query_date}"
+    end
 
+    games.each do |game|
       # Create hits for those who earned one
       League.started.each do |league|
         next if league.complete?
-        entries = league.entries.where('team_id = ? OR team_id = ?', home_team, away_team)
+        entries = league.entries.where('team_id = ? OR team_id = ?', game.home_team, game.away_team)
         entries.each do |entry|
-          if entry.team == home_team
-            check_for_hit!(entry, game.id, query_date, score[:home_score], true)
+          if entry.team == game.home_team
+            check_for_hit!(entry, game.id, query_date, game.home_score, true)
           else
-            check_for_hit!(entry, game.id, query_date, score[:away_score], true)
+            check_for_hit!(entry, game.id, query_date, game.away_score, true)
           end
         end
       end
     end
-    puts "Loaded #{espn_scores.count} games on #{query_date}"
 
     # With the new hits, see if any entries have won
     League.started.each do |league|
       next if league.complete?
-      winners = league.get_and_record_winners!
+      winners = league.get_and_record_winners!(query_date)
       if winners.size > 0
         puts 'Winner found!'
 
@@ -55,8 +61,6 @@ class GameState
       end
     end
 
-    # Returns true if we found games
-    espn_scores.any?
   end
 
   def self.reset_all_scores!
@@ -69,7 +73,6 @@ class GameState
   end
 
   def self.reset!
-    Game.destroy_all
     Hit.destroy_all
     Entry.all.each do |entry|
       entry.won_at = nil
@@ -77,49 +80,6 @@ class GameState
       entry.game_count = nil
       entry.save
     end
-  end
-
-  def self.rebuild_hits!(query_date)
-    # Clear existing game data for this date
-    Game.where(started_on: query_date).destroy_all
-
-    # Loop through each MLB game on this date
-    espn_scores = ESPN.get_mlb_scores(query_date)
-    espn_scores.each do |score|
-      home_team = Team.where(data_name: score[:home_team]).first
-      away_team = Team.where(data_name: score[:away_team]).first
-
-      # Keep log of games + scores
-      game = Game.create(
-          started_on: query_date,
-          home_team: home_team,
-          away_team: away_team,
-          home_score: score[:home_score],
-          away_score: score[:away_score]
-      )
-
-      # Create hits for those who earned one
-      League.all.each do |league|
-        next if league.complete?
-
-        # Create hits
-        entries = league.entries.where('team_id = ? OR team_id = ?', home_team, away_team)
-        entries.each do |entry|
-          if entry.team == home_team
-            check_for_hit!(entry, game.id, query_date, score[:home_score], false)
-          else
-            check_for_hit!(entry, game.id, query_date, score[:away_score], false)
-          end
-        end
-
-      end
-
-
-    end
-    puts "Loaded #{espn_scores.count} games"
-
-    # Returns true if we found games
-    espn_scores.any?
   end
 
   def self.create_hits!(query_date)

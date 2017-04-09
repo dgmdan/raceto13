@@ -48,4 +48,15 @@ namespace :game_state do
     end
   end
 
+  desc "Simulate the 2016 season"
+  task simulate_2016: :environment do
+    GameState.reset!
+    league = League.find_by(id: 1)
+    start_date = league.starts_at.to_date
+    end_date = league.ends_at.to_date
+    (start_date..end_date).each do |date|
+      GameState.scrape_games!(date)
+    end
+  end
+
 end

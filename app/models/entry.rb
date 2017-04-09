@@ -27,6 +27,5 @@ class Entry < ActiveRecord::Base
   scope :unassigned, -> { where(team_id: nil) }
   scope :assigned, -> { where.not(team_id: nil) }
   scope :winners, -> { where.not(won_at: nil) }
-  scope :winners_in_place, ->(place) { where(won_place: place) }
   scope :losers, -> { where(won_at:nil) }
 end
