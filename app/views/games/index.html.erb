@@ -2,6 +2,8 @@
   <h2>Listing <%= @games.count %> games</h2>
   <hr/>
 
+  <p>This page can be used to view the results of past games.</p>
+
   <% if current_user.admin? %>
     <P><%= link_to 'Enter Games', mass_entry_games_path %></P>
   <% end %>

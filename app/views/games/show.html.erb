@@ -1,8 +1,17 @@
 <div class="container">
   <h2>Viewing game</h2>
+  <hr/>
 
-  <p>Game date: <%= @game.started_on %></p>
-  <p>Score: <%= @game.away_team.name %> <%= @game.away_score %> - <%= @game.home_team.name %> <%= @game.home_score %></p>
-  <p><a href="http://espn.com/mlb/scoreboard/_/date/<%= @game.started_on.strftime('%Y%m%d') %>" target="_blank">See this game on ESPN</a></p>
+  <h3>Game date</h3>
+  <p><%= @game.started_on %></p>
+
+  <h3>Away team</h3>
+  <p><%= @game.away_team.name %> - <%= @game.away_score %></p>
+
+  <h3>Home team</h3>
+  <%= @game.home_team.name %> - <%= @game.home_score %></p>
+
+  <hr/>
+  <p>Source: <a href="http://espn.com/mlb/scoreboard/_/date/<%= @game.started_on.strftime('%Y%m%d') %>" target="_blank">ESPN</a></p>
 
 </div>

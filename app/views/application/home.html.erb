@@ -11,7 +11,7 @@
 <div class="jumbotron">
   <div class="container">
     <h1>Play ball!</h1>
-    <p>Here's how the MLB runs pool works: Entries are $10 each. Each entry is randomly assigned an MLB team. When a game ends, the runs are recorded for both teams. The first team whose runs cover all numbers from 0 to 13 wins!</p>
+    <p>Here's how the Race to 13 pool works: Entries are $10 each. Each entry is randomly assigned an MLB team. When a game ends, the runs are recorded for both teams. The first entry to get all numbers from 0 to 13 wins!</p>
     <% if user_signed_in? %>
         <p><%= link_to raw("View standings &raquo;"), standings_path, class: 'btn btn-primary btn-lg' %></p>
     <% else %>
@@ -32,11 +32,7 @@
     </div>
     <div class="col-md-4">
       <h2>Are we there yet?</h2>
-      <p>We might have a winner in as few as 14 games... or it might take the entire 162-game season. Like a baseball game, no one knows how long this will take!</p>
+      <p>We might have a winner in as few as 14 games... or it might take the entire 162-game season. Like a ballgame, no one knows how long this will take!</p>
     </div>
   </div>
-  <hr/>
-  <footer>
-    <p>Contact <a href="mailto:dmadere@marathondata.com">Dan Madere</a> x199 with any questions</p>
-  </footer>
 </div>
