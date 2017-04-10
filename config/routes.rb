@@ -10,9 +10,9 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'entries' => 'entries#index'
   resources :entries do
     collection do
-      get 'index'
       post 'buy'
     end
 
@@ -21,17 +21,13 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :standings do
-    collection do
-      get 'index'
-    end
-  end
+  get 'standings' => 'standings#index'
 
   resource :leagues
 
+  get 'games' => 'games#index'
   resources :games do
     collection do
-      get 'index'
       get 'mass_entry'
       post 'mass_entry'
     end
