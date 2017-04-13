@@ -4,7 +4,7 @@ class EntriesController < ApplicationController
 
   def index
     @entries = current_user.entries
-    @leagues = current_user.leagues
+    @leagues = League.all
   end
 
   def buy
