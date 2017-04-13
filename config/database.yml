@@ -17,5 +17,7 @@ test:
   database: mlb_test
 
 production:
+  <<: *default
+  database: raceto13
   username: ENV['MLB_DB_USER']
   password: ENV['MLB_DB_PASSWORD']
