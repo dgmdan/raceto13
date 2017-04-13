@@ -7,6 +7,13 @@ class StandingsController < ApplicationController
     # Parse all entries and hits
     entries = Entry.all
     entries.each do |entry|
+      if entry.game_count
+        game_count = entry.game_count
+      elsif entry.team
+        game_count = entry.team.games.count
+      else
+        game_count = 0
+      end
       entry_minimal = {
           id: entry.id,
           name: entry.user.name,
@@ -17,7 +24,7 @@ class StandingsController < ApplicationController
           won_at: entry.won_at,
           won_place: entry.won_place,
           paid_at: entry.paid_at,
-          games_played: entry.game_count ? entry.game_count : entry.team.games.count,
+          games_played: game_count,
           gravatar_url: entry.user.gravatar_url
       }
       @entries << entry_minimal
