@@ -78,6 +78,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # Mail sending
-  config.action_mailer.default_url_options = { host: 'marathonrunspool.com' }
-  config.action_mailer.asset_host = 'http://marathonrunspool.com/images'
+  config.action_mailer.default_url_options = { host: 'raceto13.com' }
+  config.action_mailer.asset_host = 'http://raceto13.com/images'
+  config.action_mailer.delivery_method = :sendmail
 end
