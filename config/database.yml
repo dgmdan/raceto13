@@ -17,4 +17,5 @@ test:
   database: mlb_test
 
 production:
-  url: <%= ENV['DATABASE_URL'] %>
+  username: ENV['MLB_DB_USER']
+  password: ENV['MLB_DB_PASSWORD']
