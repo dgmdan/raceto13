@@ -3,8 +3,7 @@ require 'test_helper'
 class GamesControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  test "should not allow non-admin users" do
-    sign_in users(:user0)
+  test "should not allow non-users" do
     get :index
     assert_redirected_to new_user_session_path
   end

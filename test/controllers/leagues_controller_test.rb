@@ -29,7 +29,7 @@ class LeaguesControllerTest < ActionController::TestCase
   test "should create league" do
     sign_in users(:admin)
     assert_difference('League.count') do
-      post :create, league: { name: @league.name, starts_at: Date.today, user_id: @league.user_id }
+      post :create, league: { name: @league.name, starts_at: Date.today, ends_at: Date.tomorrow, user_id: @league.user_id }
     end
 
     assert_redirected_to leagues_path

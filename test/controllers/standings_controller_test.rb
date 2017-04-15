@@ -12,8 +12,7 @@ class StandingsControllerTest < ActionController::TestCase
     sign_in users(:user0)
     get :index
     assert_response :success
-    assert_not_nil assigns(:entries)
-    assert_not_nil assigns(:run_counts)
+    assert_not_nil assigns(@entries)
   end
 
 end

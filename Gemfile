@@ -18,11 +18,14 @@ gem 'will_paginate', '~> 3.1.0'
 
 gem 'rails_12factor', group: :production
 
+group :development do
+  gem 'web-console', '~> 3.3'
+end
+
 group :development, :test do
   gem 'capistrano-rails'
   gem 'sqlite3'
   gem 'byebug'
-  gem 'web-console', '~> 3.3'
   gem 'spring'
   gem 'rspec-rails', '~> 3.5'
   gem 'minitest-rails-capybara'
