@@ -8,7 +8,7 @@ gem 'turbolinks', require: false
 gem 'jbuilder', '~> 2.0'
 gem 'sass-rails', '~> 5.0'
 gem 'sdoc', '~> 0.4.2', group: :doc
-gem 'espn_scraper', git: 'git://github.com/dgmdan/espn-scraper.git'
+gem 'espn_scraper', git: 'git://github.com/aj0strow/espn-scraper.git'
 gem 'devise'
 gem 'pg'
 gem 'uglifier', '>= 2.7.2'
