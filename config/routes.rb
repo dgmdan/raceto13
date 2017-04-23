@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root 'application#home'
   get 'rules' => 'application#rules'
+  get 'console' => 'application#console'
 
   resources :leagues do
     member do
