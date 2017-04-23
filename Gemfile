@@ -12,14 +12,10 @@ gem 'espn_scraper', git: 'git://github.com/aj0strow/espn-scraper.git'
 gem 'devise'
 gem 'pg'
 gem 'uglifier', '>= 2.7.2'
+gem 'web-console', '~> 3.3'
 gem 'webmock'
 gem 'will_paginate', '~> 3.1.0'
-
 gem 'rails_12factor', group: :production
-
-group :development do
-  gem 'web-console', '~> 3.3'
-end
 
 group :development, :test do
   gem 'capistrano-rails'
