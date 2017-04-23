@@ -67,7 +67,7 @@ class LeaguesController < ApplicationController
       subject = params[:post][:subject]
       body = params[:post][:body]
       users.each do |u|
-        ActionMailer::Base.mail(from: 'MLB Runs Pool <runspool@danmadere.com>', to: u.email, subject: subject , body: body).deliver_now
+        ActionMailer::Base.mail(from: 'Race To 13 <bot@raceto13.com>', to: u.email, subject: subject , body: body).deliver_now
       end
       redirect_to leagues_path, notice: "Your email '#{subject}' has been sent!"
     end

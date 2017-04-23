@@ -1,5 +1,4 @@
 class UserMailer < ApplicationMailer
-  default from: 'MLB Runs Pool <runspool@danmadere.com>'
 
   def hit_email(hit)
     @hit = hit
