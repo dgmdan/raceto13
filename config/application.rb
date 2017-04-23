@@ -48,5 +48,6 @@ module Runspool
 
     # Enable web console
     config.web_console.whitelisted_ips = ENV['WEB_CONSOLE_IPS']
+    config.web_console.development_only = false
   end
 end
