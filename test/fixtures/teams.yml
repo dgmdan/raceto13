@@ -1,0 +1,180 @@
+team1:
+  id: 1
+  name: Baltimore Orioles
+  data_name: bal
+  created_at: 2017-04-08 04:29:58.967663000 Z
+  updated_at: 2017-04-08 04:29:58.967663000 Z
+team2:
+  id: 2
+  name: Boston Red Sox
+  data_name: bos
+  created_at: 2017-04-08 04:29:58.977825000 Z
+  updated_at: 2017-04-08 04:29:58.977825000 Z
+team3:
+  id: 3
+  name: New York Yankees
+  data_name: nyy
+  created_at: 2017-04-08 04:29:58.987433000 Z
+  updated_at: 2017-04-08 04:29:58.987433000 Z
+team4:
+  id: 4
+  name: Tampa Bay Rays
+  data_name: tb
+  created_at: 2017-04-08 04:29:58.995079000 Z
+  updated_at: 2017-04-08 04:29:58.995079000 Z
+team5:
+  id: 5
+  name: Toronto Blue Jays
+  data_name: tor
+  created_at: 2017-04-08 04:29:58.998066000 Z
+  updated_at: 2017-04-08 04:29:58.998066000 Z
+team6:
+  id: 6
+  name: Atlanta Braves
+  data_name: atl
+  created_at: 2017-04-08 04:29:59.000795000 Z
+  updated_at: 2017-04-08 04:29:59.000795000 Z
+team7:
+  id: 7
+  name: Miami Marlins
+  data_name: mia
+  created_at: 2017-04-08 04:29:59.003217000 Z
+  updated_at: 2017-04-08 04:29:59.003217000 Z
+team8:
+  id: 8
+  name: New York Mets
+  data_name: nym
+  created_at: 2017-04-08 04:29:59.005306000 Z
+  updated_at: 2017-04-08 04:29:59.005306000 Z
+team9:
+  id: 9
+  name: Philadelphia Phillies
+  data_name: phi
+  created_at: 2017-04-08 04:29:59.007381000 Z
+  updated_at: 2017-04-08 04:29:59.007381000 Z
+team10:
+  id: 10
+  name: Washington Nationals
+  data_name: wsh
+  created_at: 2017-04-08 04:29:59.009314000 Z
+  updated_at: 2017-04-08 04:29:59.009314000 Z
+team11:
+  id: 11
+  name: Chicago White Sox
+  data_name: chw
+  created_at: 2017-04-08 04:29:59.011269000 Z
+  updated_at: 2017-04-08 04:29:59.011269000 Z
+team12:
+  id: 12
+  name: Cleveland Indians
+  data_name: cle
+  created_at: 2017-04-08 04:29:59.013215000 Z
+  updated_at: 2017-04-08 04:29:59.013215000 Z
+team13:
+  id: 13
+  name: Detroit Tigers
+  data_name: det
+  created_at: 2017-04-08 04:29:59.015146000 Z
+  updated_at: 2017-04-08 04:29:59.015146000 Z
+team14:
+  id: 14
+  name: Kansas City Royals
+  data_name: kc
+  created_at: 2017-04-08 04:29:59.017210000 Z
+  updated_at: 2017-04-08 04:29:59.017210000 Z
+team15:
+  id: 15
+  name: Minnesota Twins
+  data_name: min
+  created_at: 2017-04-08 04:29:59.019151000 Z
+  updated_at: 2017-04-08 04:29:59.019151000 Z
+team16:
+  id: 16
+  name: Chicago Cubs
+  data_name: chc
+  created_at: 2017-04-08 04:29:59.021102000 Z
+  updated_at: 2017-04-08 04:29:59.021102000 Z
+team17:
+  id: 17
+  name: Cincinnati Reds
+  data_name: cin
+  created_at: 2017-04-08 04:29:59.023035000 Z
+  updated_at: 2017-04-08 04:29:59.023035000 Z
+team18:
+  id: 18
+  name: Milwaukee Brewers
+  data_name: mil
+  created_at: 2017-04-08 04:29:59.025311000 Z
+  updated_at: 2017-04-08 04:29:59.025311000 Z
+team19:
+  id: 19
+  name: Pittsburgh Pirates
+  data_name: pit
+  created_at: 2017-04-08 04:29:59.027513000 Z
+  updated_at: 2017-04-08 04:29:59.027513000 Z
+team20:
+  id: 20
+  name: St. Louis Cardinals
+  data_name: stl
+  created_at: 2017-04-08 04:29:59.029629000 Z
+  updated_at: 2017-04-08 04:29:59.029629000 Z
+team21:
+  id: 21
+  name: Houston Astros
+  data_name: hou
+  created_at: 2017-04-08 04:29:59.031547000 Z
+  updated_at: 2017-04-08 04:29:59.031547000 Z
+team22:
+  id: 22
+  name: Los Angeles Angels
+  data_name: laa
+  created_at: 2017-04-08 04:29:59.034026000 Z
+  updated_at: 2017-04-08 04:29:59.034026000 Z
+team23:
+  id: 23
+  name: Oakland Athletics
+  data_name: oak
+  created_at: 2017-04-08 04:29:59.036024000 Z
+  updated_at: 2017-04-08 04:29:59.036024000 Z
+team24:
+  id: 24
+  name: Seattle Mariners
+  data_name: sea
+  created_at: 2017-04-08 04:29:59.037899000 Z
+  updated_at: 2017-04-08 04:29:59.037899000 Z
+team25:
+  id: 25
+  name: Texas Rangers
+  data_name: tex
+  created_at: 2017-04-08 04:29:59.039797000 Z
+  updated_at: 2017-04-08 04:29:59.039797000 Z
+team26:
+  id: 26
+  name: Arizona Diamondbacks
+  data_name: ari
+  created_at: 2017-04-08 04:29:59.041715000 Z
+  updated_at: 2017-04-08 04:29:59.041715000 Z
+team27:
+  id: 27
+  name: Colorado Rockies
+  data_name: col
+  created_at: 2017-04-08 04:29:59.043623000 Z
+  updated_at: 2017-04-08 04:29:59.043623000 Z
+team28:
+  id: 28
+  name: Los Angeles Dodgers
+  data_name: lad
+  created_at: 2017-04-08 04:29:59.045585000 Z
+  updated_at: 2017-04-08 04:29:59.045585000 Z
+team29:
+  id: 29
+  name: San Diego Padres
+  data_name: sd
+  created_at: 2017-04-08 04:29:59.047503000 Z
+  updated_at: 2017-04-08 04:29:59.047503000 Z
+team30:
+  id: 30
+  name: San Francisco Giants
+  data_name: sf
+  created_at: 2017-04-08 04:29:59.049635000 Z
+  updated_at: 2017-04-08 04:29:59.049635000 Z

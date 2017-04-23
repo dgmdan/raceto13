@@ -18,6 +18,3 @@
 
 .DS_Store
 /.idea
-
-# The 2014 season VCR file is too large for git
-/fixtures/vcr_cassettes/mlb_scores_2014.yml

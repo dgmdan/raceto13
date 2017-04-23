@@ -41,10 +41,8 @@ namespace :game_state do
     GameState.reset!
     start_date = Date.parse('2014-03-22')
     end_date = Date.parse('2014-09-28')
-    VCR.use_cassette("mlb_scores_2014") do
-      (start_date..end_date).each do |date|
-        GameState.scrape_games!(date)
-      end
+    (start_date..end_date).each do |date|
+      GameState.scrape_games!(date)
     end
   end
 
