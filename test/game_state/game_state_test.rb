@@ -20,8 +20,8 @@ class GameStateTest < ActiveSupport::TestCase
         GameState.scrape_games!(date)
       end
 
-      # 162 games * 30 teams / 2 teams per game + 2 fixture games = 2432 games
-      assert_equal 2432, Game.count
+      # 2428 known games in 2014 season + 2 fixture games = 2430 games
+      assert_equal 2430, Game.count
     end
   end
 end
