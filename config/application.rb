@@ -45,5 +45,8 @@ module Runspool
         enable_starttls_auto: false,
         ssl:                  true
     }
+
+    # Enable web console
+    config.web_console.whitelisted_ips = ENV['WEB_CONSOLE_IPS']
   end
 end
