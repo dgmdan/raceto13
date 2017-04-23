@@ -33,7 +33,7 @@ class GameState
       # Create hits for those who earned one
       League.all.each do |league|
         next if league.complete?
-        entries = league.entries.where('team_id = ? OR team_id = ?', game.home_team, game.away_team)
+        entries = league.entries.where('team_id = ? OR team_id = ?', game.home_team.id, game.away_team.id)
         entries.each do |entry|
           if entry.team == game.home_team
             check_for_hit!(entry, game.id, query_date, game.home_score, true)

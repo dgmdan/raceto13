@@ -2,5 +2,5 @@
 entry<%= u+1 %>:
   user: user1
   league: league2
-  team: team<%= u+1 %>
+  team_id: <%= u+1 %>
 <% end %>
