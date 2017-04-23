@@ -1,16 +1,16 @@
-one:
+league1:
   name: Beginning of Season League
-  user: user
+  user: user1
   starts_at: 2015-04-04
   ends_at: 2015-10-02
 
-two:
+league2:
   name: Late-season League
-  user: user
-  starts_at: 2015-09-01
-  ends_at: 2015-10-02
+  user: user1
+  starts_at: 2014-09-01
+  ends_at: 2014-09-28
 
-future:
+league3:
   name: Future-starting League
   user: user
   starts_at: 2020-01-01

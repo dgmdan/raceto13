@@ -1,3 +1,4 @@
+require 'byebug'
 require 'rake'
 require 'test_helper'
 
@@ -15,13 +16,31 @@ class GameStateTest < ActiveSupport::TestCase
 
       # Get all scores for 2014 season
       start_date = Date.parse('2014-03-30')
-      end_date = Date.parse('2014-09-28')
+      end_date = Date.parse('2014-09-28') + 1
       (start_date..end_date).each do |date|
         GameState.scrape_games!(date)
       end
 
-      # 2428 known games in 2014 season + 2 fixture games = 2430 games
-      assert_equal 2430, Game.count
+      assert_equal 2428, Game.count
+    end
+  end
+
+  test "winner is chosen at the end of regular season" do
+    Runspool::Application.load_tasks
+    Rake::Task['import_data:teams'].invoke
+    GameState.reset!
+    Rake::Task['game_state:assign_teams'].invoke
+    VCR.use_cassette("mlb_scores_2014") do
+      league = leagues(:league2)
+      (league.starts_at.to_date..league.ends_at.to_date+1).each do |date|
+        GameState.scrape_games!(date)
+      end
+      first_winners = league.winners(1)
+      second_winners = league.winners(2)
+      byebug
+      assert_equal 2, first_winners.count
+      assert_equal 1, second_winners.count
+      assert league.complete?
     end
   end
 end

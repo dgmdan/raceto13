@@ -31,7 +31,7 @@ class GameState
 
     games.each do |game|
       # Create hits for those who earned one
-      League.started.each do |league|
+      League.all.each do |league|
         next if league.complete?
         entries = league.entries.where('team_id = ? OR team_id = ?', game.home_team, game.away_team)
         entries.each do |entry|
@@ -45,7 +45,7 @@ class GameState
     end
 
     # With the new hits, see if any entries have won
-    League.started.each do |league|
+    League.all.each do |league|
       next if league.complete?
       winners = league.get_and_record_winners!(query_date)
       if winners.size > 0

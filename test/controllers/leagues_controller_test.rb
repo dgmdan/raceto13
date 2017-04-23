@@ -4,7 +4,7 @@ class LeaguesControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
   setup do
-    @league = leagues(:one)
+    @league = leagues(:league1)
   end
 
   test "should not allow non-admin users" do

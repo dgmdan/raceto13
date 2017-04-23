@@ -1,1 +1,5 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+<% 30.times do |u| %>
+entry<%= u %>:
+  user: user1
+  league: league2
+<% end %>

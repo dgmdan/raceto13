@@ -1,7 +1,7 @@
 one:
-  league: leagues(:one)
+  league: leagues(:league1)
   user: users(:user0)
 
 two:
-  league: leagues(:one)
+  league: leagues(:league1)
   user: users(:admin)

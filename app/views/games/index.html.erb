@@ -30,9 +30,9 @@
         <!-- Game ID <%= game.id.to_s %> -->
         <tr>
           <td><%= link_to game.started_on, game %></td>
-          <td><%= game.away_team.name %></td>
+          <td><% if game.away_team %><%= game.away_team.name %><% end %></td>
           <td><%= game.away_score %></td>
-          <td><%= game.home_team.name %></td>
+          <td><% if game.home_team %><%= game.home_team.name %><% end %></td>
           <td><%= game.home_score %></td>
         </tr>
     <% end %>

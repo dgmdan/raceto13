@@ -7,8 +7,7 @@ class League < ActiveRecord::Base
 
   validates :name, :starts_at, :ends_at, presence: true
 
-  scope :started, -> { where('starts_at <= ?', Time.now)  }
-  scope :full, -> { joins(:entries).where('entries.cancelled_at IS NULL').group('leagues.id').having('COUNT(entries.id) = ?', Team.count) }
+  scope :full, -> { joins(:entries).where('entries.cancelled_at IS NULL').group('leagues.id').having('COUNT(entries.id) = 30') }
 
   def available_teams
     Team.all - entries.active.map(&:team)
@@ -127,6 +126,10 @@ class League < ActiveRecord::Base
 
   def losers
     entries.where(won_at: nil)
+  end
+
+  def winners(place)
+    entries.where(won_place: place)
   end
 
 end
