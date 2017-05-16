@@ -79,6 +79,7 @@ Rails.application.configure do
 
   # Mail sending
   config.action_mailer.default_url_options = { host: 'raceto13.com' }
-  config.action_mailer.asset_host = 'http://raceto13.com/images'
+  config.action_mailer.asset_host = 'https://raceto13.com/images'
   config.action_mailer.delivery_method = :sendmail
+  # config.action_mailer.perform_deliveries = true
 end
