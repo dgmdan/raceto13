@@ -47,7 +47,7 @@
   <%= form_tag({action: 'buy'}, {method: :post, id: 'buy_entries'}) do %>
     <p>
       <%= label_tag 'league_id', 'League' %>: <%= select_tag 'league_id', options_from_collection_for_select(@leagues, 'id', 'name') %>&nbsp;&nbsp;
-      <%= label_tag 'quantity', 'Quantity (min 2, max 5)' %>: <%= text_field_tag 'quantity', nil, autofocus: true, value: '1' %>&nbsp;&nbsp;<b>Cost</b>: <span id="cost">$5</span>&nbsp;
+      <%= label_tag 'quantity', 'Quantity (min 2, max 5)' %>: <%= text_field_tag 'quantity', nil, autofocus: true, value: '2' %>&nbsp;&nbsp;<b>Cost</b>: <span id="cost">$5</span>&nbsp;
       <input type="submit" class="btn btn-primary" value="Buy" id="buy"/>
     </p>
   <% end %>
