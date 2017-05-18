@@ -13,6 +13,11 @@ class ApplicationController < ActionController::Base
   def console
   end
 
+  def test_email
+    ActionMailer::Base.mail(from: 'Race To 13 <bot@raceto13.com>', to: 'danmadere@gmail.com', subject: 'Test from pool' , body: 'we get signal').deliver_now
+    redirect_to root_path
+  end
+
   def authenticate_admin!
     redirect_to new_user_session_path unless current_user && current_user.admin?
   end
