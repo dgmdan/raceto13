@@ -1,7 +1,7 @@
 $(document).ready(function(){
     $('input#quantity').on('keyup paste',function(){
         if ($.isNumeric($('input#quantity').val())) {
-            $('#cost').text('$'+$('#quantity').val()*10);
+            $('#cost').text('$'+$('#quantity').val()*5);
         }
         else {
             $('#cost').text('');
