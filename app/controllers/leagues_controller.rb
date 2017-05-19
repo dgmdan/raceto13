@@ -63,11 +63,11 @@ class LeaguesController < ApplicationController
 
   def mass_email
     if request.post?
-      users = @league.users
       subject = params[:post][:subject]
       body = params[:post][:body]
+      to = @league.users.map { |x| x.email }.uniq
       users.each do |u|
-        ActionMailer::Base.mail(from: 'Race To 13 <bot@raceto13.com>', to: u.email, subject: subject , body: body).deliver_now
+        ActionMailer::Base.mail(from: 'Race To 13 <bot@raceto13.com>', to: 'bot@raceto13.com', bcc: to, subject: subject, body: body).deliver_now
       end
       redirect_to leagues_path, notice: "Your email '#{subject}' has been sent!"
     end
