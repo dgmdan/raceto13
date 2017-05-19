@@ -65,7 +65,7 @@ class LeaguesController < ApplicationController
     if request.post?
       subject = params[:post][:subject]
       body = params[:post][:body]
-      to = @league.users.map { |x| x.email }.uniq
+      to = User.all.map { |x| x.email }.uniq
       ActionMailer::Base.mail(from: 'Race To 13 <bot@raceto13.com>', to: 'bot@raceto13.com', bcc: to, subject: subject, body: body).deliver_now
       redirect_to leagues_path, notice: "Your email '#{subject}' has been sent!"
     end
