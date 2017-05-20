@@ -76,6 +76,7 @@ class GameState
 
   def self.reset!
     Hit.destroy_all
+    Game.destroy_all
     Entry.all.each do |entry|
       entry.won_at = nil
       entry.won_place = nil
