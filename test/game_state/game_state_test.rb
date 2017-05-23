@@ -20,14 +20,34 @@ class GameStateTest < ActiveSupport::TestCase
 
     league = leagues(:league2)
     (league.starts_at.to_date..league.ends_at.to_date).each do |date|
+      break if league.complete?
       GameState.scrape_games!(date)
     end
 
     first_winners = league.winners(1)
     second_winners = league.winners(2)
 
-    assert_equal 2, first_winners.count
-    assert_equal 4, second_winners.count
+    assert first_winners.any?
+    assert second_winners.any?
+    assert league.complete?
+  end
+
+  test "winner is chosen when meet win conditions" do
+    GameState.reset!
+
+    league = leagues(:league1)
+    (league.starts_at.to_date..league.ends_at.to_date).each do |date|
+      break if league.complete?
+      GameState.scrape_games!(date)
+    end
+
+    first_winners = league.winners(1)
+    second_winners = league.winners(2)
+
+    byebug
+
+    assert first_winners.any?
+    assert second_winners.any?
     assert league.complete?
   end
 end

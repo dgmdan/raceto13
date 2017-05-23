@@ -1,8 +1,8 @@
 league1:
   name: Beginning of Season League
   user: user1
-  starts_at: 2015-04-04
-  ends_at: 2015-10-02
+  starts_at: 2014-03-30
+  ends_at: 2014-09-28
 
 league2:
   name: Late-season League
