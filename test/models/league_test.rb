@@ -20,7 +20,9 @@ class LeagueTest < ActiveSupport::TestCase
       league.save
     end
   end
+
   test "gets available teams" do
+    @league.entries.destroy_all
     available_teams = @league.available_teams
     assert_instance_of Array, available_teams
     assert_equal Team.count, available_teams.count
@@ -31,8 +33,10 @@ class LeagueTest < ActiveSupport::TestCase
   end
 
   test "detect when league is complete" do
-    Entry.create(user:users(:user0), league:leagues(:league1), won_at: Time.now, won_place: 1)
-    Entry.create(user:users(:user0), league:leagues(:league1), won_at: Time.now, won_place: 2)
+    entry = @league.entries.first
+    entry.won_at = Time.now
+    entry.won_place = 1
+    entry.save!
     assert @league.complete?
   end
 
@@ -46,6 +50,7 @@ class LeagueTest < ActiveSupport::TestCase
   end
 
   test "detect when league isn't full" do
+    @league.entries.first.destroy
     refute_includes League.full, @league
   end
 

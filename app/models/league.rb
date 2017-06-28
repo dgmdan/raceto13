@@ -1,9 +1,9 @@
 class League < ActiveRecord::Base
   belongs_to :user
-  has_many :league_users
+  has_many :league_users, dependent: :destroy
   has_many :users, through: :league_users
-  has_many :entries
-  has_many :hits, through: :entries
+  has_many :entries, dependent: :destroy
+  has_many :hits, through: :entries, dependent: :destroy
 
   validates :name, :starts_at, :ends_at, presence: true
 

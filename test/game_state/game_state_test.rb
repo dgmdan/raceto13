@@ -44,8 +44,6 @@ class GameStateTest < ActiveSupport::TestCase
     first_winners = league.winners(1)
     second_winners = league.winners(2)
 
-    byebug
-
     assert first_winners.any?
     assert second_winners.any?
     assert league.complete?

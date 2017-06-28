@@ -1,5 +1,10 @@
 <% 30.times do |u| %>
-entry<%= u+1 %>:
+league1entry<%= u+1 %>:
+  user: user1
+  league: league1
+  team_id: <%= u+1 %>
+
+league2entry<%= u+1 %>:
   user: user1
   league: league2
   team_id: <%= u+1 %>
