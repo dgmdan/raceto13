@@ -8,11 +8,6 @@
           <%= devise_error_messages! %>
           <%= render partial: 'form', locals: {f:f} %>
 
-          <div class="form-group">
-            <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-            <%= f.password_field :current_password, autocomplete: "off", class: 'form-control' %>
-          </div>
-
           <p>
             <b>Avatar</b><br/>
             To set or change your avatar, visit <a href="https://en.gravatar.com/" target="_blank">Gravatar</a>, create a profile and upload your image.
