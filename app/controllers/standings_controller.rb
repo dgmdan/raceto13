@@ -27,11 +27,20 @@ class StandingsController < ApplicationController
           games_played: game_count,
           gravatar_url: entry.user.gravatar_url
       }
+
+      # add the "highest miss" for each entry. used in sorting.
+      (0..13).each do |i|
+        runs = 13 - i
+        if !entry.hits.where(runs: runs).any?
+          entry_minimal[:highest_miss] = runs
+          break
+        end
+      end
       @entries << entry_minimal
     end
 
-    # Sort by winners, then run count (descending), then games played (ascending)
-    @entries.sort_by! { |e| [e[:won_place] || 99, -e[:run_count], e[:games_played]] }
+    # Sort by winners, then run count (descending), then games played (ascending), then highest miss (ascending)
+    @entries.sort_by! { |e| [e[:won_place] || 99, -e[:run_count], e[:games_played], e[:highest_miss]] }
 
     # Figure out rankings
     current_rank, current_runs, current_games_played = nil, nil, nil
