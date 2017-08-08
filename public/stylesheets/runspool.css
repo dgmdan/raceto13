@@ -53,3 +53,7 @@ span.winner-icon {
 img.gravatar {
     height:30px;
 }
+
+span.new-hit {
+    color:orangered;
+}
