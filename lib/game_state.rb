@@ -53,12 +53,12 @@ class GameState
 
         # Send an email to winners
         winners.each do |entry|
-          UserMailer.win_email(entry, winners.count).deliver_now if entry.user.notification_types.where(name: 'conclude').any?
+          UserMailer.win_email(entry, winners.count).deliver_later if entry.user.notification_types.where(name: 'conclude').any?
         end
 
         # Send an email to losers
         league.losers.each do |entry|
-          UserMailer.conclusion_email(entry, winners).deliver_now if entry.user.notification_types.where(name: 'conclude').any?
+          UserMailer.conclusion_email(entry, winners).deliver_later if entry.user.notification_types.where(name: 'conclude').any?
         end
       end
     end
@@ -107,7 +107,7 @@ class GameState
     if Hit.where(entry: entry, runs: runs).empty?
       Rails.logger.debug "Creating hit for entry #{entry.id}, date #{query_date}, runs #{runs}"
       hit = Hit.create(entry: entry, hit_on: query_date, runs: runs, game_id: game_id)
-      UserMailer.hit_email(hit).deliver_now if entry.user.notification_types.where(name: 'hit').any? && enable_emails
+      UserMailer.hit_email(hit).deliver_later if entry.user.notification_types.where(name: 'hit').any? && enable_emails
     end
   end
 

@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   end
 
   def test_email
-    ActionMailer::Base.mail(from: 'Race To 13 <bot@raceto13.com>', to: 'danmadere@gmail.com', subject: 'Test from pool' , body: 'we get signal').deliver_now
+    ActionMailer::Base.mail(from: 'Race To 13 <bot@raceto13.com>', to: 'danmadere@gmail.com', subject: 'Test from pool' , body: 'we get signal').deliver_later
     redirect_to root_path
   end
 

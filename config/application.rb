@@ -45,5 +45,8 @@ module Runspool
     # Enable web console
     config.web_console.whitelisted_ips = ENV['WEB_CONSOLE_IPS']
     config.web_console.development_only = false
+
+    # Use active job
+    config.active_job.queue_adapter = :sidekiq
   end
 end

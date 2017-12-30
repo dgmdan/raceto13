@@ -1,0 +1,4 @@
+# configuration file for Sidekiq
+:queues:
+  - default
+  - mailers

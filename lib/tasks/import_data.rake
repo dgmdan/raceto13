@@ -14,11 +14,7 @@ namespace :import_data do
 
   desc 'Import MLB games for the next day based on current data'
   task :advance => [:environment] do |t|
-    last_game_date = Game.any? ? Game.maximum('started_on') : (Date.today-1)
-    # There are days with no MLB games, so we need to keep advancing the date and trying again until we reach the current date
-    last_game_date.upto(Date.today-1) { |current_date|
-      GameState.scrape_games!(current_date)
-    }
+    ScrapeScoresJob.perform_later
   end
 
   desc 'Import MLB scores for a given date'
