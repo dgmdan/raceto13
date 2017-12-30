@@ -14,14 +14,6 @@ module Runspool
 
     # Serve static assets
     config.public_file_server.enabled = true
-    config.serve_static_files = true
-
-    # Compress JavaScripts and CSS.
-    config.assets.js_compressor = :uglifier
-    config.assets.css_compressor = :sass
-    config.assets.gzip = true
-    config.assets.compile = false
-
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers

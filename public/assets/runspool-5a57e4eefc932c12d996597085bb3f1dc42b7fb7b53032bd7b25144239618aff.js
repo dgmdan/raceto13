@@ -1,0 +1,1 @@
+$(document).ready(function(){$("input#quantity").on("keyup paste",function(){$.isNumeric($("input#quantity").val())?$("#cost").text("$"+5*$("#quantity").val()):$("#cost").text("")}),$("form#buy_entries").submit(function(){return confirm("I've read the rules and will pay the "+$("#cost").text()+" entry fee.")}),$("span.runs-marker").tooltip({placement:"top"})});
