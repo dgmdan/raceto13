@@ -1,4 +1,4 @@
-class League < ActiveRecord::Base
+class League < ApplicationRecord
   belongs_to :user
   has_many :league_users, dependent: :destroy
   has_many :users, through: :league_users
@@ -43,7 +43,7 @@ class League < ActiveRecord::Base
           ORDER BY hits DESC, game_count ASC
           LIMIT 1;
           """
-    first_counts_results = ActiveRecord::Base.connection.execute(first_counts_sql)
+    first_counts_results = ApplicationRecord.connection.execute(first_counts_sql)
     return [] if first_counts_results.count == 0
 
     # Get all first-place winners
@@ -61,7 +61,7 @@ class League < ActiveRecord::Base
         GROUP BY entries.id
         HAVING COUNT(DISTINCT hits.id) = #{first_winning_hits} AND COUNT(DISTINCT games.id) = #{first_winning_game_count};
     """
-    first_winners = ActiveRecord::Base.connection.execute(first_winners_sql)
+    first_winners = ApplicationRecord.connection.execute(first_winners_sql)
     first_entry_ids = first_winners.map { |x| x['entry_id'] }
     first_game_count = first_winners.first['game_count'] ? first_winners.first['game_count'] : first_winning_game_count
 
@@ -81,7 +81,7 @@ class League < ActiveRecord::Base
         ORDER BY hits DESC, game_count ASC
         LIMIT 1;
     """
-    second_counts_results = ActiveRecord::Base.connection.execute(second_counts_sql)
+    second_counts_results = ApplicationRecord.connection.execute(second_counts_sql)
     second_winning_hits = second_counts_results.first['hits']
     second_winning_game_count = second_counts_results.first['game_count']
     second_winners_sql = """
@@ -96,7 +96,7 @@ class League < ActiveRecord::Base
         GROUP BY entries.id
         HAVING COUNT(DISTINCT hits.id) = #{second_winning_hits} AND COUNT(DISTINCT games.id) = #{second_winning_game_count};
     """
-    second_winners = ActiveRecord::Base.connection.execute(second_winners_sql)
+    second_winners = ApplicationRecord.connection.execute(second_winners_sql)
     second_entry_ids = second_winners.map { |x| x['entry_id'] }
     second_game_count = second_winners.first['game_count'] ? second_winners.first['game_count'] : second_winning_game_count
 
@@ -129,7 +129,7 @@ class League < ActiveRecord::Base
         GROUP BY entries.id
         HAVING (#{second_game_count} - COUNT(DISTINCT games.id)) >= (#{second_winning_hits} - COUNT(DISTINCT hits.id));
     """
-    first_tie_results = ActiveRecord::Base.connection.execute(first_tie_sql)
+    first_tie_results = ApplicationRecord.connection.execute(first_tie_sql)
     if first_tie_results.count > 0
       # Set the game_count for pending winner entries, indicating that other entries cannot exceed this number of games played.
       Entry.where(id: first_entry_ids, game_count: nil).update_all(game_count: first_winning_game_count)

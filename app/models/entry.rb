@@ -14,7 +14,7 @@ class MaxLeagueEntriesValidator < ActiveModel::Validator
   end
 end
 
-class Entry < ActiveRecord::Base
+class Entry < ApplicationRecord
   belongs_to :user
   belongs_to :league
   belongs_to :team

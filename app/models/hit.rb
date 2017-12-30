@@ -1,4 +1,4 @@
-class Hit < ActiveRecord::Base
+class Hit < ApplicationRecord
   belongs_to :entry
   belongs_to :game
 

@@ -1,4 +1,4 @@
-class Team < ActiveRecord::Base
+class Team < ApplicationRecord
 
   validates :name, :data_name, presence: true
   validates :data_name, uniqueness: true

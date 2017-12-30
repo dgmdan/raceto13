@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.8'
-gem 'coffee-rails', '~> 4.2.1'
+gem 'rails', '5.1.4'
+gem 'coffee-rails', '~> 4.2'
 gem 'therubyracer', platforms: :ruby
 gem 'jquery-rails'
 gem 'turbolinks', require: false
