@@ -22,7 +22,7 @@
               <td><%= entry.created_at.strftime('%D %r') %></td>
               <td>
                 <% if entry.team %>
-                    <%= image_tag "/assets/teams/#{entry.team.data_name}.png" %>&nbsp;
+                    <%= image_tag "teams/#{entry.team.data_name}.png" %>&nbsp;
                     <%= entry.team.name %>
                 <% else %>
                     Pending
