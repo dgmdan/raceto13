@@ -11,6 +11,7 @@ gem 'sdoc', '~> 0.4.2', group: :doc
 gem 'espn_scraper', git: 'git://github.com/aj0strow/espn-scraper.git'
 gem 'devise'
 gem 'pg'
+gem 'puma'
 gem 'sidekiq'
 gem 'uglifier', '>= 2.7.2'
 gem 'web-console', '~> 3.3'
