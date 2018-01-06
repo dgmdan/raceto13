@@ -5,5 +5,5 @@ test:
   host: 'localhost'
   port: '6379'
 production:
-  host: 'scorecrazy.klwmuf.0001.usw2.cache.amazonaws.com'
+  host: 'raceto13.klwmuf.0001.usw2.cache.amazonaws.com'
   port: '6379'
