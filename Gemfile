@@ -20,7 +20,6 @@ gem 'will_paginate', '~> 3.1.0'
 gem 'rails_12factor', group: :production
 
 group :development, :test do
-  gem 'capistrano-rails'
   gem 'sqlite3'
   gem 'byebug'
   gem 'spring'
