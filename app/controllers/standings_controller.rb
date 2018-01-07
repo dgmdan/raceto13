@@ -4,8 +4,17 @@ class StandingsController < ApplicationController
   def index
     @entries = []
 
+    # Determine which league is selected
+    if params[:league_id]
+      @selected_league = League.find(params[:league_id])
+    elsif current_user.leagues.any?
+      @selected_league = current_user.leagues.first
+    else
+      raise ActiveRecord::RecordNotFound
+    end
+
     # Parse all entries and hits
-    entries = Entry.all
+    entries = @selected_league.entries
     entries.each do |entry|
       if entry.game_count
         game_count = entry.game_count

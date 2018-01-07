@@ -3,6 +3,10 @@ body {
     padding-top:50px;
 }
 
+/* League selection tabs */
+.nav-tabs {
+    background-color: lightgray;
+}
 
 /* Entries page */
 input#quantity {

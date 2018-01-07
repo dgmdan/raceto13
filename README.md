@@ -18,8 +18,4 @@ The more complete set of rules are in entries/index.html.erb
 
 ### TODO
 
-* Take games played into account when determining winners
-* Support for multiple leagues (right now League + LeagueUser models exist but aren't fully implemented)
-* Give admins ability to mass email players
-* Browsable game history
 * Live scores of in progress games on the scoreboard

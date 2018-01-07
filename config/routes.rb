@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'standings/:league_id' => 'standings#index', as: 'league_standings'
   get 'standings' => 'standings#index'
 
   resource :leagues
