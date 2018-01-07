@@ -1,7 +1,7 @@
 <ul class="nav nav-tabs">
   <% current_user.leagues.each do |league| %>
     <li<% if league == @selected_league %> class="active"<% end %>>
-      <%= link_to league.name, league_standings_path(league) %>
+      <%= link_to league.name, { controller: link_controller, action: link_action, league_id: league.id } %>
     </li>
   <% end %>
 </ul>

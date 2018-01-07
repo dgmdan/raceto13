@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   end
 
   def rules
+    @selected_league = determine_league(current_user, params[:league_id])
   end
 
   def console
@@ -23,6 +24,17 @@ class ApplicationController < ActionController::Base
   end
 
   protected
+
+  def determine_league(user=nil, league_id=nil)
+    raise ActiveRecord::RecordNotFound unless user
+    if league_id
+      League.find(league_id)
+    elsif user.leagues.any?
+      user.leagues.first
+    else
+      raise ActiveRecord::RecordNotFound
+    end
+  end
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :email, :password, :password_confirmation, { notification_type_ids: [] }]) # { |u| u.permit(, ) }

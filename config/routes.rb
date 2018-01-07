@@ -2,7 +2,10 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
   root 'application#home'
+
+  get 'rules/:league_id' => 'application#rules'
   get 'rules' => 'application#rules'
+
   get 'console' => 'application#console'
   get 'test712' => 'application#test_email'
 
