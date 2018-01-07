@@ -3,19 +3,19 @@ class EntriesController < ApplicationController
   before_action :authenticate_admin!, only: [:pay]
 
   def index
-    @entries = current_user.entries
-    @leagues = League.all
+    @selected_league = determine_league(current_user, params[:league_id])
+    @entries = @selected_league.entries.where(user: current_user)
   end
 
   def buy
-    @league = current_user.leagues.where(id: params[:league_id]).first
+    @league = League.joins(:users).where('users.id': current_user.id, id: params[:league_id]).first
 
     # Create the entries
     success = 0
     errors = 0
     error = ''
     params[:quantity].to_i.times do
-      entry = Entry.new(user: current_user, league: @league)
+      entry = Entry.new(user: current_user, league_id: params[:league_id])
       if entry.save
         success += 1
       else
@@ -34,7 +34,7 @@ class EntriesController < ApplicationController
       message = "Unable to purchase entries. #{error}"
     end
 
-    redirect_to entries_path, notice: message
+    redirect_to league_entries_path(@league.id), notice: message
   end
 
   def pay

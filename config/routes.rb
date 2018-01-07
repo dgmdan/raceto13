@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   end
 
   get 'entries' => 'entries#index'
+  get 'entries/:league_id' => 'entries#index', as: 'league_entries'
   resources :entries do
     collection do
       post 'buy'
