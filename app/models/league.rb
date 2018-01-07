@@ -7,6 +7,8 @@ class League < ApplicationRecord
 
   validates :name, :starts_at, :ends_at, presence: true
 
+  before_create :set_invite_uuid
+
   scope :full, -> { joins(:entries).where('entries.cancelled_at IS NULL').group('leagues.id').having('COUNT(entries.id) = 30') }
 
   def available_teams
@@ -168,6 +170,12 @@ class League < ApplicationRecord
 
   def winners(place)
     entries.where(won_place: place)
+  end
+
+  private
+
+  def set_invite_uuid
+    self.invite_uuid = SecureRandom.uuid
   end
 
 end
