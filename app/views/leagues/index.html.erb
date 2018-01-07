@@ -9,29 +9,41 @@
 
       <p id="notice"><%= notice %></p>
 
-      <table class="table">
-        <thead>
-        <tr>
-          <th>Start Date</th>
-          <th>Name</th>
-          <th>Admin</th>
-        </tr>
-        </thead>
+      <% if @leagues.any? %>
 
-        <tbody>
-        <% @leagues.each do |league| %>
+        <table class="table">
+          <thead>
+          <tr>
+            <th>Start Date</th>
+            <th>Name</th>
+            <th>Commissioner Actions</th>
+            <% if current_user.admin? %><th>Admin Actions</th><% end %>
+          </tr>
+          </thead>
+
+          <tbody>
+          <% @leagues.each do |league| %>
             <tr>
               <td><%= league.starts_at ? league.starts_at.strftime('%m/%d/%Y') : 'None' %></td>
               <td><%= league.name %></td>
               <td>
+                <input type="button" value="Invite by link">
+              </td>
+              <% if current_user.admin? %>
+                <td>
                   <%= link_to 'Email', mass_email_league_path(league) %> |
                   <%= link_to 'Edit', edit_league_path(league) %> |
                   <%= link_to 'Destroy', league, method: :delete, data: { confirm: 'Are you sure?' } %>
-              </td>
+                </td>
+              <% end %>
             </tr>
-        <% end %>
-        </tbody>
-      </table>
+          <% end %>
+          </tbody>
+        </table>
+
+      <% else %>
+        <p>You don't own any leagues yet.</p>
+      <% end %>
 
       <p><%= link_to 'New League', new_league_path %></p>
 

@@ -48,10 +48,8 @@
       <ul class="nav navbar-nav">
         <li><%= link_to 'Rules', rules_path %></li>
         <% if user_signed_in? %>
-            <% if current_user.admin? %>
-                <li><%= link_to 'Leagues', leagues_path %></li>
-            <% end %>
-            <li><%= link_to 'My Entries', entries_path %></li>
+            <li><%= link_to 'Leagues', leagues_path %></li>
+            <li><%= link_to 'Entries', entries_path %></li>
             <li><%= link_to 'Standings', standings_path %></li>
             <li><%= link_to 'Game log', games_path %></li>
             <li><%= link_to 'Settings', edit_user_registration_path %></li>

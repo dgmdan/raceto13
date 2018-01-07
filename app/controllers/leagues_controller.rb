@@ -1,17 +1,17 @@
 class LeaguesController < ApplicationController
-  before_action :authenticate_admin!, except: [:join]
-  before_action :authenticate_user!, only: [:join]
-  before_action :set_league, only: [:show, :edit, :update, :destroy, :join, :update_teams, :mass_email]
+  before_action :authenticate_admin!, only: [:show, :edit, :update, :destroy, :mass_email]
+  before_action :authenticate_user!, only: [:index, :new, :create]
 
   # GET /leagues
   # GET /leagues.json
   def index
-    @leagues = League.all
+    @leagues = current_user.owned_leagues
   end
 
   # GET /leagues/1
   # GET /leagues/1.json
   def show
+    @league = League.find(params[:id])
     @teams = Team.order('name')
     # @my_teams = current_user.team_users.where(league: @league, team_id: params[:team_id])
   end
@@ -23,6 +23,7 @@ class LeaguesController < ApplicationController
 
   # GET /leagues/1/edit
   def edit
+    @league = League.find(params[:id])
   end
 
   # POST /leagues
@@ -33,6 +34,7 @@ class LeaguesController < ApplicationController
 
     respond_to do |format|
       if @league.save
+        LeagueUser.create!(user: current_user, league: @league)
         format.html { redirect_to leagues_path, notice: 'League was successfully created.' }
       else
         format.html { render :new }
@@ -43,6 +45,7 @@ class LeaguesController < ApplicationController
   # PATCH/PUT /leagues/1
   # PATCH/PUT /leagues/1.json
   def update
+    @league = League.find(params[:id])
     respond_to do |format|
       if @league.update(league_params)
         format.html { redirect_to leagues_path, notice: 'League was successfully updated.' }
@@ -55,13 +58,15 @@ class LeaguesController < ApplicationController
   # DELETE /leagues/1
   # DELETE /leagues/1.json
   def destroy
-    @league.destroy
+    league = League.find(params[:id])
+    league.destroy
     respond_to do |format|
       format.html { redirect_to leagues_url, notice: 'League was successfully destroyed.' }
     end
   end
 
   def mass_email
+    @league = League.find(params[:id])
     if request.post?
       subject = params[:post][:subject]
       body = params[:post][:body]
@@ -72,10 +77,6 @@ class LeaguesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_league
-      @league = League.find(params[:id])
-    end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def league_params
