@@ -1,22 +1,24 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
+  # home
   root 'application#home'
 
+  # rules
   get 'rules/:league_id' => 'application#rules'
   get 'rules' => 'application#rules'
 
-  get 'console' => 'application#console'
-  get 'test712' => 'application#test_email'
-
+  # leagues/invites
+  get 'invite/:invite_uuid' => 'leagues#invite', as: 'invite', constraints: { invite_uuid: /[\w\d\-]+/ }
+  resource :leagues
   resources :leagues do
     member do
-      post 'join'
       get 'mass_email'
       post 'mass_email'
     end
   end
 
+  # entries
   get 'entries' => 'entries#index'
   get 'entries/:league_id' => 'entries#index', as: 'league_entries'
   resources :entries do
@@ -29,11 +31,11 @@ Rails.application.routes.draw do
     end
   end
 
+  # standings
   get 'standings/:league_id' => 'standings#index', as: 'league_standings'
   get 'standings' => 'standings#index'
 
-  resource :leagues
-
+  # games
   get 'games' => 'games#index'
   resources :games do
     collection do
@@ -42,6 +44,15 @@ Rails.application.routes.draw do
     end
   end
 
+  # authentication
   devise_for :users, controllers: { registrations: 'registrations' }
+
+  # rails console
+  get 'console' => 'application#console'
+
+  # test sending email
+  get 'test712' => 'application#test_email'
+
+  # sidekiq monitoring
   mount Sidekiq::Web => '/kiq712'
 end
