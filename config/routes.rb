@@ -10,13 +10,13 @@ Rails.application.routes.draw do
 
   # leagues/invites
   get 'invite/:invite_uuid' => 'leagues#invite', as: 'invite', constraints: { invite_uuid: /[\w\d\-]+/ }
-  resource :leagues
   resources :leagues do
     member do
       get 'mass_email'
       post 'mass_email'
     end
   end
+  resource :leagues
 
   # entries
   get 'entries' => 'entries#index'
