@@ -37,7 +37,7 @@ class ApplicationController < ActionController::Base
   end
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :email, :password, :password_confirmation, { notification_type_ids: [] }]) # { |u| u.permit(, ) }
-    devise_parameter_sanitizer.permit(:account_update, keys: [:name, :email, :password, :password_confirmation, :current_password, { notification_type_ids: [] }])  # { |u| u.permit({ notification_type_ids: [] }, ) }
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :email, :password, :password_confirmation, :invite_uuid, { notification_type_ids: [] }])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:name, :email, :password, :password_confirmation, :current_password, { notification_type_ids: [] }])
   end
 end
