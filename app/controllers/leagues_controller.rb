@@ -76,6 +76,17 @@ class LeaguesController < ApplicationController
     end
   end
 
+  def invite
+    league = League.where(invite_uuid: params[:invite_uuid]).first
+    if user_signed_in?
+      league_user = LeagueUser.where(user: current_user, league: league)
+      LeagueUser.create(user: current_user, league: league) if league_user.nil?
+      redirect_to league_entries_path(league), notice: 'You have joined this league.'
+    else
+      redirect_to new_user_registration_path(invite_uuid: params[:invite_uuid]), notice: 'Please complete registration to join the league.'
+    end
+  end
+
   private
 
     # Never trust parameters from the scary internet, only allow the white list through.
