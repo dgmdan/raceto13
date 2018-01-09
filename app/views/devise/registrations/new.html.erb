@@ -1,3 +1,13 @@
+<% if flash[:notice] %>
+    <div class="container">
+      <div class="col-md-12">
+        <div class="alert alert-info" role="alert">
+          <%= flash[:notice] %>
+        </div>
+      </div>
+    </div>
+<% end %>
+
 <div class="container">
   <div class="row">
     <div class="col-md-12">
@@ -7,6 +17,9 @@
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
           <%= devise_error_messages! %>
           <%= render partial: 'form', locals: {f:f} %>
+          <% if params[:invite_uuid] %>
+            <input type="hidden" name="invite_uuid" value="<%= params[:invite_uuid] %>">
+          <% end %>
           <%= f.submit "Sign up", class: 'btn btn-default btn-primary' %>
       <% end %>
     </div>
