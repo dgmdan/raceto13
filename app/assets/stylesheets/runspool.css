@@ -3,9 +3,15 @@ body {
     padding-top:50px;
 }
 
-/* League selection tabs */
+/* Global - League selection tabs */
 .nav-tabs {
     background-color: lightgray;
+}
+
+/* Leagues pages */
+
+input.invite-url {
+    width:100px;
 }
 
 /* Entries page */

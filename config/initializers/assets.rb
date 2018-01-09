@@ -12,8 +12,8 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
 Rails.application.config.assets.precompile += %w( *.js *.css )
-Rails.application.config.assets.js_compressor = :uglifier
-Rails.application.config.assets.css_compressor = :sass
-Rails.application.config.assets.gzip = true
-Rails.application.config.assets.compile = false
-Rails.application.config.assets.digest = true
+#Rails.application.config.assets.js_compressor = :uglifier
+#Rails.application.config.assets.css_compressor = :sass
+#Rails.application.config.assets.gzip = true
+#Rails.application.config.assets.compile = false
+#Rails.application.config.assets.digest = true
