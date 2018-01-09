@@ -27,7 +27,13 @@
               <td><%= league.starts_at ? league.starts_at.strftime('%m/%d/%Y') : 'None' %></td>
               <td><%= league.name %></td>
               <td>
-                <input type="button" value="Invite by link">
+                <% if league.invite_uuid %>
+                  <input type="button" value="Invite" class="invite-btn" data-invite-area="invite-area-<%= league.id %>">
+                  <span id="invite-area-<%= league.id %>" style="display:none">
+                    Share this link:
+                    <input type="text" class="invite-url" value="<%= invite_url(invite_uuid: league.invite_uuid) %>">
+                  </span>
+                <% end %>
               </td>
               <% if current_user.admin? %>
                 <td>
@@ -51,3 +57,5 @@
   </div>
 
 </div>
+
+<%= javascript_include_tag 'leagues.js' %>
