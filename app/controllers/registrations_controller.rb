@@ -1,5 +1,10 @@
 class RegistrationsController < Devise::RegistrationsController
 
+  # redirect to entries page after sign up
+  def after_sign_up_path_for(resource)
+    entries_path
+  end
+
   def create
     super
 
