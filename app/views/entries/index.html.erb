@@ -13,7 +13,7 @@
       </div>
   <% end %>
 
-  <% if @entries.any? %>
+  <% if @entries and @entries.any? %>
       <table class="table table-striped">
         <tr>
           <th>Received</th>
@@ -39,15 +39,18 @@
     <p>You don't have any entries.</p>
   <% end %>
 
-  <h2>Buy entries</h2>
-  <hr/>
-
-  <%= form_tag({action: 'buy'}, {method: :post, id: 'buy_entries'}) do %>
-    <p>
-      <input type="hidden" name="league_id" value="<%= @selected_league.id %>">
-      <%= label_tag 'quantity', 'Quantity (min 2, max 5)' %>: <%= text_field_tag 'quantity', nil, autofocus: true, value: '2' %>&nbsp;&nbsp;<b>Cost</b>: <span id="cost">$10</span>&nbsp;
-      <input type="submit" class="btn btn-primary" value="Buy" id="buy"/>
-    </p>
+  <% if @selected_league %>
+    <h2>Buy entries</h2>
+    <hr/>
+    <%= form_tag({action: 'buy'}, {method: :post, id: 'buy_entries'}) do %>
+      <p>
+        <input type="hidden" name="league_id" value="<%= @selected_league.id %>">
+        <%= label_tag 'quantity', 'Quantity (min 2, max 5)' %>: <%= text_field_tag 'quantity', nil, autofocus: true, value: '2' %>&nbsp;&nbsp;<b>Cost</b>: <span id="cost">$10</span>&nbsp;
+        <input type="submit" class="btn btn-primary" value="Buy" id="buy"/>
+      </p>
+    <% end %>
+  <% else %>
+    <p>You can't buy entries because you don't belong to a league.</p>
   <% end %>
 
 </div>

@@ -4,7 +4,9 @@ class EntriesController < ApplicationController
 
   def index
     @selected_league = determine_league(current_user, params[:league_id])
-    @entries = @selected_league.entries.where(user: current_user)
+    if @selected_league
+      @entries = @selected_league.entries.where(user: current_user)
+    end
   end
 
   def buy

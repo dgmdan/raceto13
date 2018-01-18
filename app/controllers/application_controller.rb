@@ -31,8 +31,6 @@ class ApplicationController < ActionController::Base
       League.find(league_id)
     elsif user.leagues.any?
       user.leagues.first
-    else
-      raise ActiveRecord::RecordNotFound
     end
   end
 
