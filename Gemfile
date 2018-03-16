@@ -26,4 +26,5 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.5'
   gem 'minitest-rails-capybara'
   gem 'mocha'
+  gem 'rails-controller-testing'
 end

@@ -10,14 +10,14 @@ class EntriesController < ApplicationController
   end
 
   def buy
-    @league = League.joins(:users).where('users.id': current_user.id, id: params[:league_id]).first
+    league = League.joins(:league_users).where('league_users.user_id': current_user.id, id: params[:league_id]).first
 
     # Create the entries
     success = 0
     errors = 0
     error = ''
     params[:quantity].to_i.times do
-      entry = Entry.new(user: current_user, league_id: params[:league_id])
+      entry = Entry.new(user: current_user, league: league)
       if entry.save
         success += 1
       else
@@ -36,7 +36,7 @@ class EntriesController < ApplicationController
       message = "Unable to purchase entries. #{error}"
     end
 
-    redirect_to league_entries_path(@league.id), notice: message
+    redirect_to league_entries_path(league), notice: message
   end
 
   def pay

@@ -3,15 +3,18 @@ league1:
   user: user1
   starts_at: 2014-03-30
   ends_at: 2014-09-28
+  invite_uuid: a
 
 league2:
   name: Late-season League
   user: user1
   starts_at: 2014-09-01
   ends_at: 2014-09-28
+  invite_uuid: a
 
 league3:
   name: Future-starting League
-  user: user
+  user: user1
   starts_at: 2020-01-01
   ends_at: 2020-10-02
+  invite_uuid: a

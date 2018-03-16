@@ -8,30 +8,30 @@ class EntriesControllerTest < ActionController::TestCase
     get :index
     assert_response :success
     assert_not_nil assigns(:entries)
-    assert_not_nil assigns(:leagues)
+    assert_not_nil assigns(:selected_league)
   end
 
   test "should allow buying an entry" do
     sign_in users(:user0)
-    assert_difference('Entry.count') do
-      post :buy, quantity: 1, league_id: leagues(:league1).id
+    assert_difference 'Entry.count', 2 do
+      post :buy, params: { quantity: '2', league_id: leagues(:league1).id }
     end
-    assert_redirected_to entries_path
+    assert_redirected_to league_entries_path(leagues(:league1).id)
   end
 
   test "should prevent buying an entry on errors" do
     sign_in users(:user0)
-    post :buy, quantity: 5, league_id: leagues(:league1).id
+    post :buy, params: { quantity: 5, league_id: leagues(:league1).id }
     assert_no_difference('Entry.count') do
-      post :buy, quantity: 1, league_id: leagues(:league1).id
+      post :buy, params: { quantity: 1, league_id: leagues(:league1).id }
     end
-    assert_redirected_to entries_path
+    assert_redirected_to league_entries_path(leagues(:league1))
   end
 
   test "should allow an unpaid entry to be marked paid" do
     sign_in users(:admin)
-    post :buy, quantity: 1, league_id: leagues(:league1).id
-    post :pay, id: Entry.first
+    post :buy, params: { quantity: 1, league_id: leagues(:league1).id }
+    post :pay, params: { id: Entry.first }
     assert_not_nil Entry.first.paid_at
   end
 

@@ -1,0 +1,7 @@
+<% 6.times do |u| %>
+  <% 3.times do |l| %>
+    leagueuser<%= u %>-<%= l %>:
+      league: league<%= l %>
+      user: user<%= u %>
+  <% end %>
+<% end %>

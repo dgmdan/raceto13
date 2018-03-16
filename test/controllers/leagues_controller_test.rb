@@ -7,12 +7,6 @@ class LeaguesControllerTest < ActionController::TestCase
     @league = leagues(:league1)
   end
 
-  test "should not allow non-admin users" do
-    sign_in users(:user0)
-    get :index
-    assert_redirected_to new_user_session_path
-  end
-
   test "should get index" do
     sign_in users(:admin)
     get :index
@@ -29,7 +23,7 @@ class LeaguesControllerTest < ActionController::TestCase
   test "should create league" do
     sign_in users(:admin)
     assert_difference('League.count') do
-      post :create, league: { name: @league.name, starts_at: Date.today, ends_at: Date.tomorrow, user_id: @league.user_id }
+      post :create, params: { league: { name: @league.name, starts_at: Date.today, ends_at: Date.tomorrow, user_id: @league.user_id } }
     end
 
     assert_redirected_to leagues_path
@@ -37,26 +31,26 @@ class LeaguesControllerTest < ActionController::TestCase
 
   test "should show league" do
     sign_in users(:admin)
-    get :show, id: @league
+    get :show, params: { id: @league }
     assert_response :success
   end
 
   test "should get edit" do
     sign_in users(:admin)
-    get :edit, id: @league
+    get :edit, params: { id: @league }
     assert_response :success
   end
 
   test "should update league" do
     sign_in users(:admin)
-    patch :update, id: @league, league: { name: @league.name, user_id: @league.user_id }
+    patch :update, params: { id: @league, league: { name: @league.name, user_id: @league.user_id } }
     assert_redirected_to leagues_path
   end
 
   test "should destroy league" do
     sign_in users(:admin)
     assert_difference('League.count', -1) do
-      delete :destroy, id: @league
+      delete :destroy, params: { id: @league }
     end
     assert_redirected_to leagues_path
   end

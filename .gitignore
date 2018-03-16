@@ -18,7 +18,9 @@
 
 .DS_Store
 /.idea
+/.old-idea
 *.swp
+.byebug_history
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
