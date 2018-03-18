@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def determine_league(user=nil, league_id=nil)
-    raise ActiveRecord::RecordNotFound unless user
+    return unless user
     if league_id
       League.find(league_id)
     elsif user.leagues.any?
