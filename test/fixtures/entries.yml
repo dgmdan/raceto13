@@ -3,7 +3,9 @@ league1entry<%= u+1 %>:
   user: user1
   league: league1
   team_id: <%= u+1 %>
+<% end %>
 
+<% 30.times do |u| %>
 league2entry<%= u+1 %>:
   user: user1
   league: league2

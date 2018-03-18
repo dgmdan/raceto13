@@ -10,7 +10,7 @@ class EntriesController < ApplicationController
   end
 
   def buy
-    league = League.joins(:league_users).where('league_users.user_id': current_user.id, id: params[:league_id]).first
+    league = current_user.leagues.find(params[:league_id])
 
     # Create the entries
     success = 0

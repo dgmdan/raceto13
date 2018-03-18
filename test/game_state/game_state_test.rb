@@ -3,8 +3,6 @@ require 'test_helper'
 
 class GameStateTest < ActiveSupport::TestCase
   test "entire season game count equals known value" do
-    GameState.reset!
-
     # Get all scores for 2014 season
     start_date = Date.parse('2014-03-30')
     end_date = Date.parse('2014-09-28')
@@ -16,9 +14,7 @@ class GameStateTest < ActiveSupport::TestCase
   end
 
   test "winner is chosen at the end of regular season" do
-    GameState.reset!
-
-    league = leagues(:league2)
+    league = leagues(:league1)
     (league.starts_at.to_date..league.ends_at.to_date).each do |date|
       break if league.complete?
       GameState.scrape_games!(date)
@@ -33,8 +29,6 @@ class GameStateTest < ActiveSupport::TestCase
   end
 
   test "winner is chosen when meet win conditions" do
-    GameState.reset!
-
     league = leagues(:league1)
     (league.starts_at.to_date..league.ends_at.to_date).each do |date|
       break if league.complete?

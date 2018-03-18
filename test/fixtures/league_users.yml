@@ -5,3 +5,9 @@
       user: user<%= u %>
   <% end %>
 <% end %>
+
+<% 3.times do |l| %>
+  leagueadmin<%= l %>:
+    league: league<= l %>
+    user: admin
+<% end %>

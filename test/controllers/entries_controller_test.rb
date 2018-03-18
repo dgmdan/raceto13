@@ -30,15 +30,14 @@ class EntriesControllerTest < ActionController::TestCase
 
   test "should allow an unpaid entry to be marked paid" do
     sign_in users(:admin)
-    post :buy, params: { quantity: 1, league_id: leagues(:league1).id }
     post :pay, params: { id: Entry.first }
     assert_not_nil Entry.first.paid_at
   end
 
   test "should not allow non-admin users to mark things as paid" do
     sign_in users(:user0)
-    post :buy, quantity: 1, league_id: leagues(:league1).id
-    post :pay, id: Entry.first
+    post :buy, params: { quantity: 1, league_id: leagues(:league1).id }
+    post :pay, params: { id: Entry.first }
     assert_nil Entry.first.paid_at
   end
 end
