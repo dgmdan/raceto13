@@ -1,0 +1,5 @@
+scrape_scores_job:
+  cron: "*/5 0-4,12-23 * * *"
+  class: "ScrapeScoresJob"
+  queue: default
+  active_job: true
