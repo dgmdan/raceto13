@@ -7,6 +7,6 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 NotificationType.create [
-                          { name: 'hit', description: 'When my score increases', created_at: DateTime.now, updated_at: DateTime.now },
-                          { name: 'conclude', description: 'When the pool ends', created_at: DateTime.now, updated_at: DateTime.now }
+                          { id: 1, name: 'hit', description: 'When my score increases', created_at: DateTime.now, updated_at: DateTime.now },
+                          { id: 2, name: 'conclude', description: 'When the pool ends', created_at: DateTime.now, updated_at: DateTime.now }
                         ]
