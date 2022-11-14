@@ -1,51 +1,18 @@
-require_relative 'boot'
+require_relative "boot"
 
-# Pick the frameworks you want:
-require 'rails/all'
+require "rails/all"
 
-# Require the gems listed in Gemfile, including any gems
-# you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
+require "action_text"
 
-module Runspool
+module RunsPool
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 5.1
-
-    # Serve static assets
-    config.public_file_server.enabled = true
+    config.load_defaults 7.0
 
     # Settings in config/environments/* take precedence over those specified here.
-    # Application configuration should go into files in config/initializers
-    # -- all .rb files in that directory are automatically loaded.
-
-    # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
-    # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
-    config.time_zone = 'Eastern Time (US & Canada)'
-
-    # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
-    # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
-    # config.i18n.default_locale = :de
-
-    # Need this for logs on heroku
-    config.logger = ActiveSupport::Logger.new(STDOUT)
-
-    # Mail sending
-    config.action_mailer.delivery_method = :smtp
-		config.action_mailer.smtp_settings = {
-      address: "email-smtp.us-west-2.amazonaws.com",
-      port: 587,
-      user_name: ENV["SES_SMTP_USERNAME"],
-      password: ENV["SES_SMTP_PASSWORD"],
-      authentication: :login,
-      enable_starttls_auto: true
-    }
-
-    # Enable web console
-    config.web_console.whitelisted_ips = ENV['WEB_CONSOLE_IPS']
-    config.web_console.development_only = false
-
-    # Use active job
-    config.active_job.queue_adapter = :sidekiq
+    # Application configuration can go into files in config/initializers
+    # -- all .rb files in that directory are automatically loaded after loading
+    # the framework and any gems in your application.
   end
 end

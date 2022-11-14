@@ -1,31 +1,21 @@
 source 'https://rubygems.org'
 
-gem 'rails', '5.1.4'
-gem 'coffee-rails', '~> 4.2'
-gem 'therubyracer', platforms: :ruby
-gem 'jquery-rails'
-gem 'turbolinks', require: false
-gem 'jbuilder', '~> 2.0'
-gem 'sass-rails', '~> 5.0'
-gem 'sdoc', '~> 0.4.2', group: :doc
-gem 'espn_scraper', git: 'git://github.com/aj0strow/espn-scraper.git'
+gem 'rails', '~> 7.0'
+gem 'espn_scraper', git: 'https://github.com/aj0strow/espn-scraper.git'
 gem 'devise'
-gem 'pg'
-gem 'puma'
 gem 'sidekiq'
-gem 'sidekiq-cron', '~> 0.6.3'
-gem 'uglifier', '>= 2.7.2'
-gem 'web-console', '~> 3.3'
+gem 'sidekiq-cron'
+gem 'uglifier'
 gem 'webmock'
-gem 'will_paginate', '~> 3.1.0'
+gem 'will_paginate'
 gem 'rails_12factor', group: :production
+gem 'sassc-rails'
 
 group :development, :test do
+  gem 'pg'
+  gem 'puma'
   gem 'sqlite3'
   gem 'byebug'
-  gem 'spring'
-  gem 'rspec-rails', '~> 3.5'
-  gem 'minitest-rails-capybara'
   gem 'mocha'
-  gem 'rails-controller-testing'
+  gem "redis", "~> 5.0"
 end
