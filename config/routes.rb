@@ -46,7 +46,7 @@ Rails.application.routes.draw do
   end
 
   # authentication
-  devise_for :users, path: 'registrations'
+  devise_for :users, controllers: { registrations: 'registrations' }
 
   # rails console
   get 'console' => 'application#console'
