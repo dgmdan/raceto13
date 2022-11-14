@@ -1,4 +1,4 @@
-class AddStartsAtToLeagues < ActiveRecord::Migration[4.2]
+class AddStartsAtToLeagues < ActiveRecord::Migration
   def change
     add_column :leagues, :starts_at, :datetime
   end

@@ -1,4 +1,4 @@
-class CreateEntries < ActiveRecord::Migration[4.2]
+class CreateEntries < ActiveRecord::Migration
   def change
     create_table :entries do |t|
       t.references :user, index: true

@@ -1,4 +1,4 @@
-class AddGameIdToHits < ActiveRecord::Migration[4.2]
+class AddGameIdToHits < ActiveRecord::Migration
   def change
     add_reference :hits, :game
   end

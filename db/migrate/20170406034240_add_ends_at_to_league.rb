@@ -1,4 +1,4 @@
-class AddEndsAtToLeague < ActiveRecord::Migration[4.2]
+class AddEndsAtToLeague < ActiveRecord::Migration
   def change
     add_column :leagues, :ends_at, :datetime
   end

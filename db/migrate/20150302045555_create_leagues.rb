@@ -1,4 +1,4 @@
-class CreateLeagues < ActiveRecord::Migration[4.2]
+class CreateLeagues < ActiveRecord::Migration
   def change
     create_table :leagues do |t|
       t.string :name

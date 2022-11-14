@@ -1,4 +1,4 @@
-class CreateHits < ActiveRecord::Migration[4.2]
+class CreateHits < ActiveRecord::Migration
   def change
     create_table :hits do |t|
       t.references :entry, index: true

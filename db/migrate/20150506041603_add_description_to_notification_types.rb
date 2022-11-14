@@ -1,4 +1,4 @@
-class AddDescriptionToNotificationTypes < ActiveRecord::Migration[4.2]
+class AddDescriptionToNotificationTypes < ActiveRecord::Migration
   def change
     add_column :notification_types, :description, :string
   end

@@ -1,4 +1,4 @@
-class AddWinnerFieldsToLeagues < ActiveRecord::Migration[4.2]
+class AddWinnerFieldsToLeagues < ActiveRecord::Migration
   def change
     add_column :entries, :won_at, :datetime
   end

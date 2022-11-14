@@ -1,4 +1,4 @@
-class AddWonToPlaceEntries < ActiveRecord::Migration[4.2]
+class AddWonToPlaceEntries < ActiveRecord::Migration
   def change
     add_column :entries, :won_place, :integer, after: :won_at
   end

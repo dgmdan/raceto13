@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(version: 20180109003447) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "entries", id: :serial, force: :cascade do |t|
+  create_table "entries", force: :cascade do |t|
     t.integer "user_id"
     t.integer "league_id"
     t.integer "team_id"
@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 20180109003447) do
     t.index ["user_id"], name: "index_entries_on_user_id"
   end
 
-  create_table "games", id: :serial, force: :cascade do |t|
+  create_table "games", force: :cascade do |t|
     t.date "started_on"
     t.integer "home_team_id"
     t.integer "away_team_id"
@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 20180109003447) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "hits", id: :serial, force: :cascade do |t|
+  create_table "hits", force: :cascade do |t|
     t.integer "entry_id"
     t.integer "runs"
     t.date "hit_on"
@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(version: 20180109003447) do
     t.index ["entry_id"], name: "index_hits_on_entry_id"
   end
 
-  create_table "league_users", id: :serial, force: :cascade do |t|
+  create_table "league_users", force: :cascade do |t|
     t.integer "league_id"
     t.integer "user_id"
     t.datetime "created_at", null: false
@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(version: 20180109003447) do
     t.index ["user_id"], name: "index_league_users_on_user_id"
   end
 
-  create_table "leagues", id: :serial, force: :cascade do |t|
+  create_table "leagues", force: :cascade do |t|
     t.string "name"
     t.integer "user_id"
     t.datetime "created_at", null: false
@@ -73,21 +73,21 @@ ActiveRecord::Schema.define(version: 20180109003447) do
     t.index ["user_id"], name: "index_leagues_on_user_id"
   end
 
-  create_table "notification_type_users", id: :serial, force: :cascade do |t|
+  create_table "notification_type_users", force: :cascade do |t|
     t.integer "notification_type_id"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "notification_types", id: :serial, force: :cascade do |t|
+  create_table "notification_types", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "description"
   end
 
-  create_table "teams", id: :serial, force: :cascade do |t|
+  create_table "teams", force: :cascade do |t|
     t.string "name"
     t.string "data_name"
     t.datetime "created_at", null: false
@@ -95,7 +95,7 @@ ActiveRecord::Schema.define(version: 20180109003447) do
     t.index ["data_name"], name: "index_teams_on_data_name", unique: true
   end
 
-  create_table "users", id: :serial, force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"

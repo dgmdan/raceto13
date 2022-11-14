@@ -1,4 +1,4 @@
-class CreateTeamUsers < ActiveRecord::Migration[4.2]
+class CreateTeamUsers < ActiveRecord::Migration
   def change
     create_table :team_users do |t|
       t.references :team, index: true
