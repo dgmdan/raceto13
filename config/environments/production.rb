@@ -93,4 +93,9 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # Mail sending
+  config.action_mailer.default_url_options = { host: 'raceto13.com' }
+  config.action_mailer.asset_host = 'https://raceto13.com/images'
+  config.action_mailer.perform_deliveries = true
 end
