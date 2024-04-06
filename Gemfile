@@ -17,5 +17,7 @@ group :development, :test do
   gem 'sqlite3'
   gem 'byebug'
   gem 'mocha'
-  gem "redis", "~> 5.0"
+  gem 'redis', '~> 5.0'
+  gem 'bundler-audit'
+  gem 'rails-controller-testing'
 end
