@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
     if league_id
       League.find(league_id)
     elsif user.leagues.any?
-      user.leagues.first
+      user.leagues.last
     end
   end
 
