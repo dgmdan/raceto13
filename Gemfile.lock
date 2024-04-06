@@ -89,6 +89,8 @@ GEM
     base64 (0.2.0)
     bcrypt (3.1.20)
     bigdecimal (3.1.7)
+    brakeman (6.1.2)
+      racc
     builder (3.2.4)
     bundler-audit (0.9.1)
       bundler (>= 1.2.0, < 3)
@@ -280,6 +282,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  brakeman
   bundler-audit
   byebug
   devise

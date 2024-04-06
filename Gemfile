@@ -20,4 +20,6 @@ group :development, :test do
   gem 'redis', '~> 5.0'
   gem 'bundler-audit'
   gem 'rails-controller-testing'
+  gem 'brakeman'
+  gem 'rubocop'
 end
