@@ -13,6 +13,7 @@ gem 'rails_12factor', group: :production
 group :development, :test do
   gem 'pg'
   gem 'puma'
+  gem 'rubocop', require: false
   gem 'sqlite3'
   gem 'byebug'
   gem 'mocha'
