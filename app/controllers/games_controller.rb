@@ -1,14 +1,16 @@
+# frozen_string_literal: true
+
 class GamesController < ApplicationController
-  before_action :authenticate_admin!, only: [:edit, :update, :destroy, :mass_entry]
-  before_action :authenticate_user!, only: [:index, :show]
+  before_action :authenticate_admin!, only: %i[edit update destroy mass_entry]
+  before_action :authenticate_user!, only: %i[index show]
   # before_action :set_game, only: [:show, :edit, :update, :destroy]
 
   def index
-    if params[:date]
-      @games = Game.where(started_on: params[:date])
-    else
-      @games = Game.order(:started_on)
-    end
+    @games = if params[:date]
+               Game.where(started_on: params[:date])
+             else
+               Game.order(:started_on)
+             end
     @games = @games.paginate(page: params[:page])
   end
 
@@ -17,27 +19,27 @@ class GamesController < ApplicationController
   end
 
   def mass_entry
-    if request.post?
-      rejected = Array.new
-      15.times do |count|
-        unless params[count.to_s]['home_team'].blank?
-          home_team = Team.find_by_data_name(params[count.to_s]['home_team'])
-          away_team = Team.find_by_data_name(params[count.to_s]['away_team'])
-          if home_team && away_team
-            game = Game.new
-            game.home_team = home_team
-            game.away_team = away_team
-            game.home_score = params[count.to_s]['home_score']
-            game.away_score = params[count.to_s]['away_score']
-            game.started_on = params['game']['date']
-            rejected << params[count.to_s]['away_team'] unless game.save
-          else
-            rejected << params[count.to_s]['away_team']
-          end
-        end
+    return unless request.post?
+
+    rejected = []
+    15.times do |count|
+      next if params[count.to_s]['home_team'].blank?
+
+      home_team = Team.find_by_data_name(params[count.to_s]['home_team'])
+      away_team = Team.find_by_data_name(params[count.to_s]['away_team'])
+      if home_team && away_team
+        game = Game.new
+        game.home_team = home_team
+        game.away_team = away_team
+        game.home_score = params[count.to_s]['home_score']
+        game.away_score = params[count.to_s]['away_score']
+        game.started_on = params['game']['date']
+        rejected << params[count.to_s]['away_team'] unless game.save
+      else
+        rejected << params[count.to_s]['away_team']
       end
-      redirect_to mass_entry_games_path, notice: 'Games created. Rejects: ' + rejected.to_s
     end
+    redirect_to mass_entry_games_path, notice: "Games created. Rejects: #{rejected}"
   end
 
   private

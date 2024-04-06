@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class LeaguesController < ApplicationController
-  before_action :authenticate_admin!, only: [:show, :edit, :update, :destroy, :mass_email]
-  before_action :authenticate_user!, only: [:index, :new, :create]
+  before_action :authenticate_admin!, only: %i[show edit update destroy mass_email]
+  before_action :authenticate_user!, only: %i[index new create]
 
   # GET /leagues
   # GET /leagues.json
@@ -67,30 +69,32 @@ class LeaguesController < ApplicationController
 
   def mass_email
     @league = League.find(params[:id])
-    if request.post?
-      subject = params[:post][:subject]
-      body = params[:post][:body]
-      to = User.all.map { |x| x.email }.uniq
-      ActionMailer::Base.mail(from: 'Race To 13 <bot@raceto13.com>', to: 'bot@raceto13.com', bcc: to, subject: subject, body: body).deliver_later
-      redirect_to leagues_path, notice: "Your email '#{subject}' has been sent!"
-    end
+    return unless request.post?
+
+    subject = params[:post][:subject]
+    body = params[:post][:body]
+    to = User.all.map(&:email).uniq
+    ActionMailer::Base.mail(from: 'Race To 13 <bot@raceto13.com>', to: 'bot@raceto13.com', bcc: to, subject:,
+                            body:).deliver_later
+    redirect_to leagues_path, notice: "Your email '#{subject}' has been sent!"
   end
 
   def invite
     league = League.where(invite_uuid: params[:invite_uuid]).first
     if user_signed_in?
-      league_user = LeagueUser.where(user: current_user, league: league)
-      LeagueUser.create(user: current_user, league: league) if league_user.nil?
+      league_user = LeagueUser.where(user: current_user, league:)
+      LeagueUser.create(user: current_user, league:) if league_user.nil?
       redirect_to league_entries_path(league), notice: 'You have joined this league.'
     else
-      redirect_to new_user_registration_path(invite_uuid: params[:invite_uuid]), notice: 'Please complete registration to join the league.'
+      redirect_to new_user_registration_path(invite_uuid: params[:invite_uuid]),
+                  notice: 'Please complete registration to join the league.'
     end
   end
 
   private
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def league_params
-      params.require(:league).permit(:name, :starts_at, :ends_at, :invite_uuid)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def league_params
+    params.require(:league).permit(:name, :starts_at, :ends_at, :invite_uuid)
+  end
 end

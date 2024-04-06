@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 class EntriesController < ApplicationController
   before_action :authenticate_user!
   before_action :authenticate_admin!, only: [:pay]
 
   def index
     @selected_league = determine_league current_user, params[:league_id]
-    if @selected_league
-      @entries = @selected_league.entries.where(user: current_user)
-    end
+    return unless @selected_league
+
+    @entries = @selected_league.entries.where(user: current_user)
   end
 
   def buy
@@ -17,7 +19,7 @@ class EntriesController < ApplicationController
     errors = 0
     error = ''
     params[:quantity].to_i.times do
-      entry = Entry.new(user: current_user, league: league)
+      entry = Entry.new(user: current_user, league:)
       if entry.save
         success += 1
       else
@@ -28,9 +30,9 @@ class EntriesController < ApplicationController
 
     # TODO: email a confirmation
 
-    if success > 0 && errors == 0
-      message = "You successfully purchased #{success} " + 'entry'.pluralize(success) + ". Good luck!"
-    elsif success > 0 && errors > 0
+    if success.positive? && errors.zero?
+      message = "You successfully purchased #{success} #{'entry'.pluralize(success)}. Good luck!"
+    elsif success.positive? && errors.positive?
       message = "Partial success! You have purchased #{success} " + 'entry'.pluralize(success) + " but you cannot purchase more. #{error}"
     else
       message = "Unable to purchase entries. #{error}"
@@ -47,5 +49,4 @@ class EntriesController < ApplicationController
     end
     redirect_to standings_path, notice: 'Entry is now marked paid.'
   end
-
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateLeagueUsers < ActiveRecord::Migration[6.0]
   def change
     create_table :league_users do |t|

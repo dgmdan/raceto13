@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'digest/md5'
 
 class User < ApplicationRecord
@@ -16,11 +18,11 @@ class User < ApplicationRecord
   validates :name, presence: true, uniqueness: true
 
   def to_s
-    self.email
+    email
   end
 
   def admin?
-    self.admin == true
+    admin == true
   end
 
   def gravatar_url
@@ -28,5 +30,4 @@ class User < ApplicationRecord
     hash = Digest::MD5.hexdigest(email_address)
     "http://www.gravatar.com/avatar/#{hash}"
   end
-
 end

@@ -1,7 +1,8 @@
-class RegistrationsController < Devise::RegistrationsController
+# frozen_string_literal: true
 
+class RegistrationsController < Devise::RegistrationsController
   # redirect to entries page after sign up
-  def after_sign_up_path_for(resource)
+  def after_sign_up_path_for(_resource)
     entries_path
   end
 
@@ -9,13 +10,13 @@ class RegistrationsController < Devise::RegistrationsController
     super
 
     # if new user passes a valid invite uuid, associate them to league
-    if resource.save and params[:invite_uuid]
-      leagues = League.where(invite_uuid: params[:invite_uuid])
-      if leagues.any?
-        league = leagues.first
-        LeagueUser.create!(user: resource, league: league)
-      end
-    end
+    return unless resource.save && params[:invite_uuid]
+
+    leagues = League.where(invite_uuid: params[:invite_uuid])
+    return unless leagues.any?
+
+    league = leagues.first
+    LeagueUser.create!(user: resource, league:)
   end
 
   protected

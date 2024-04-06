@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class StandingsControllerTest < ActionController::TestCase
@@ -8,11 +10,10 @@ class StandingsControllerTest < ActionController::TestCase
     assert_redirected_to new_user_session_path
   end
 
-  test "gets index" do
+  test 'gets index' do
     sign_in users(:user1)
     get :index
     assert_response :success
     assert_not_nil assigns(@entries)
   end
-
 end

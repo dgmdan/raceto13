@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
 class MaxUserEntriesValidator < ActiveModel::Validator
   def validate(record)
-    if Entry.active.where(user: record.user, league: record.league).where.not(id: record.id).count >= 5 && !record.user.admin
+    if Entry.active.where(user: record.user,
+                          league: record.league).where.not(id: record.id).count >= 5 && !record.user.admin
       record.errors.add :base, 'You have the maximum of 5 entries in this league.'
     end
   end
@@ -8,9 +11,9 @@ end
 
 class MaxLeagueEntriesValidator < ActiveModel::Validator
   def validate(record)
-    if League.full.include?(record.league)
-      record.errors.add :base, 'Entries to this league are sold out.'
-    end
+    return unless League.full.include?(record.league)
+
+    record.errors.add :base, 'Entries to this league are sold out.'
   end
 end
 
@@ -27,5 +30,5 @@ class Entry < ApplicationRecord
   scope :unassigned, -> { where(team_id: nil) }
   scope :assigned, -> { where.not(team_id: nil) }
   scope :winners, -> { where.not(won_at: nil) }
-  scope :losers, -> { where(won_at:nil) }
+  scope :losers, -> { where(won_at: nil) }
 end

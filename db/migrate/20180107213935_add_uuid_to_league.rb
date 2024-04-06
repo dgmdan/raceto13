@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddUuidToLeague < ActiveRecord::Migration[6.0][5.1]
   def change
     add_column :leagues, :invite_uuid, :string

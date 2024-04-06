@@ -1,5 +1,6 @@
-class UserMailer < ApplicationMailer
+# frozen_string_literal: true
 
+class UserMailer < ApplicationMailer
   def hit_email(hit)
     @hit = hit
     mail(to: @hit.entry.user.email, subject: "Congrats! Your team scored #{@hit.runs} runs")
