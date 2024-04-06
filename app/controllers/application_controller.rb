@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
   def determine_league(user=nil, league_id=nil)
     return unless user
     if league_id
-      League.find(league_id)
+      user.leagues.find league_id
     elsif user.leagues.any?
       user.leagues.last
     end
