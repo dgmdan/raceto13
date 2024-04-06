@@ -1,13 +1,11 @@
-<% 6.times do |u| %>
-  <% 3.times do |l| %>
-    leagueuser<%= u %>-<%= l %>:
-      league: league<%= l %>
-      user: user<%= u %>
-  <% end %>
+<% 18.times do |lu| %>
+leagueuser<%= lu %>%>:
+  league: league<%= rand(3) %>
+  user: user<%= rand(6) %>
 <% end %>
 
 <% 3.times do |l| %>
-  leagueadmin<%= l %>:
-    league: league<= l %>
-    user: admin
+leagueadmin<%= l %>:
+  league: league<= l %>
+  user: admin
 <% end %>
