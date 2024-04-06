@@ -3,14 +3,14 @@ class EntriesController < ApplicationController
   before_action :authenticate_admin!, only: [:pay]
 
   def index
-    @selected_league = determine_league(current_user, params[:league_id])
+    @selected_league = determine_league current_user, params[:league_id]
     if @selected_league
       @entries = @selected_league.entries.where(user: current_user)
     end
   end
 
   def buy
-    league = current_user.leagues.find(params[:league_id])
+    league = determine_league current_user, params[:league_id]
 
     # Create the entries
     success = 0
