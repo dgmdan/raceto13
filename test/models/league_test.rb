@@ -2,7 +2,7 @@ require 'test_helper'
 
 class LeagueTest < ActiveSupport::TestCase
   setup do
-    @league = leagues(:league1)
+    @league = leagues(:league2)
   end
 
   test "requires a name" do
@@ -43,7 +43,7 @@ class LeagueTest < ActiveSupport::TestCase
   test "detect when league is full" do
     6.times do |user_num|
       5.times do
-        Entry.create(user: users(:"user#{user_num}") , league: leagues(:league1))
+        Entry.create(user: users(:"user#{1+user_num}") , league: leagues(:league1))
       end
     end
     assert_includes League.full, @league

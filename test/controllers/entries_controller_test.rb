@@ -4,7 +4,7 @@ class EntriesControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
   test "should list my entries" do
-    sign_in users(:user0)
+    sign_in users(:user1)
     get :index
     assert_response :success
     assert_not_nil assigns(:entries)
@@ -12,7 +12,7 @@ class EntriesControllerTest < ActionController::TestCase
   end
 
   test "should allow buying an entry" do
-    sign_in users(:user0)
+    sign_in users(:user1)
     assert_difference 'Entry.count', 2 do
       post :buy, params: { quantity: '2', league_id: leagues(:league1).id }
     end
@@ -20,7 +20,7 @@ class EntriesControllerTest < ActionController::TestCase
   end
 
   test "should prevent buying an entry on errors" do
-    sign_in users(:user0)
+    sign_in users(:user1)
     post :buy, params: { quantity: 5, league_id: leagues(:league1).id }
     assert_no_difference('Entry.count') do
       post :buy, params: { quantity: 1, league_id: leagues(:league1).id }
@@ -35,7 +35,7 @@ class EntriesControllerTest < ActionController::TestCase
   end
 
   test "should not allow non-admin users to mark things as paid" do
-    sign_in users(:user0)
+    sign_in users(:user1)
     post :buy, params: { quantity: 1, league_id: leagues(:league1).id }
     post :pay, params: { id: Entry.first }
     assert_nil Entry.first.paid_at

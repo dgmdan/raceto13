@@ -1,5 +1,5 @@
 <% 6.times do |u| %>
-user<%= u %>:
+user<%= 1+u %>:
   email: user<%= u %>@gmail.com
   name: User <%= u %>
   encrypted_password: foo
