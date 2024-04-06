@@ -2,28 +2,24 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180109003447) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
+ActiveRecord::Schema[7.1].define(version: 2024_04_06_150109) do
   create_table "entries", force: :cascade do |t|
     t.integer "user_id"
     t.integer "league_id"
     t.integer "team_id"
-    t.datetime "paid_at"
-    t.datetime "cancelled_at"
+    t.datetime "paid_at", precision: nil
+    t.datetime "cancelled_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "won_at"
+    t.datetime "won_at", precision: nil
     t.integer "won_place"
     t.integer "game_count"
     t.index ["league_id"], name: "index_entries_on_league_id"
@@ -49,6 +45,7 @@ ActiveRecord::Schema.define(version: 20180109003447) do
     t.datetime "updated_at", null: false
     t.integer "game_id"
     t.index ["entry_id"], name: "index_hits_on_entry_id"
+    t.index ["game_id"], name: "index_hits_on_game_id"
   end
 
   create_table "league_users", force: :cascade do |t|
@@ -57,7 +54,6 @@ ActiveRecord::Schema.define(version: 20180109003447) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["league_id"], name: "index_league_users_on_league_id"
-    t.index ["user_id", "league_id"], name: "index_league_users_on_user_id_and_league_id", unique: true
     t.index ["user_id"], name: "index_league_users_on_user_id"
   end
 
@@ -66,8 +62,8 @@ ActiveRecord::Schema.define(version: 20180109003447) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "starts_at"
-    t.datetime "ends_at"
+    t.datetime "starts_at", precision: nil
+    t.datetime "ends_at", precision: nil
     t.string "invite_uuid"
     t.index ["invite_uuid"], name: "index_leagues_on_invite_uuid"
     t.index ["user_id"], name: "index_leagues_on_user_id"
@@ -78,6 +74,8 @@ ActiveRecord::Schema.define(version: 20180109003447) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["notification_type_id"], name: "index_notification_type_users_on_notification_type_id"
+    t.index ["user_id"], name: "index_notification_type_users_on_user_id"
   end
 
   create_table "notification_types", force: :cascade do |t|
@@ -99,15 +97,15 @@ ActiveRecord::Schema.define(version: 20180109003447) do
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
+    t.datetime "reset_password_sent_at", precision: nil
+    t.datetime "remember_created_at", precision: nil
     t.integer "sign_in_count", default: 0, null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
+    t.datetime "current_sign_in_at", precision: nil
+    t.datetime "last_sign_in_at", precision: nil
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.boolean "admin", default: false
     t.string "name"
     t.index ["email"], name: "index_users_on_email", unique: true
