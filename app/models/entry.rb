@@ -1,7 +1,7 @@
 class MaxUserEntriesValidator < ActiveModel::Validator
   def validate(record)
-    if Entry.where(user: record.user, league: record.league).active.count >= 5 and !record.user.admin
-      record.errors[:base] << 'You have the maximum of 5 entries in this league.'
+    if Entry.active.where(user: record.user, league: record.league).where.not(id: record.id).count >= 5 && !record.user.admin
+      record.errors.add :base, 'You have the maximum of 5 entries in this league.'
     end
   end
 end
@@ -9,7 +9,7 @@ end
 class MaxLeagueEntriesValidator < ActiveModel::Validator
   def validate(record)
     if League.full.include?(record.league)
-      record.errors[:base] << 'Entries to this league are sold out.'
+      record.errors.add :base, 'Entries to this league are sold out.'
     end
   end
 end
