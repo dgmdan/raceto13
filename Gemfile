@@ -9,6 +9,7 @@ gem 'uglifier'
 gem 'webmock'
 gem 'will_paginate'
 gem 'rails_12factor', group: :production
+gem 'figaro'
 
 group :development, :test do
   gem 'pg'

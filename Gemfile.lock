@@ -94,6 +94,8 @@ GEM
     et-orbi (1.2.7)
       tzinfo
     execjs (2.8.1)
+    figaro (1.2.0)
+      thor (>= 0.14.0, < 2)
     fugit (1.7.2)
       et-orbi (~> 1, >= 1.2.7)
       raabro (~> 1.4)
@@ -130,6 +132,8 @@ GEM
       net-protocol
     nio4r (2.5.8)
     nokogiri (1.13.9-x86_64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.13.9-x86_64-linux)
       racc (~> 1.4)
     orm_adapter (0.5.0)
     pg (1.4.4)
@@ -191,6 +195,7 @@ GEM
       fugit (~> 1)
       sidekiq (>= 4.2.1)
     sqlite3 (1.5.3-x86_64-darwin)
+    sqlite3 (1.5.3-x86_64-linux)
     thor (1.2.1)
     timeout (0.3.0)
     tzinfo (2.0.5)
@@ -211,11 +216,13 @@ GEM
 
 PLATFORMS
   x86_64-darwin-21
+  x86_64-linux
 
 DEPENDENCIES
   byebug
   devise
   espn_scraper!
+  figaro
   mocha
   pg
   puma
