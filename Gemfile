@@ -21,7 +21,6 @@ group :development, :test do
   gem 'puma'
   gem 'rails-controller-testing'
   gem 'redis', '~> 5.0'
-  gem 'rubocop', require: false
   gem 'rubocop'
   gem 'sqlite3'
 end
