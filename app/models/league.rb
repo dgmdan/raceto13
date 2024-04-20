@@ -12,8 +12,8 @@ class League < ApplicationRecord
   before_create :set_invite_uuid
 
   scope :full, lambda {
-                 joins(:entries).where('entries.cancelled_at IS NULL').group('leagues.id').having('COUNT(entries.id) = 30')
-               }
+    joins(:entries).where('entries.cancelled_at IS NULL').group('leagues.id').having('COUNT(entries.id) = 30')
+  }
 
   def available_teams
     Team.all - entries.active.map(&:team)
