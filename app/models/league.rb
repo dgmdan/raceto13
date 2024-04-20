@@ -40,7 +40,8 @@ class League < ApplicationRecord
           FROM entries
           JOIN hits ON hits.entry_id = entries.id
           JOIN teams ON teams.id = entries.team_id
-          JOIN games ON (games.home_team_id = teams.id OR games.away_team_id = teams.id) AND DATE(games.started_on) <= '#{ActiveRecord::Base.sanitize_sql query_date}'
+          JOIN games ON ((games.home_team_id = teams.id OR games.away_team_id = teams.id)
+            AND DATE(games.started_on) <= '#{ActiveRecord::Base.sanitize_sql query_date}')
           WHERE entries.league_id = #{id}
           AND entries.cancelled_at IS NULL
           AND entries.won_at IS NULL
@@ -60,12 +61,14 @@ class League < ApplicationRecord
         FROM entries
         JOIN hits ON hits.entry_id = entries.id
         JOIN teams ON teams.id = entries.team_id
-        JOIN games ON (games.home_team_id = teams.id OR games.away_team_id = teams.id) AND DATE(games.started_on) <= '#{ActiveRecord::Base.sanitize_sql query_date}'
+        JOIN games ON ((games.home_team_id = teams.id OR games.away_team_id = teams.id)
+          AND DATE(games.started_on) <= '#{ActiveRecord::Base.sanitize_sql query_date}')
         WHERE entries.league_id = #{id}
         AND entries.cancelled_at IS NULL
         AND entries.won_at IS NULL
         GROUP BY entries.id
-        HAVING COUNT(DISTINCT hits.id) = #{ActiveRecord::Base.sanitize_sql first_winning_hits} AND COUNT(DISTINCT games.id) = #{ActiveRecord::Base.sanitize_sql first_winning_game_count};
+        HAVING COUNT(DISTINCT hits.id) = #{ActiveRecord::Base.sanitize_sql first_winning_hits}
+          AND COUNT(DISTINCT games.id) = #{ActiveRecord::Base.sanitize_sql first_winning_game_count};
     "''
     first_winners = ApplicationRecord.connection.execute(first_winners_sql)
     first_entry_ids = first_winners.map { |x| x['entry_id'] }
@@ -73,12 +76,12 @@ class League < ApplicationRecord
 
     # Find second place winners
     second_counts_sql = ''"
-    SELECT COUNT(DISTINCT hits.id) hits,
-          COUNT(DISTINCT games.id) game_count
+    SELECT COUNT(DISTINCT hits.id) hits, COUNT(DISTINCT games.id) game_count
         FROM entries
         JOIN hits ON hits.entry_id = entries.id
         JOIN teams ON teams.id = entries.team_id
-        JOIN games ON (games.home_team_id = teams.id OR games.away_team_id = teams.id) AND DATE(games.started_on) <= '#{ActiveRecord::Base.sanitize_sql query_date}'
+        JOIN games ON ((games.home_team_id = teams.id OR games.away_team_id = teams.id)
+          AND DATE(games.started_on) <= '#{ActiveRecord::Base.sanitize_sql query_date}')
         WHERE entries.league_id = #{ActiveRecord::Base.sanitize_sql id}
         AND entries.cancelled_at IS NULL
         AND entries.won_at IS NULL
@@ -95,12 +98,14 @@ class League < ApplicationRecord
         FROM entries
         JOIN hits ON hits.entry_id = entries.id
         JOIN teams ON teams.id = entries.team_id
-        JOIN games ON (games.home_team_id = teams.id OR games.away_team_id = teams.id) AND DATE(games.started_on) <= '#{ActiveRecord::Base.sanitize_sql query_date}'
+        JOIN games ON ((games.home_team_id = teams.id OR games.away_team_id = teams.id)
+          AND DATE(games.started_on) <= '#{ActiveRecord::Base.sanitize_sql query_date}')
         WHERE entries.league_id = #{ActiveRecord::Base.sanitize_sql id}
         AND entries.cancelled_at IS NULL
         AND entries.won_at IS NULL
         GROUP BY entries.id
-        HAVING COUNT(DISTINCT hits.id) = #{ActiveRecord::Base.sanitize_sql second_winning_hits} AND COUNT(DISTINCT games.id) = #{ActiveRecord::Base.sanitize_sql second_winning_game_count};
+        HAVING (COUNT(DISTINCT hits.id) = #{ActiveRecord::Base.sanitize_sql second_winning_hits}
+          AND COUNT(DISTINCT games.id) = #{ActiveRecord::Base.sanitize_sql second_winning_game_count});
     "''
     second_winners = ApplicationRecord.connection.execute(second_winners_sql)
     second_entry_ids = second_winners.map { |x| x['entry_id'] }
@@ -115,29 +120,34 @@ class League < ApplicationRecord
           FROM entries
           JOIN hits ON hits.entry_id = entries.id
           JOIN teams ON teams.id = entries.team_id
-          JOIN games ON (games.home_team_id = teams.id OR games.away_team_id = teams.id) AND DATE(games.started_on) <= '#{ActiveRecord::Base.sanitize_sql query_date}'
+          JOIN games ON ((games.home_team_id = teams.id OR games.away_team_id = teams.id)
+            AND DATE(games.started_on) <= '#{ActiveRecord::Base.sanitize_sql query_date}')
           WHERE entries.league_id = #{ActiveRecord::Base.sanitize_sql id}
           AND entries.id NOT IN (#{ActiveRecord::Base.sanitize_sql first_entry_ids.join(',')})
           AND entries.cancelled_at IS NULL
           AND entries.won_at IS NULL
           GROUP BY entries.id
-          HAVING (#{ActiveRecord::Base.sanitize_sql first_game_count} - COUNT(DISTINCT games.id)) >= (#{ActiveRecord::Base.sanitize_sql first_winning_hits} - COUNT(DISTINCT hits.id))
+          HAVING (#{ActiveRecord::Base.sanitize_sql first_game_count} - COUNT(DISTINCT games.id)) >=
+            (#{ActiveRecord::Base.sanitize_sql first_winning_hits} - COUNT(DISTINCT hits.id))
       UNION
         SELECT 1
         FROM entries
         JOIN hits ON hits.entry_id = entries.id
         JOIN teams ON teams.id = entries.team_id
-        JOIN games ON (games.home_team_id = teams.id OR games.away_team_id = teams.id) AND DATE(games.started_on) <= '#{ActiveRecord::Base.sanitize_sql query_date}'
+        JOIN games ON ((games.home_team_id = teams.id OR games.away_team_id = teams.id) AND
+          DATE(games.started_on) <= '#{ActiveRecord::Base.sanitize_sql query_date}')
         WHERE entries.league_id = #{id}
         AND entries.id NOT IN (#{ActiveRecord::Base.sanitize_sql second_entry_ids.join(',')})
         AND entries.cancelled_at IS NULL
         AND entries.won_at IS NULL
         GROUP BY entries.id
-        HAVING (#{ActiveRecord::Base.sanitize_sql second_game_count} - COUNT(DISTINCT games.id)) >= (#{ActiveRecord::Base.sanitize_sql second_winning_hits} - COUNT(DISTINCT hits.id));
+        HAVING (#{ActiveRecord::Base.sanitize_sql second_game_count} - COUNT(DISTINCT games.id)) >=
+          (#{ActiveRecord::Base.sanitize_sql second_winning_hits} - COUNT(DISTINCT hits.id));
     "''
     first_tie_results = ApplicationRecord.connection.execute(first_tie_sql)
     if first_tie_results.any?
-      # Set the game_count for pending winner entries, indicating that other entries cannot exceed this number of games played.
+      # Set the game_count for pending winner entries, indicating that other entries cannot exceed this entry's number
+      # of games played
       Entry.where(id: first_entry_ids, game_count: nil).update_all(game_count: first_winning_game_count)
       Entry.where(id: second_entry_ids, game_count: nil).update_all(game_count: second_winning_game_count)
       return []

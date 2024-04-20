@@ -1,5 +1,14 @@
+Layout/LineLength:
+  Max: 120
+
+Lint/EmptyFile:
+  Enabled: false
+
+Metrics:
+  Enabled: false
+
 Style/Documentation:
   Enabled: false
 
-Layout/LineLength:
-  Max: 120
+Style/MixinUsage:
+  Enabled: false

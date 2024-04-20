@@ -37,7 +37,7 @@ namespace :game_state do
   end
 
   desc 'Simulate the 2014 season'
-  task simulate_2014: :environment do
+  task simulate2014: :environment do
     WebMock.allow_net_connect!
     GameState.reset!
     start_date = Date.parse('2014-03-22')
@@ -48,7 +48,7 @@ namespace :game_state do
   end
 
   desc 'Simulate the 2016 season'
-  task simulate_2016: :environment do
+  task simulate2016: :environment do
     GameState.reset!
     league = League.find_by(id: 1)
     start_date = league.starts_at.to_date
