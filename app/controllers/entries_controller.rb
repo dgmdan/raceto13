@@ -28,16 +28,13 @@ class EntriesController < ApplicationController
       end
     end
 
-    # TODO: email a confirmation
-
-    if success.positive? && errors.zero?
+    if success && !errors
       message = "You successfully purchased #{success} #{'entry'.pluralize(success)}. Good luck!"
-    elsif success.positive? && errors.positive?
+    elsif success && errors
       message = "Partial success! You have purchased #{success} " + 'entry'.pluralize(success) + " but you cannot purchase more. #{error}"
     else
       message = "Unable to purchase entries. #{error}"
     end
-
     redirect_to league_entries_path(league), notice: message
   end
 
