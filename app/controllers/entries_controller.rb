@@ -30,9 +30,8 @@ class EntriesController < ApplicationController
 
     if success && !errors
       message = "You successfully purchased #{success} #{'entry'.pluralize(success)}. Good luck!"
-    elsif success && errors
-      message = "Partial success! You have purchased #{success} #{entry.pluralize success} but you cannot purchase "
-      "more. #{error}"
+    elsif success.positive? && errors.positive?
+      message = "Partial success! You have purchased #{success} but you cannot purchase more. #{error}"
     else
       message = "Unable to purchase entries. #{error}"
     end
