@@ -8,7 +8,7 @@ gem 'rails', '~> 7.0'
 gem 'rails_12factor', group: :production
 gem 'sidekiq'
 gem 'sidekiq-cron'
-gem 'sqlite3'
+gem 'sqlite3', '~> 1.7'
 gem 'uglifier'
 gem 'webmock'
 gem 'will_paginate'
