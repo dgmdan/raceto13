@@ -8,6 +8,7 @@ gem 'rails', '~> 7.0'
 gem 'rails_12factor', group: :production
 gem 'sidekiq'
 gem 'sidekiq-cron'
+gem 'sqlite3'
 gem 'uglifier'
 gem 'webmock'
 gem 'will_paginate'
@@ -22,5 +23,4 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'redis', '~> 5.0'
   gem 'rubocop'
-  gem 'sqlite3'
 end
