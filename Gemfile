@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 
 gem 'devise'
 gem 'espn_scraper', git: 'https://github.com/aj0strow/espn-scraper.git'
+gem 'pg'
 gem 'rails', '~> 7.0'
 gem 'rails_12factor', group: :production
 gem 'sidekiq'
@@ -18,7 +19,6 @@ group :development, :test do
   gem 'bundler-audit'
   gem 'byebug'
   gem 'mocha'
-  gem 'pg'
   gem 'puma'
   gem 'rails-controller-testing'
   gem 'redis', '~> 5.0'
