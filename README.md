@@ -1,5 +1,7 @@
 # MLB Runs Pool Game
 
+[![Ruby on Rails CI](https://github.com/dgmdan/raceto13/actions/workflows/rubyonrails.yml/badge.svg)](https://github.com/dgmdan/raceto13/actions/workflows/rubyonrails.yml)
+
 This is a simple office pool game based on MLB scores. The basic rules are:
 
 * Players sign up and buy one or more entries
