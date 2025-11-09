@@ -34,7 +34,7 @@ class League < ApplicationRecord
                        end
 
     # Look for win condition
-    first_counts_sql = ''"
+    first_counts_sql = "
           SELECT COUNT(DISTINCT hits.id) hits,
             COUNT(DISTINCT games.id) game_count
           FROM entries
@@ -49,14 +49,14 @@ class League < ApplicationRecord
           #{ActiveRecord::Base.sanitize_sql having_condition}
           ORDER BY hits DESC, game_count ASC
           LIMIT 1;
-          "''
+          "
     first_counts_results = ApplicationRecord.connection.execute(first_counts_sql)
     return [] if first_counts_results.count.zero?
 
     # Get all first-place winners
     first_winning_hits = first_counts_results.first['hits']
     first_winning_game_count = first_counts_results.first['game_count']
-    first_winners_sql = ''"
+    first_winners_sql = "
     SELECT entries.id AS entry_id, entries.game_count AS game_count
         FROM entries
         JOIN hits ON hits.entry_id = entries.id
@@ -69,13 +69,13 @@ class League < ApplicationRecord
         GROUP BY entries.id
         HAVING COUNT(DISTINCT hits.id) = #{ActiveRecord::Base.sanitize_sql first_winning_hits}
           AND COUNT(DISTINCT games.id) = #{ActiveRecord::Base.sanitize_sql first_winning_game_count};
-    "''
+    "
     first_winners = ApplicationRecord.connection.execute(first_winners_sql)
     first_entry_ids = first_winners.map { |x| x['entry_id'] }
     first_game_count = first_winners.first['game_count'] || first_winning_game_count
 
     # Find second place winners
-    second_counts_sql = ''"
+    second_counts_sql = "
     SELECT COUNT(DISTINCT hits.id) hits, COUNT(DISTINCT games.id) game_count
         FROM entries
         JOIN hits ON hits.entry_id = entries.id
@@ -89,11 +89,11 @@ class League < ApplicationRecord
         GROUP BY entries.id
         ORDER BY hits DESC, game_count ASC
         LIMIT 1;
-    "''
+    "
     second_counts_results = ApplicationRecord.connection.execute(second_counts_sql)
     second_winning_hits = second_counts_results.first['hits']
     second_winning_game_count = second_counts_results.first['game_count']
-    second_winners_sql = ''"
+    second_winners_sql = "
     SELECT entries.id AS entry_id, entries.game_count AS game_count
         FROM entries
         JOIN hits ON hits.entry_id = entries.id
@@ -106,7 +106,7 @@ class League < ApplicationRecord
         GROUP BY entries.id
         HAVING (COUNT(DISTINCT hits.id) = #{ActiveRecord::Base.sanitize_sql second_winning_hits}
           AND COUNT(DISTINCT games.id) = #{ActiveRecord::Base.sanitize_sql second_winning_game_count});
-    "''
+    "
     second_winners = ApplicationRecord.connection.execute(second_winners_sql)
     second_entry_ids = second_winners.map { |x| x['entry_id'] }
     second_game_count = second_winners.first['game_count'] || second_winning_game_count
@@ -115,7 +115,7 @@ class League < ApplicationRecord
     #   HOW MANY HITS BEHIND: (#{first_winning_hits} - COUNT(DISTINCT hits.id))
     #   HOW MANY GAMES BEHIND: (#{first_winning_game_count} - COUNT(DISTINCT games.id))
     #   GAMES BEHIND MUST BE >= HITS BEHIND
-    first_tie_sql = ''"
+    first_tie_sql = "
       SELECT 1
           FROM entries
           JOIN hits ON hits.entry_id = entries.id
@@ -143,7 +143,7 @@ class League < ApplicationRecord
         GROUP BY entries.id
         HAVING (#{ActiveRecord::Base.sanitize_sql second_game_count} - COUNT(DISTINCT games.id)) >=
           (#{ActiveRecord::Base.sanitize_sql second_winning_hits} - COUNT(DISTINCT hits.id));
-    "''
+    "
     first_tie_results = ApplicationRecord.connection.execute(first_tie_sql)
     if first_tie_results.any?
       # Set the game_count for pending winner entries, indicating that other entries cannot exceed this entry's number
