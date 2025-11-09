@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
+ruby '3.2.2'
 
 gem 'devise'
 gem 'espn_scraper', git: 'https://github.com/aj0strow/espn-scraper.git'
