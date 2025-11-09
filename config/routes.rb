@@ -57,7 +57,7 @@ Rails.application.routes.draw do
   get 'test712' => 'application#test_email'
 
   # sidekiq monitoring
-  authenticate :user, ->(u) { u.admin? } do
+  authenticate :user, lambda(&:admin?) do
     mount Sidekiq::Web => '/kiq'
   end
 end
