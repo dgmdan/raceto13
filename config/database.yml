@@ -1,22 +1,22 @@
 default: &default
-  adapter: sqlite3
-  pool: 5
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch('RAILS_MAX_THREADS', 5) %>
   timeout: 5000
 
 development:
   <<: *default
-  database: db/development.sqlite3
+  database: raceto13_development
+  url: <%= ENV['RACETO13_DATABASE_URL'] %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: db/test.sqlite3
+  database: raceto13_test
+  url: <%= ENV['RACETO13_DATABASE_URL'] %>
 
 production:
-  adapter: postgresql
-  encoding: unicode
+  <<: *default
   url: <%= ENV['DATABASE_URL'] %>
-  database: raceto13
-  pool: 5
