@@ -5,6 +5,7 @@ ruby '3.2.2'
 
 gem 'devise'
 gem 'espn_scraper', git: 'https://github.com/aj0strow/espn-scraper.git'
+gem 'good_job', '~> 4.12'
 gem 'pg'
 gem 'puma'
 gem 'rails', '~> 7.0'
@@ -25,3 +26,5 @@ group :development, :test do
   gem 'redis', '~> 5.0'
   gem 'rubocop'
 end
+
+
