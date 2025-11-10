@@ -56,3 +56,21 @@ jobs:
         run: bundle exec brakeman -q -w2
       - name: Lint Ruby files
         run: bundle exec rubocop --parallel
+
+  
+  deploy:
+    name: Deploy to DigitalOcean App Platform
+    needs: [test, lint]
+    runs-on: ubuntu-22.04
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Install doctl (DigitalOcean CLI)
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DO_API_TOKEN }}
+      - name: Trigger App Platform deployment
+        env:
+          DO_APP_ID: ${{ secrets.DO_APP_ID }}
+        run: doctl apps create-deployment $DO_APP_ID --force-rebuild
